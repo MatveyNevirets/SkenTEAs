@@ -6,7 +6,7 @@ import 'package:skenteas/feature/home/presentation/widgets/tabs_panel.dart';
 import 'package:skenteas/feature/home/presentation/widgets/up_panel.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +20,11 @@ class HomeScreen extends StatelessWidget {
           ),
           SliverToBoxAdapter(child: TabsPanel()),
           SliverList.builder(
-            itemCount: postTabs.length,
+            itemCount: postItems.length,
             itemBuilder: (context, index) => PostItem(
-              userName: postTabs[index].userName,
-              heading: postTabs[index].heading,
-              content: postTabs[index].content,
+              userName: postItems[index].userName,
+              heading: postItems[index].heading,
+              content: postItems[index].content,
             ),
           ),
         ],

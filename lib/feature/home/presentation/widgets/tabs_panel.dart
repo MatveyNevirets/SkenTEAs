@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:skenteas/core/color_consts.dart";
-import "package:skenteas/feature/home/presentation/widgets/tab_item.dart";
+import "package:skenteas/core/widgets/tab_item.dart";
 
 class TabsPanel extends StatelessWidget {
   TabsPanel({super.key});
