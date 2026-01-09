@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:skenteas/core/color_consts.dart';
+import 'package:skenteas/core/const_test_shit.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/home/presentation/widgets/tabs_panel.dart';
 import 'package:skenteas/feature/home/presentation/widgets/up_panel.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-
-  final List<PostItem> postTabs = [
-    PostItem(
-      userName: "Артем Карпов",
-      heading: "Заголовка",
-      content:
-          "Очень интересный заголовок с тонной строк Очень интересный заголовок с тонной строк Очень интересный заголовок с тонной строк Очень интересный заголовок с тонной строк Очень интересный заголовок с тонной строк Очень интересный заголовок с тонной строк Очень интересный заголовок с тонной строк ",
-    ),
-    PostItem(
-      userName: "вендеморка",
-      heading: "Ei",
-      content: "Посмотрите это интересное порно с вендеморкой!",
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
