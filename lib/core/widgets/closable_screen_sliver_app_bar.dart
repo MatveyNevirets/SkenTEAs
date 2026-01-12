@@ -11,16 +11,7 @@ class ClosableScreenSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       pinned: true,
       backgroundColor: panelColor,
-      title: Row(
-        children: [
-          //IconButton(
-          Icon(Icons.close, size: 30, color: mainTextColor),
-          //onPressed: () => Navigator.pop(context),
-          //),
-          Expanded(child: Center(child: title)),
-          const SizedBox(width: 48),
-        ],
-      ),
+      title: title,
     );
   }
 }
