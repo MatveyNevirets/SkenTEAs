@@ -8,18 +8,20 @@ class TabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       margin: EdgeInsets.only(top: 20, bottom: 20, left: 3, right: 3),
       width: 90,
       height: 40,
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 23, 23, 23),
+        color: colorScheme.onPrimary,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Center(
         child: Text(
           tabs[index],
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(fontSize: 16, color: colorScheme.primary),
         ),
       ),
     );

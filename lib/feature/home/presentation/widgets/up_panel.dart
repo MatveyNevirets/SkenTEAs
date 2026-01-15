@@ -5,13 +5,15 @@ class UpPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Expanded(
           child: Icon(
             Icons.heart_broken_rounded,
             size: 40,
-            color: Color.fromARGB(225, 110, 80, 8),
+            color: colorScheme.onPrimary,
           ),
         ),
         Expanded(
@@ -22,7 +24,10 @@ class UpPanel extends StatelessWidget {
                 TextSpan(text: "Скен", style: TextStyle(fontSize: 20)),
                 TextSpan(
                   text: "TEA",
-                  style: TextStyle(color: Colors.green, fontSize: 20),
+                  style: TextStyle(
+                    color: Colors.lightGreenAccent,
+                    fontSize: 20,
+                  ),
                 ),
                 TextSpan(text: "сь", style: TextStyle(fontSize: 20)),
               ],

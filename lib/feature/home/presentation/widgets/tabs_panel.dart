@@ -9,8 +9,9 @@ class TabsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      color: panelColor,
+      color: colorScheme.primary,
       width: 400,
       height: 100,
       child: ListView.builder(

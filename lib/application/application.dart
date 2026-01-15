@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skenteas/core/consts/app_themes.dart';
 import 'package:skenteas/feature/create_post/create_post_screen.dart';
 import 'package:skenteas/feature/home/presentation/home_screen.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
@@ -34,17 +35,11 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Later we'll must to create the color scheme adaptive theme
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: _routerConfig,
-      theme: ThemeData.light().copyWith(
-        appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
-      ),
-      darkTheme: ThemeData(
-        appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
-        scaffoldBackgroundColor: Color.fromARGB(255, 22, 23, 24),
-      ),
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
     );
   }
 }
