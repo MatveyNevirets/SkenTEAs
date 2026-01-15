@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skenteas/core/color_consts.dart';
+import 'package:skenteas/core/consts/color_consts.dart';
 
 class ClosableScreenSliverAppBar extends StatelessWidget {
   const ClosableScreenSliverAppBar({super.key, required this.title});

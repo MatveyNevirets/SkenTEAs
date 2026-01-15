@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:skenteas/core/color_consts.dart';
-import 'package:skenteas/core/const_test_shit.dart';
+import 'package:skenteas/core/consts/color_consts.dart';
+import 'package:skenteas/core/consts/const_test_shit.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/home/presentation/widgets/tabs_panel.dart';
 import 'package:skenteas/feature/home/presentation/widgets/up_panel.dart';
@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: Later we'll must to create the color scheme adaptive theme
       backgroundColor: Colors.black,
       body: CustomScrollView(
         slivers: [

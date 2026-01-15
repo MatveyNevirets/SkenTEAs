@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:skenteas/core/color_consts.dart';
-import 'package:skenteas/core/const_test_shit.dart';
+import 'package:skenteas/core/consts/color_consts.dart';
+import 'package:skenteas/core/consts/const_test_shit.dart';
 import 'package:skenteas/core/widgets/closable_screen_sliver_app_bar.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/post_details/presentation/widgets/commentary_item.dart';

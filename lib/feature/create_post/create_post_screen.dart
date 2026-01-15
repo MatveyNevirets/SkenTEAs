@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:skenteas/core/color_consts.dart";
+import "package:skenteas/core/consts/color_consts.dart";
 import "package:skenteas/core/widgets/closable_screen_sliver_app_bar.dart";
 
 class CreatePostScreen extends StatelessWidget {

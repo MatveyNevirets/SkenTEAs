@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skenteas/core/color_consts.dart';
+import 'package:skenteas/core/consts/color_consts.dart';
 
 class CommentaryItem extends StatelessWidget {
   const CommentaryItem({

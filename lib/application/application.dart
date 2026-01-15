@@ -36,6 +36,7 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Later we'll must to create the color scheme adaptive theme
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: _routerConfig,
       theme: ThemeData.light().copyWith(
         appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
