@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:skenteas/application/application.dart';
 import 'package:skenteas/application/depends/app_depends.dart';
 import 'package:skenteas/application/runner/app_env.dart';
@@ -18,9 +19,8 @@ class AppRunner {
         final appDepends = AppDepends(appEnv);
         await appDepends.initDepends(
           onProgress: (name, progress) {
-            // TODO: Will change to the logger package later
-            print(
-              "$name depend had been loaded successfully with progress: $progress",
+            Logger().i(
+              "$name depend has been completed successfully; Progress: $progress% is completed",
             );
           },
           onError: (e, stack) {
