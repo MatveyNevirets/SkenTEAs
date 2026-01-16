@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:skenteas/core/consts/color_consts.dart';
 import 'package:skenteas/core/consts/const_test_shit.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';

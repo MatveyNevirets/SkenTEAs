@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skenteas/core/consts/color_consts.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
 
 class PostItem extends StatelessWidget {

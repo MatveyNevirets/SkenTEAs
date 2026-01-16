@@ -1,3 +1,22 @@
 import 'package:skenteas/feature/auth/data/datasource/auth_datasource.dart';
 
-class ProdAuthDatasource implements AuthDatasource {}
+class ProdAuthDatasource implements AuthDatasource {
+  @override
+  Future<void> logout() {
+    // TODO: implement logout
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<String?> signIn(String email, String password) {
+    // TODO: implement signIn
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<String?> signUp(String email, String password, String username) {
+    // TODO: implement signUp
+    throw UnimplementedError();
+  }
+
+}

@@ -7,5 +7,32 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required AuthDatasource authDatasource})
     : _authDatasource = authDatasource;
 
+  @override
+  Future<void> logout() async {
+    try {
+      await _authDatasource.logout();
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
+  }
 
+  @override
+  Future<String?> signIn(String email, String password) async {
+    try {
+      final token = await _authDatasource.signIn(email, password);
+      return token;
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
+  }
+
+  @override
+  Future<String?> signUp(String email, String password, String username) async {
+    try {
+      final token = await _authDatasource.signUp(email, password, username);
+      return token;
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
+  }
 }

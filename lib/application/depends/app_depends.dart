@@ -4,6 +4,7 @@ import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:logger/logger.dart';
 import 'package:skenteas/application/runner/app_env.dart';
 import 'package:skenteas/feature/auth/data/datasource/auth_datasource.dart';
+import 'package:skenteas/feature/auth/data/datasource/mock_auth_database.dart';
 import 'package:skenteas/feature/auth/data/datasource/prod_auth_datasource.dart';
 import 'package:skenteas/feature/auth/data/repository/auth_repository_impl.dart';
 import 'package:skenteas/feature/auth/domain/repository/auth_repository.dart';
@@ -70,9 +71,10 @@ class AppDepends {
       switch (appEnv) {
         case AppEnv.prod:
           authDatasource = ProdAuthDatasource();
-          getIt.registerSingleton<AuthDatasource>(authDatasource);
         case AppEnv.test:
+          authDatasource = MockAuthDatabase();
       }
+      getIt.registerSingleton<AuthDatasource>(authDatasource);
       onProgress(
         DependsEnum.authDatasource.toString(),
         countProgress(
