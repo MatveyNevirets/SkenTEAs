@@ -91,14 +91,11 @@ class AppDepends {
     /// ---
 
     try {
-      switch (appEnv) {
-        case AppEnv.prod:
-          authRepository = AuthRepositoryImpl(
-            authDatasource: getIt<AuthDatasource>(),
-          );
-          getIt.registerSingleton<AuthRepository>(authRepository);
-        case AppEnv.test:
-      }
+      authRepository = AuthRepositoryImpl(
+        authDatasource: getIt<AuthDatasource>(),
+      );
+      getIt.registerSingleton<AuthRepository>(authRepository);
+
       onProgress(
         DependsEnum.authDatasource.toString(),
         countProgress(

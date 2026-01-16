@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               padding: Theme.of(context).screenPadding,
               child: Center(
                 child: ElevatedButton(
-                  onPressed: () => context.go("/create_post"),
+                  onPressed: () => context.go("/home/create_post"),
                   child: Text("Написать пост"),
                 ),
               ),
@@ -39,7 +39,8 @@ class HomeScreen extends StatelessWidget {
           SliverList.builder(
             itemCount: postItems.length,
             itemBuilder: (context, index) => GestureDetector(
-              onTap: () => context.go("/post_details", extra: postItems[index]),
+              onTap: () =>
+                  context.go("/home/post_details", extra: postItems[index]),
               child: PostItem(
                 userName: postItems[index].userName,
                 heading: postItems[index].heading,
