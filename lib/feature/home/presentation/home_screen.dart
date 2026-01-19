@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/consts/const_test_shit.dart';
+import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
+import 'package:skenteas/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/home/presentation/widgets/tabs_panel.dart';
 import 'package:skenteas/feature/home/presentation/widgets/up_panel.dart';
@@ -36,17 +39,33 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverList.builder(
-            itemCount: postItems.length,
-            itemBuilder: (context, index) => GestureDetector(
-              onTap: () =>
-                  context.go("/home/post_details", extra: postItems[index]),
-              child: PostItem(
-                userName: postItems[index].userName,
-                heading: postItems[index].heading,
-                content: postItems[index].content,
-              ),
-            ),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is HomePostsState) {
+                return SliverList.builder(
+                  itemCount: state.posts.length,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => context.go(
+                      "/home/post_details",
+                      extra: state.posts[index],
+                    ),
+                    child: PostItem(
+                      userName: state.posts[index].authorUsername,
+                      heading: state.posts[index].title,
+                      content: state.posts[index].description,
+                    ),
+                  ),
+                );
+              } else if (state is HomeErrorState) {
+                return SliverToBoxAdapter(
+                  child: Center(child: Text(ErrorMessages.somethingWrong)),
+                );
+              }
+              // TODO: Will change it later to the normal progress indicator
+              return SliverToBoxAdapter(
+                child: Center(child: CircularProgressIndicator()),
+              );
+            },
           ),
         ],
       ),

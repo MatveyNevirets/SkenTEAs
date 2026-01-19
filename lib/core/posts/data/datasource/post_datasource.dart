@@ -1,5 +1,5 @@
 import 'package:skenteas/core/posts/data/models/post.dart';
 
-abstract interface class PostDatasource {
+abstract class PostsDatasource {
   Future<List<Post>> getPosts();
 }

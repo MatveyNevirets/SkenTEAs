@@ -2,7 +2,7 @@ import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
 import 'package:skenteas/core/posts/data/models/comment.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
 
-class MockPostDatasource implements PostDatasource {
+class MockPostsDatasource implements PostsDatasource {
   final _mockPosts = [
     Post(
       id: 0,
@@ -55,7 +55,7 @@ class MockPostDatasource implements PostDatasource {
   @override
   Future<List<Post>> getPosts() async {
     await Future.delayed(Duration(seconds: 2));
-    
+
     return _mockPosts;
   }
 }

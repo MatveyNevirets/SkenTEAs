@@ -28,6 +28,8 @@ class AppRunner {
           },
         );
 
+        Logger().d("All dependecies has been loaded successfully");
+
         runApp(const Application());
 
         WidgetsBinding.instance.allowFirstFrame();

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/feature/auth/presentation/login_page.dart';
 import 'package:skenteas/feature/create_post/create_post_screen.dart';
+import 'package:skenteas/feature/home/presentation/home_page.dart';
 import 'package:skenteas/feature/home/presentation/home_screen.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/post_details/presentation/post_details_screen.dart';
@@ -29,7 +30,7 @@ final routerConfig = GoRouter(
     GoRoute(path: "/auth", builder: (context, state) => LoginPage()),
     GoRoute(
       path: "/home",
-      builder: (context, state) => HomeScreen(),
+      builder: (context, state) => HomePage(),
       routes: [
         GoRoute(
           path: "/post_details",

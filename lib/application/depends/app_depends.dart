@@ -3,6 +3,11 @@ import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:logger/logger.dart';
 import 'package:skenteas/application/runner/app_env.dart';
+import 'package:skenteas/core/posts/data/datasource/mock_post_datasource.dart';
+import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
+import 'package:skenteas/core/posts/data/datasource/prod_posts_datasource.dart';
+import 'package:skenteas/core/posts/data/repository/post_repository_impl.dart';
+import 'package:skenteas/core/posts/domain/repository/post_repository.dart';
 import 'package:skenteas/feature/auth/data/datasource/auth_datasource.dart';
 import 'package:skenteas/feature/auth/data/datasource/mock_auth_database.dart';
 import 'package:skenteas/feature/auth/data/datasource/prod_auth_datasource.dart';
@@ -13,13 +18,22 @@ import 'package:skenteas/generated/auth.pbgrpc.dart';
 typedef OnProgress = void Function(String dependName, int progress);
 typedef OnError = void Function(Object? error, StackTrace stack);
 
-enum DependsEnum { envFile, authRpcClient, authDatasource, authRepository }
+enum DependsEnum {
+  envFile,
+  authRpcClient,
+  authDatasource,
+  authRepository,
+  postsDatasource,
+  postsRepository,
+}
 
 class AppDepends {
   final AppEnv appEnv;
   late final AuthRpcClient authRpcClient;
   late final AuthDatasource authDatasource;
   late final AuthRepository authRepository;
+  late final PostsDatasource postsDatasource;
+  late final PostsRepository postsRepository;
   final getIt = GetIt.I;
 
   AppDepends(this.appEnv);
@@ -107,7 +121,47 @@ class AppDepends {
       onError(e, stack);
     }
 
-    Logger().d("All dependecies has been loaded successfully");
+    /// ---
+    ///  Setups the PostsDatasource depend
+    /// ---
+
+    try {
+      postsDatasource = switch (appEnv) {
+        AppEnv.test => MockPostsDatasource(),
+        AppEnv.prod => ProdPostsDatasource(),
+      };
+      getIt.registerSingleton<PostsDatasource>(postsDatasource);
+      onProgress(
+        DependsEnum.postsDatasource.toString(),
+        countProgress(
+          DependsEnum.postsDatasource.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
+    ///  Setups the PostsDatasource depend
+    /// ---
+
+    try {
+      postsRepository = PostsRepositoryImpl(
+        postDatasource: getIt<PostsDatasource>(),
+      );
+
+      getIt.registerSingleton<PostsRepository>(postsRepository);
+      onProgress(
+        DependsEnum.postsRepository.toString(),
+        countProgress(
+          DependsEnum.postsRepository.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
   }
 }
 
