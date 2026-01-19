@@ -67,29 +67,6 @@ class AppDepends {
         transportSecure: false,
       );
 
-      postsRpcClient = PostsRpcClient(channel);
-      getIt.registerSingleton<PostsRpcClient>(postsRpcClient);
-      onProgress(
-        DependsEnum.postsRpcClient.name,
-        countProgress(
-          DependsEnum.postsRpcClient.index,
-          DependsEnum.values.length,
-        ),
-      );
-    } catch (e, stack) {
-      onError(e, stack);
-    }
-
-    /// ---
-    ///  Setups the AuthRpcClient depend
-    /// ---
-    try {
-      final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
-        host: dotenv.env['SERVICES_HOST']!,
-        port: int.parse(dotenv.env['NGINX_PORT']!),
-        transportSecure: false,
-      );
-
       authRpcClient = AuthRpcClient(channel);
       getIt.registerSingleton<AuthRpcClient>(authRpcClient);
       onProgress(
@@ -104,12 +81,36 @@ class AppDepends {
     }
 
     /// ---
+    ///  Setups the PostsRpcClient depend
+    /// ---
+    try {
+      final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
+        host: dotenv.env['SERVICES_HOST']!,
+        port: int.parse(dotenv.env['NGINX_PORT']!),
+        transportSecure: false,
+      );
+
+      postsRpcClient = PostsRpcClient(channel);
+      getIt.registerSingleton<PostsRpcClient>(postsRpcClient);
+      onProgress(
+        DependsEnum.postsRpcClient.name,
+        countProgress(
+          DependsEnum.postsRpcClient.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
     ///  Setups the AuthDatasource depend
     /// ---
     try {
       switch (appEnv) {
         case AppEnv.prod:
-          authDatasource = ProdAuthDatasource();
+          authDatasource = MockAuthDatabase();
+        // authDatasource = ProdAuthDatasource();
         case AppEnv.test:
           authDatasource = MockAuthDatabase();
       }
@@ -153,7 +154,9 @@ class AppDepends {
     try {
       postsDatasource = switch (appEnv) {
         AppEnv.test => MockPostsDatasource(),
-        AppEnv.prod => ProdPostsDatasource(),
+        AppEnv.prod => ProdPostsDatasource(
+          postsRpcClient: getIt<PostsRpcClient>(),
+        ),
       };
       getIt.registerSingleton<PostsDatasource>(postsDatasource);
       onProgress(
