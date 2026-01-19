@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skenteas/core/posts/data/models/post.dart';
 import 'package:skenteas/feature/auth/presentation/login_page.dart';
 import 'package:skenteas/feature/create_post/create_post_screen.dart';
 import 'package:skenteas/feature/home/presentation/home_page.dart';
@@ -35,9 +36,9 @@ final routerConfig = GoRouter(
         GoRoute(
           path: "/post_details",
           builder: (context, state) {
-            final post = state.extra as PostItem;
+            final post = state.extra as Post;
 
-            return PostDetailsScreen(postItem: post);
+            return PostDetailsScreen(post: post);
           },
         ),
         GoRoute(

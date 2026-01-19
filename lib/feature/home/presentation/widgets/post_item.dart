@@ -4,14 +4,14 @@ import 'package:skenteas/core/extensions/theme_extensions.dart';
 class PostItem extends StatelessWidget {
   const PostItem({
     super.key,
-    required this.userName,
-    required this.heading,
-    required this.content,
+    required this.authorUsername,
+    required this.title,
+    required this.description,
   });
 
-  final String userName;
-  final String heading;
-  final String content;
+  final String authorUsername;
+  final String title;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class PostItem extends StatelessWidget {
                 ), // Используем person вместо man
                 const SizedBox(width: 8),
                 Text(
-                  userName,
+                  authorUsername,
                   style: TextStyle(
                     color: colorScheme.onPrimaryContainer,
                     fontSize: 16,
@@ -88,7 +88,7 @@ class PostItem extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              heading,
+              title,
               style: TextStyle(
                 color: colorScheme.onPrimaryContainer,
                 fontSize: 20,
@@ -97,7 +97,7 @@ class PostItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              content,
+              description,
               style: TextStyle(
                 color: colorScheme.onPrimaryContainer,
                 fontSize: 14,

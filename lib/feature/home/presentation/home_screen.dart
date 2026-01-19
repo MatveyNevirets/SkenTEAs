@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:skenteas/core/consts/const_test_shit.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
 import 'package:skenteas/feature/home/presentation/bloc/home_bloc.dart';
@@ -50,9 +49,9 @@ class HomeScreen extends StatelessWidget {
                       extra: state.posts[index],
                     ),
                     child: PostItem(
-                      userName: state.posts[index].authorUsername,
-                      heading: state.posts[index].title,
-                      content: state.posts[index].description,
+                      authorUsername: state.posts[index].authorUsername,
+                      title: state.posts[index].title,
+                      description: state.posts[index].description,
                     ),
                   ),
                 );

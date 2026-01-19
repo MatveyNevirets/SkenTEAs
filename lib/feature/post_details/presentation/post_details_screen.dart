@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:skenteas/core/consts/color_consts.dart';
-import 'package:skenteas/core/consts/const_test_shit.dart';
+import 'package:skenteas/core/posts/data/models/post.dart';
 import 'package:skenteas/core/widgets/closable_screen_sliver_app_bar.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/post_details/presentation/widgets/commentary_item.dart';
 
 class PostDetailsScreen extends StatelessWidget {
-  const PostDetailsScreen({super.key, required this.postItem});
+  const PostDetailsScreen({super.key, required this.post});
 
-  final PostItem postItem;
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +18,18 @@ class PostDetailsScreen extends StatelessWidget {
           ClosableScreenSliverAppBar(
             title: Text("Комментарии", style: TextStyle(color: mainTextColor)),
           ),
-          SliverToBoxAdapter(child: postItem),
+          SliverToBoxAdapter(
+            child: PostItem(
+              authorUsername: post.authorUsername,
+              title: post.title,
+              description: post.description,
+            ),
+          ),
           SliverList.builder(
-            itemCount: commentaryItems.length,
+            itemCount: post.comments.length,
             itemBuilder: (context, index) => CommentaryItem(
-              userName: commentaryItems[index].userName,
-              commentary: commentaryItems[index].commentary,
+              userName: post.comments[index].authorUsername,
+              commentary: post.comments[index].message,
             ),
           ),
         ],
