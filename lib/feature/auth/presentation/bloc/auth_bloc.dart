@@ -2,6 +2,7 @@
 import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
+import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/feature/auth/domain/repository/auth_repository.dart';
 
 part 'auth_event.dart';
@@ -30,15 +31,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignUp(AuthSignUpEvent event, Emitter<AuthState> emit) async {
     try {
       emit(AuthLoadingState());
-      final token = await authRepository.signUp(
-        event.email,
-        event.password,
-        event.username,
-      );
-      // TODO: Token saving into the key-value storage
-      emit(AuthenticatedState());
+      if (event.email.isEmpty ||
+          event.password.isEmpty ||
+          event.username.isEmpty) {
+        emit(UnauthenticatedState(message: ErrorMessages.fieldsMustBeFilled));
+      } else {
+        // TODO: Token saving into the key-value storage
+        final token = await authRepository.signUp(
+          event.email,
+          event.password,
+          event.username,
+        );
+        emit(AuthenticatedState());
+      }
     } on Object catch (e, stack) {
-      emit(UnauthenticatedState());
+      emit(UnauthenticatedState(message: ErrorMessages.somethingWrong));
       throw Exception("$e StackTrace: $stack");
     }
   }
@@ -46,8 +53,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignIn(AuthSignInEvent event, Emitter<AuthState> emit) async {
     try {
       emit(AuthLoadingState());
-      final token = await authRepository.signIn(event.email, event.password);
-      emit(AuthenticatedState());
+      if (event.email.isEmpty || event.password.isEmpty) {
+        emit(UnauthenticatedState(message: ErrorMessages.fieldsMustBeFilled));
+      } else if (event.email != "MockEmail" ||
+          event.password != "MockPassword") {
+        final token = await authRepository.signIn(event.email, event.password);
+        emit(UnauthenticatedState(message: ErrorMessages.emailOrPasswordWrong));
+      } else {
+        emit(AuthenticatedState());
+      }
     } on Object catch (e, stack) {
       emit(UnauthenticatedState());
       throw Exception("$e StackTrace: $stack");

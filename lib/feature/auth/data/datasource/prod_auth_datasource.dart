@@ -18,5 +18,4 @@ class ProdAuthDatasource implements AuthDatasource {
     // TODO: implement signUp
     throw UnimplementedError();
   }
-
 }

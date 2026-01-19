@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skenteas/core/widgets/snackbar.dart';
 import 'package:skenteas/feature/auth/presentation/bloc/auth_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -17,6 +18,9 @@ class LoginScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthenticatedState) {
             context.go("/home");
+          }
+          if (state is UnauthenticatedState && state.message != null) {
+            createSnackBar(context, state.message!);
           }
         },
         builder: (context, state) {

@@ -9,4 +9,7 @@ class AuthLoadingState extends AuthState {}
 
 class AuthenticatedState extends AuthState {}
 
-class UnauthenticatedState extends AuthState {}
+class UnauthenticatedState extends AuthState {
+  String? message;
+  UnauthenticatedState({this.message});
+}

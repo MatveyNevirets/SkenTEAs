@@ -13,23 +13,21 @@ class MockAuthDatabase implements AuthDatasource {
 
   @override
   Future<String?> signIn(String email, String password) async {
-    if (email == "MockEmail" && password == "MockPassword") {
-      token = "token";
-      Logger().d("Authentication was successful");
-      return token!;
-    } else {
-      Logger().d("Email or Password is wrong");
-      return token;
-    }
+    token = "token";
+    await Future.delayed(Duration(seconds: 2));
+    Logger().d("Authentication was successful");
+    return token;
   }
 
   @override
   Future<String?> signUp(String email, String password, String username) async {
     if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty) {
       token = "token";
+      await Future.delayed(Duration(seconds: 2));
       Logger().d("Authentication was successful");
       return token;
     } else {
+      await Future.delayed(Duration(seconds: 2));
       Logger().d("All fields must be filled");
       return null;
     }
