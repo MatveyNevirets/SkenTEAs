@@ -34,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (event.email.isEmpty ||
           event.password.isEmpty ||
           event.username.isEmpty) {
-        emit(UnauthenticatedState(message: ErrorMessages.fieldsMustBeFilled));
+        emit(UnauthenticatedState(message: AppMessages.fieldsMustBeFilled));
       } else {
         // TODO: Token saving into the key-value storage
         final token = await authRepository.signUp(
@@ -45,7 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthenticatedState());
       }
     } on Object catch (e, stack) {
-      emit(UnauthenticatedState(message: ErrorMessages.somethingWrong));
+      emit(UnauthenticatedState(message: AppMessages.somethingWrong));
       throw Exception("$e StackTrace: $stack");
     }
   }
@@ -54,11 +54,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoadingState());
       if (event.email.isEmpty || event.password.isEmpty) {
-        emit(UnauthenticatedState(message: ErrorMessages.fieldsMustBeFilled));
+        emit(UnauthenticatedState(message: AppMessages.fieldsMustBeFilled));
       } else if (event.email != "MockEmail" ||
           event.password != "MockPassword") {
         final token = await authRepository.signIn(event.email, event.password);
-        emit(UnauthenticatedState(message: ErrorMessages.emailOrPasswordWrong));
+        emit(UnauthenticatedState(message: AppMessages.emailOrPasswordWrong));
       } else {
         emit(AuthenticatedState());
       }

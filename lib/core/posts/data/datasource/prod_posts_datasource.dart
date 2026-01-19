@@ -7,4 +7,10 @@ class ProdPostsDatasource implements PostsDatasource {
     // TODO: implement getPosts
     throw UnimplementedError();
   }
+  
+  @override
+  Future<void> insertPost(Post post) {
+    // TODO: implement insertPost
+    throw UnimplementedError();
+  }
 }

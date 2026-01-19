@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
-import 'package:skenteas/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:skenteas/feature/home/presentation/bloc/posts_bloc.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/home/presentation/widgets/tabs_panel.dart';
 import 'package:skenteas/feature/home/presentation/widgets/up_panel.dart';
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          BlocBuilder<HomeBloc, HomeState>(
+          BlocBuilder<PostsBloc, PostsState>(
             builder: (context, state) {
               if (state is HomePostsState) {
                 return SliverList.builder(
@@ -55,9 +55,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 );
-              } else if (state is HomeErrorState) {
+              } else if (state is PostsErrorState) {
                 return SliverToBoxAdapter(
-                  child: Center(child: Text(ErrorMessages.somethingWrong)),
+                  child: Center(child: Text(AppMessages.somethingWrong)),
                 );
               }
               // TODO: Will change it later to the normal progress indicator

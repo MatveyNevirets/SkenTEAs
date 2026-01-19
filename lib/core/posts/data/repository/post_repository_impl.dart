@@ -15,4 +15,13 @@ class PostsRepositoryImpl implements PostsRepository {
       throw Exception("$e StackTrace: $stack");
     }
   }
+
+  @override
+  Future<void> insertPost(Post post) async {
+    try {
+      await postDatasource.insertPost(post);
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
+  }
 }

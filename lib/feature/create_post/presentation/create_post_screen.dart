@@ -1,9 +1,16 @@
 import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:go_router/go_router.dart";
 import "package:skenteas/core/consts/color_consts.dart";
+import "package:skenteas/core/posts/data/models/post.dart";
 import "package:skenteas/core/widgets/closable_screen_sliver_app_bar.dart";
+import "package:skenteas/feature/home/presentation/bloc/posts_bloc.dart";
 
 class CreatePostScreen extends StatelessWidget {
-  const CreatePostScreen({super.key});
+  CreatePostScreen({super.key});
+
+  final titleController = TextEditingController(),
+      descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +59,34 @@ class CreatePostScreen extends StatelessWidget {
                       width: double.infinity,
                       color: secondaryColor,
                     ),
-                    SizedBox(height: 50, child: TextField()),
-                    SizedBox(height: 50, child: TextField()),
+                    Text("Заголовок"),
+                    SizedBox(
+                      height: 50,
+                      child: TextField(controller: titleController),
+                    ),
+                    Text("Содержание"),
+                    SizedBox(
+                      height: 50,
+                      child: TextField(controller: descriptionController),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        final post = Post(
+                          authorUsername: "authorUsername",
+                          title: titleController.text,
+                          description: descriptionController.text,
+                          imagePath: "imagePath",
+                          likes: 0,
+                          comments: [],
+                        );
+                        context.read<PostsBloc>().add(
+                          TryCreatePostEvent(post: post),
+                        );
+                        context.pop();
+                        context.read<PostsBloc>().add(GetPostsEvent());
+                      },
+                      child: Text("Опубликовать"),
+                    ),
                   ],
                 ),
               ),
