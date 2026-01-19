@@ -1,0 +1,43 @@
+syntax="proto3";
+
+service PostsRpc {
+    rpc InsertPost(PostDto) returns (ResponseDto);
+    rpc DeletePost(PostDto) returns (ResponseDto);
+
+    rpc FetchUserPosts (ResponseDto) returns (ListPostsDto);
+    rpc FetchPosts (ResponseDto) returns (ListPostsDto);
+    rpc FetchPostDetails (PostDto) returns (PostDto);
+}
+
+message ListPostsDto {
+    repeated PostDto posts = 1;
+}
+
+message PostDto {
+    oneof id_optional {
+        string id = 1;
+        string author_id = 2;
+    }
+    string title = 3;
+    string description = 4;
+    string image_path = 5;
+
+    oneof likes_optional {
+        string likes = 6;
+    }
+
+    repeated CommentDto comments = 7;
+}
+
+message ResponseDto {
+    string message = 1;
+}
+
+message CommentDto {
+     oneof id_optional {
+        string id = 1;
+        string author_id = 2;
+    }
+    string post_id = 3;
+    string message = 4;
+}

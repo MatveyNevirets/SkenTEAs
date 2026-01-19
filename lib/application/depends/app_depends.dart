@@ -1,7 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
-import 'package:logger/logger.dart';
 import 'package:skenteas/application/runner/app_env.dart';
 import 'package:skenteas/core/posts/data/datasource/mock_post_datasource.dart';
 import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
@@ -13,7 +12,8 @@ import 'package:skenteas/feature/auth/data/datasource/mock_auth_database.dart';
 import 'package:skenteas/feature/auth/data/datasource/prod_auth_datasource.dart';
 import 'package:skenteas/feature/auth/data/repository/auth_repository_impl.dart';
 import 'package:skenteas/feature/auth/domain/repository/auth_repository.dart';
-import 'package:skenteas/generated/auth.pbgrpc.dart';
+import 'package:skenteas/generated/auth/auth.pbgrpc.dart';
+import 'package:skenteas/generated/posts/posts.pbgrpc.dart';
 
 typedef OnProgress = void Function(String dependName, int progress);
 typedef OnError = void Function(Object? error, StackTrace stack);
@@ -21,6 +21,7 @@ typedef OnError = void Function(Object? error, StackTrace stack);
 enum DependsEnum {
   envFile,
   authRpcClient,
+  postsRpcClient,
   authDatasource,
   authRepository,
   postsDatasource,
@@ -30,6 +31,7 @@ enum DependsEnum {
 class AppDepends {
   final AppEnv appEnv;
   late final AuthRpcClient authRpcClient;
+  late final PostsRpcClient postsRpcClient;
   late final AuthDatasource authDatasource;
   late final AuthRepository authRepository;
   late final PostsDatasource postsDatasource;
@@ -52,6 +54,29 @@ class AppDepends {
         countProgress(DependsEnum.envFile.index, DependsEnum.values.length),
       );
     } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
+    ///  Setups the AuthRpcClient depend
+    /// ---
+    try {
+      final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
+        host: dotenv.env['SERVICES_HOST']!,
+        port: int.parse(dotenv.env['NGINX_PORT']!),
+        transportSecure: false,
+      );
+
+      postsRpcClient = PostsRpcClient(channel);
+      getIt.registerSingleton<PostsRpcClient>(postsRpcClient);
+      onProgress(
+        DependsEnum.postsRpcClient.name,
+        countProgress(
+          DependsEnum.postsRpcClient.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } catch (e, stack) {
       onError(e, stack);
     }
 
