@@ -12,24 +12,28 @@ class MockAuthDatabase implements AuthDatasource {
   }
 
   @override
-  Future<String?> signIn(String email, String password) async {
+  Future<(String, String)> signIn(String email, String password) async {
     token = "token";
     await Future.delayed(Duration(seconds: 2));
     Logger().d("Authentication was successful");
-    return token;
+    return (token!, token!);
   }
 
   @override
-  Future<String?> signUp(String email, String password, String username) async {
+  Future<(String, String)> signUp(
+    String email,
+    String password,
+    String username,
+  ) async {
     if (email.isNotEmpty && password.isNotEmpty && username.isNotEmpty) {
       token = "token";
       await Future.delayed(Duration(seconds: 2));
       Logger().d("Authentication was successful");
-      return token;
+      return (token!, token!);
     } else {
       await Future.delayed(Duration(seconds: 2));
       Logger().d("All fields must be filled");
-      return null;
+      return ("", "");
     }
   }
 }

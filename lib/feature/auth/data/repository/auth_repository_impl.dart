@@ -17,20 +17,20 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<String?> signIn(String email, String password) async {
+  Future<(String, String)> signIn(String email, String password) async {
     try {
-      final token = await _authDatasource.signIn(email, password);
-      return token;
+      final tokens = await _authDatasource.signIn(email, password);
+      return (tokens.$1, tokens.$2);
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }
   }
 
   @override
-  Future<String?> signUp(String email, String password, String username) async {
+  Future<(String, String)> signUp(String email, String password, String username) async {
     try {
-      final token = await _authDatasource.signUp(email, password, username);
-      return token;
+      final tokens = await _authDatasource.signUp(email, password, username);
+      return (tokens.$1, tokens.$2);
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }

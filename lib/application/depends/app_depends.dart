@@ -201,6 +201,7 @@ class AppDepends {
         AppEnv.test => MockPostsDatasource(),
         AppEnv.prod => ProdPostsDatasource(
           postsRpcClient: getIt<PostsRpcClient>(),
+          keyValueStorageRepository: getIt<KeyValueStorageRepository>(),
         ),
       };
       getIt.registerSingleton<PostsDatasource>(postsDatasource);

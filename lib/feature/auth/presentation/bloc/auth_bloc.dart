@@ -1,5 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/feature/auth/domain/repository/auth_repository.dart';
@@ -26,7 +27,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoadingState());
-    final token = await keyValueStorageRepository.readString('TOKEN_KEY');
+    final token = await keyValueStorageRepository.readString(
+      dotenv.env['ACCESS_TOKEN_KEY']!,
+    );
 
     if (token != null) {
       emit(AuthenticatedState());
@@ -39,7 +42,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoadingState());
       await authRepository.logout();
-      await keyValueStorageRepository.delete('TOKEN_KEY');
+      await keyValueStorageRepository.delete(dotenv.env['ACCESS_TOKEN_KEY']!);
+      await keyValueStorageRepository.delete(dotenv.env['REFRESH_TOKEN_KEY']!);
       emit(UnauthenticatedState());
     } on Object catch (e, stack) {
       throw Exception("$e, StackTrace: $stack");
@@ -54,13 +58,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.username.isEmpty) {
         emit(UnauthenticatedState(message: AppMessages.fieldsMustBeFilled));
       } else {
-        final token = await authRepository.signUp(
+        final tokens = await authRepository.signUp(
           event.email,
           event.password,
           event.username,
         );
 
-        await keyValueStorageRepository.write<String>('TOKEN_KEY', token!);
+        await keyValueStorageRepository.write<String>(
+          dotenv.env['ACCESS_TOKEN_KEY']!,
+          tokens.$1,
+        );
+        await keyValueStorageRepository.write<String>(
+          dotenv.env['REFRESH_TOKEN_KEY']!,
+          tokens.$2,
+        );
 
         emit(AuthenticatedState());
       }
@@ -76,9 +87,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (event.email.isEmpty || event.password.isEmpty) {
         emit(UnauthenticatedState(message: AppMessages.fieldsMustBeFilled));
       } else {
-        final token = await authRepository.signIn(event.email, event.password);
+        final tokens = await authRepository.signIn(event.email, event.password);
 
-        await keyValueStorageRepository.write<String>('TOKEN_KEY', token!);
+        await keyValueStorageRepository.write<String>(
+          dotenv.env['ACCESS_TOKEN_KEY']!,
+          tokens.$1,
+        );
+        await keyValueStorageRepository.write<String>(
+          dotenv.env['REFRESH_TOKEN_KEY']!,
+          tokens.$2,
+        );
 
         emit(AuthenticatedState());
       }
