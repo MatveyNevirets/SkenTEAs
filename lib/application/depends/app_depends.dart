@@ -2,6 +2,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:skenteas/application/runner/app_env.dart';
+import 'package:skenteas/core/key_value_storage/data/datasource/key_value_datasource.dart';
+import 'package:skenteas/core/key_value_storage/data/datasource/shared_preferences_key_value_datasource.dart';
+import 'package:skenteas/core/key_value_storage/data/repository/key_value_storage_repository_impl.dart';
+import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/posts/data/datasource/mock_post_datasource.dart';
 import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
 import 'package:skenteas/core/posts/data/datasource/prod_posts_datasource.dart';
@@ -20,6 +24,8 @@ typedef OnError = void Function(Object? error, StackTrace stack);
 
 enum DependsEnum {
   envFile,
+  keyValueDatasource,
+  keyValueRepository,
   authRpcClient,
   postsRpcClient,
   authDatasource,
@@ -30,6 +36,8 @@ enum DependsEnum {
 
 class AppDepends {
   final AppEnv appEnv;
+  late final KeyValueDatasource keyValueDatasource;
+  late final KeyValueStorageRepository keyValueStorageRepository;
   late final AuthRpcClient authRpcClient;
   late final PostsRpcClient postsRpcClient;
   late final AuthDatasource authDatasource;
@@ -52,6 +60,44 @@ class AppDepends {
       onProgress(
         DependsEnum.envFile.toString(),
         countProgress(DependsEnum.envFile.index, DependsEnum.values.length),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
+    ///  Setups the KeyValueDatasource depend
+    /// ---
+    try {
+      keyValueDatasource = SharedPreferencesKeyValueDatasource();
+      getIt.registerSingleton<KeyValueDatasource>(keyValueDatasource);
+      onProgress(
+        DependsEnum.keyValueDatasource.toString(),
+        countProgress(
+          DependsEnum.keyValueDatasource.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
+    ///  Setups the KeyValueRepository depend
+    /// ---
+    try {
+      keyValueStorageRepository = KeyValueStorageRepositoryImpl(
+        keyValueDatasource: getIt<KeyValueDatasource>(),
+      );
+      getIt.registerSingleton<KeyValueStorageRepository>(
+        keyValueStorageRepository,
+      );
+      onProgress(
+        DependsEnum.keyValueRepository.toString(),
+        countProgress(
+          DependsEnum.keyValueRepository.index,
+          DependsEnum.values.length,
+        ),
       );
     } on Object catch (e, stack) {
       onError(e, stack);

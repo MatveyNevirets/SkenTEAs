@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
 import 'package:skenteas/core/posts/data/models/comment.dart';

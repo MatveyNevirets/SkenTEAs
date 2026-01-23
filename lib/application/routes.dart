@@ -3,12 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
-import 'package:skenteas/feature/auth/presentation/login_page.dart';
+import 'package:skenteas/feature/auth/presentation/login_screen.dart';
 import 'package:skenteas/feature/create_post/presentation/create_post_page.dart';
-import 'package:skenteas/feature/create_post/presentation/create_post_screen.dart';
 import 'package:skenteas/feature/home/presentation/home_page.dart';
-import 'package:skenteas/feature/home/presentation/home_screen.dart';
-import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/post_details/presentation/post_details_screen.dart';
 
 FutureOr<String?> _redirect(BuildContext context, GoRouterState state) {
@@ -29,7 +26,7 @@ final routerConfig = GoRouter(
   redirect: _redirect,
   initialLocation: "/auth",
   routes: [
-    GoRoute(path: "/auth", builder: (context, state) => LoginPage()),
+    GoRoute(path: "/auth", builder: (context, state) => LoginScreen()),
     GoRoute(
       path: "/home",
       builder: (context, state) => HomePage(),

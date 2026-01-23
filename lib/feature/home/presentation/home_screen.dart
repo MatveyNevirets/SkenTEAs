@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
+import 'package:skenteas/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:skenteas/feature/home/presentation/bloc/posts_bloc.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/home/presentation/widgets/tabs_panel.dart';
@@ -34,6 +35,21 @@ class HomeScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () => context.go("/home/create_post"),
                   child: Text("Написать пост"),
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            // TODO: Remove later
+            child: Padding(
+              padding: Theme.of(context).screenPadding,
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    context.go("/auth");
+                    context.read<AuthBloc>().add(AuthLogoutEvent());
+                  },
+                  child: Text("Выйти из аккаунта"),
                 ),
               ),
             ),
