@@ -55,15 +55,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoadingState());
       if (event.email.isEmpty || event.password.isEmpty) {
         emit(UnauthenticatedState(message: AppMessages.fieldsMustBeFilled));
-      } else if (event.email != "MockEmail" ||
-          event.password != "MockPassword") {
-        final token = await authRepository.signIn(event.email, event.password);
-        emit(UnauthenticatedState(message: AppMessages.emailOrPasswordWrong));
       } else {
+        final token = await authRepository.signIn(event.email, event.password);
         emit(AuthenticatedState());
       }
     } on Object catch (e, stack) {
-      emit(UnauthenticatedState());
+      emit(UnauthenticatedState(message: AppMessages.emailOrPasswordWrong));
       throw Exception("$e StackTrace: $stack");
     }
   }

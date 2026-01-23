@@ -11,4 +11,6 @@ abstract class AppMessages {
   ///            ///
 
   static const String publishedSuccessful = "Пост успешно опубликован!";
+  static const String signUpSuccessful = "Регистрация прошла успешно!";
+  static const String signInSuccessful = "Успешный вход!";
 }
