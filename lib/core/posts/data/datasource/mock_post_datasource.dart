@@ -3,8 +3,9 @@ import 'package:skenteas/core/posts/data/models/comment.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
 
 class MockPostsDatasource implements PostsDatasource {
-  final List<Post> _mockPosts = [
+  List<Post> mockPosts = [
     Post(
+      id: "0",
       authorUsername: "Тема Карпов",
       title: "Почему ЧКП - best чайная Волгограда?",
       description:
@@ -27,6 +28,7 @@ class MockPostsDatasource implements PostsDatasource {
       ],
     ),
     Post(
+      id: "1",
       authorUsername: "Матви",
       title: "Как я в чайную попал",
       description:
@@ -54,12 +56,18 @@ class MockPostsDatasource implements PostsDatasource {
   Future<List<Post>> getPosts() async {
     await Future.delayed(Duration(seconds: 2));
 
-    return _mockPosts;
+    return mockPosts;
   }
 
   @override
   Future<void> insertPost(Post post) async {
     await Future.delayed(Duration(seconds: 2));
-    _mockPosts.add(post);
+    mockPosts.add(post);
+  }
+
+  @override
+  Future<void> changeLikesPost(String postId) async {
+    final index = int.parse(postId);
+    mockPosts[index].likes = mockPosts[index].likes + 1;
   }
 }

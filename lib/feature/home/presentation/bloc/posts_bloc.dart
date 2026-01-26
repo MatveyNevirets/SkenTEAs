@@ -17,6 +17,29 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   PostsBloc({required this.postsRepository}) : super(HomeInitial()) {
     on<GetPostsEvent>(_onGetPosts);
     on<TryCreatePostEvent>(_onTryCreatePost);
+    on<ChangeLikePostEvent>(_onChangeLikePost);
+  }
+
+  Future<void> _onChangeLikePost(
+    ChangeLikePostEvent event,
+    Emitter<PostsState> emit,
+  ) async {
+    try {
+      if (_cachedPosts == null) {
+        throw Exception("Posts haven't been recieved");
+      }
+
+      final currentPost = _cachedPosts![event.index];
+      currentPost.liked = !currentPost.liked;
+
+      _cachedPosts![event.index] = currentPost;
+
+      await postsRepository.changeLikesPost(currentPost.id);
+
+      emit(HomePostsState(posts: _cachedPosts!));
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
   }
 
   Future<void> _onGetPosts(

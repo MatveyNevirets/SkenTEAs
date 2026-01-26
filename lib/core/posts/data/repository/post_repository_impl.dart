@@ -24,4 +24,13 @@ class PostsRepositoryImpl implements PostsRepository {
       throw Exception("$e StackTrace: $stack");
     }
   }
+
+  @override
+  Future<void> changeLikesPost(String postId) async {
+    try {
+      await postDatasource.changeLikesPost(postId);
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
+  }
 }

@@ -19,9 +19,11 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 class ListPostsDto extends $pb.GeneratedMessage {
   factory ListPostsDto({
     $core.Iterable<PostDto>? posts,
+    $core.Iterable<LikedPostsDto>? likedPosts,
   }) {
     final result = create();
     if (posts != null) result.posts.addAll(posts);
+    if (likedPosts != null) result.likedPosts.addAll(likedPosts);
     return result;
   }
 
@@ -39,6 +41,8 @@ class ListPostsDto extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..pPM<PostDto>(1, _omitFieldNames ? '' : 'posts',
         subBuilder: PostDto.create)
+    ..pPM<LikedPostsDto>(2, _omitFieldNames ? '' : 'likedPosts',
+        protoName: 'likedPosts', subBuilder: LikedPostsDto.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -62,11 +66,111 @@ class ListPostsDto extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $pb.PbList<PostDto> get posts => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<LikedPostsDto> get likedPosts => $_getList(1);
 }
 
-enum PostDto_IdOptional { id, authorId, notSet }
+class ListCommentsDto extends $pb.GeneratedMessage {
+  factory ListCommentsDto({
+    $core.Iterable<CommentDto>? comments,
+  }) {
+    final result = create();
+    if (comments != null) result.comments.addAll(comments);
+    return result;
+  }
 
-enum PostDto_LikesOptional { likes, notSet }
+  ListCommentsDto._();
+
+  factory ListCommentsDto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListCommentsDto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ListCommentsDto',
+      createEmptyInstance: create)
+    ..pPM<CommentDto>(1, _omitFieldNames ? '' : 'comments',
+        subBuilder: CommentDto.create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListCommentsDto clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ListCommentsDto copyWith(void Function(ListCommentsDto) updates) =>
+      super.copyWith((message) => updates(message as ListCommentsDto))
+          as ListCommentsDto;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListCommentsDto create() => ListCommentsDto._();
+  @$core.override
+  ListCommentsDto createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static ListCommentsDto getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ListCommentsDto>(create);
+  static ListCommentsDto? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<CommentDto> get comments => $_getList(0);
+}
+
+class LikedPostsDto extends $pb.GeneratedMessage {
+  factory LikedPostsDto({
+    $core.String? postId,
+  }) {
+    final result = create();
+    if (postId != null) result.postId = postId;
+    return result;
+  }
+
+  LikedPostsDto._();
+
+  factory LikedPostsDto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory LikedPostsDto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'LikedPostsDto',
+      createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'postId')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  LikedPostsDto clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  LikedPostsDto copyWith(void Function(LikedPostsDto) updates) =>
+      super.copyWith((message) => updates(message as LikedPostsDto))
+          as LikedPostsDto;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LikedPostsDto create() => LikedPostsDto._();
+  @$core.override
+  LikedPostsDto createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static LikedPostsDto getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<LikedPostsDto>(create);
+  static LikedPostsDto? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get postId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set postId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasPostId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPostId() => $_clearField(1);
+}
 
 class PostDto extends $pb.GeneratedMessage {
   factory PostDto({
@@ -76,7 +180,7 @@ class PostDto extends $pb.GeneratedMessage {
     $core.String? description,
     $core.String? imagePath,
     $core.String? likes,
-    $core.Iterable<CommentDto>? comments,
+    $core.String? authorUsername,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -85,7 +189,7 @@ class PostDto extends $pb.GeneratedMessage {
     if (description != null) result.description = description;
     if (imagePath != null) result.imagePath = imagePath;
     if (likes != null) result.likes = likes;
-    if (comments != null) result.comments.addAll(comments);
+    if (authorUsername != null) result.authorUsername = authorUsername;
     return result;
   }
 
@@ -98,30 +202,16 @@ class PostDto extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static const $core.Map<$core.int, PostDto_IdOptional>
-      _PostDto_IdOptionalByTag = {
-    1: PostDto_IdOptional.id,
-    2: PostDto_IdOptional.authorId,
-    0: PostDto_IdOptional.notSet
-  };
-  static const $core.Map<$core.int, PostDto_LikesOptional>
-      _PostDto_LikesOptionalByTag = {
-    6: PostDto_LikesOptional.likes,
-    0: PostDto_LikesOptional.notSet
-  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PostDto',
       createEmptyInstance: create)
-    ..oo(0, [1, 2])
-    ..oo(1, [6])
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'authorId')
     ..aOS(3, _omitFieldNames ? '' : 'title')
     ..aOS(4, _omitFieldNames ? '' : 'description')
     ..aOS(5, _omitFieldNames ? '' : 'imagePath')
     ..aOS(6, _omitFieldNames ? '' : 'likes')
-    ..pPM<CommentDto>(7, _omitFieldNames ? '' : 'comments',
-        subBuilder: CommentDto.create)
+    ..aOS(7, _omitFieldNames ? '' : 'authorUsername')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -141,20 +231,6 @@ class PostDto extends $pb.GeneratedMessage {
   static PostDto getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PostDto>(create);
   static PostDto? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  @$pb.TagNumber(2)
-  PostDto_IdOptional whichIdOptional() =>
-      _PostDto_IdOptionalByTag[$_whichOneof(0)]!;
-  @$pb.TagNumber(1)
-  @$pb.TagNumber(2)
-  void clearIdOptional() => $_clearField($_whichOneof(0));
-
-  @$pb.TagNumber(6)
-  PostDto_LikesOptional whichLikesOptional() =>
-      _PostDto_LikesOptionalByTag[$_whichOneof(1)]!;
-  @$pb.TagNumber(6)
-  void clearLikesOptional() => $_clearField($_whichOneof(1));
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -211,7 +287,13 @@ class PostDto extends $pb.GeneratedMessage {
   void clearLikes() => $_clearField(6);
 
   @$pb.TagNumber(7)
-  $pb.PbList<CommentDto> get comments => $_getList(6);
+  $core.String get authorUsername => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set authorUsername($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasAuthorUsername() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearAuthorUsername() => $_clearField(7);
 }
 
 class ResponseDto extends $pb.GeneratedMessage {
@@ -267,20 +349,20 @@ class ResponseDto extends $pb.GeneratedMessage {
   void clearMessage() => $_clearField(1);
 }
 
-enum CommentDto_IdOptional { id, authorId, notSet }
-
 class CommentDto extends $pb.GeneratedMessage {
   factory CommentDto({
     $core.String? id,
     $core.String? authorId,
     $core.String? postId,
     $core.String? message,
+    $core.String? authorUsername,
   }) {
     final result = create();
     if (id != null) result.id = id;
     if (authorId != null) result.authorId = authorId;
     if (postId != null) result.postId = postId;
     if (message != null) result.message = message;
+    if (authorUsername != null) result.authorUsername = authorUsername;
     return result;
   }
 
@@ -293,20 +375,14 @@ class CommentDto extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(json, registry);
 
-  static const $core.Map<$core.int, CommentDto_IdOptional>
-      _CommentDto_IdOptionalByTag = {
-    1: CommentDto_IdOptional.id,
-    2: CommentDto_IdOptional.authorId,
-    0: CommentDto_IdOptional.notSet
-  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CommentDto',
       createEmptyInstance: create)
-    ..oo(0, [1, 2])
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'authorId')
     ..aOS(3, _omitFieldNames ? '' : 'postId')
     ..aOS(4, _omitFieldNames ? '' : 'message')
+    ..aOS(5, _omitFieldNames ? '' : 'authorUsername')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -326,14 +402,6 @@ class CommentDto extends $pb.GeneratedMessage {
   static CommentDto getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<CommentDto>(create);
   static CommentDto? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  @$pb.TagNumber(2)
-  CommentDto_IdOptional whichIdOptional() =>
-      _CommentDto_IdOptionalByTag[$_whichOneof(0)]!;
-  @$pb.TagNumber(1)
-  @$pb.TagNumber(2)
-  void clearIdOptional() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -370,6 +438,15 @@ class CommentDto extends $pb.GeneratedMessage {
   $core.bool hasMessage() => $_has(3);
   @$pb.TagNumber(4)
   void clearMessage() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get authorUsername => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set authorUsername($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasAuthorUsername() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearAuthorUsername() => $_clearField(5);
 }
 
 const $core.bool _omitFieldNames =

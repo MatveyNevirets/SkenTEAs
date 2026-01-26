@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:grpc/service_api.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
@@ -18,34 +20,69 @@ class ProdPostsDatasource implements PostsDatasource {
   @override
   Future<List<Post>> getPosts() async {
     try {
-      final listPostsDto = await postsRpcClient.fetchPosts(ResponseDto());
+      final token = await keyValueStorageRepository.readString(
+        dotenv.env['ACCESS_TOKEN_KEY']!,
+      );
+      log("token: ${token.toString()}");
+      final listPostsDto = await postsRpcClient.fetchPosts(
+        ResponseDto(),
+        options: token != null
+            ? CallOptions(metadata: {"accessToken": token})
+            : null,
+      );
 
-      final posts = listPostsDto.posts
-          .map(
-            (post) => Post(
-              authorUsername: "Some name",
-              title: post.title,
-              description: post.description,
-              imagePath: post.imagePath,
-              likes: int.tryParse(post.likes) ?? 0,
-              comments: post.comments
-                  .map(
-                    (comment) => Comment(
-                      id: int.tryParse(comment.id) ?? 0,
-                      authorUsername: "authorUsername",
-                      postId: int.tryParse(comment.postId) ?? 0,
-                      message: comment.message,
-                    ),
-                  )
-                  .toList(),
-            ),
-          )
-          .toList();
+      final posts = listPostsDto.posts.map((post) {
+        return Post(
+          id: post.id,
+          authorUsername: "Some name",
+          title: post.title,
+          description: post.description,
+          imagePath: post.imagePath,
+          likes: int.tryParse(post.likes) ?? 0,
+          comments: [],
+        );
+      }).toList();
 
-      return posts;
+      List<Post> filledPosts = [];
+
+      for (final post in posts) {
+        if (token != null) {
+          final likedPosts = listPostsDto.likedPosts;
+          log(likedPosts.toString());
+          for (LikedPostsDto likedPost in likedPosts) {
+            if (post.id == likedPost.postId) {
+              log("liked");
+              post.liked = true;
+              break;
+            }
+          }
+        }
+
+        post.comments = await fetchComments(post.id);
+        filledPosts.add(post);
+      }
+
+      return filledPosts;
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }
+  }
+
+  Future<List<Comment>> fetchComments(String postId) async {
+    final listCommentsDto = await postsRpcClient.fetchPostComments(
+      PostDto(id: postId),
+    );
+
+    return listCommentsDto.comments
+        .map(
+          (comment) => Comment(
+            id: int.parse(comment.id),
+            authorUsername: "authorUsername",
+            postId: int.parse(comment.postId),
+            message: comment.message,
+          ),
+        )
+        .toList();
   }
 
   @override
@@ -66,5 +103,17 @@ class ProdPostsDatasource implements PostsDatasource {
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }
+  }
+
+  @override
+  Future<void> changeLikesPost(String postId) async {
+    final token = await keyValueStorageRepository.readString(
+      dotenv.env['ACCESS_TOKEN_KEY']!,
+    );
+
+    await postsRpcClient.likePost(
+      PostDto(id: postId),
+      options: CallOptions(metadata: {"accessToken": token!}),
+    );
   }
 }

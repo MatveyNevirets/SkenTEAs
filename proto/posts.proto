@@ -7,26 +7,34 @@ service PostsRpc {
     rpc FetchUserPosts (ResponseDto) returns (ListPostsDto);
     rpc FetchPosts (ResponseDto) returns (ListPostsDto);
     rpc FetchPostDetails (PostDto) returns (PostDto);
+
+    rpc CommentPost(CommentDto) returns (ResponseDto);
+    rpc FetchPostComments(PostDto) returns (ListCommentsDto);
+    
+    rpc LikePost(PostDto) returns (ResponseDto);
 }
 
 message ListPostsDto {
     repeated PostDto posts = 1;
+    repeated LikedPostsDto likedPosts = 2;
+}
+
+message ListCommentsDto {
+    repeated CommentDto comments = 1;
+}
+
+message LikedPostsDto {
+    string post_id = 1;
 }
 
 message PostDto {
-    oneof id_optional {
-        string id = 1;
-        string author_id = 2;
-    }
+    string id = 1;
+    string author_id = 2;
     string title = 3;
     string description = 4;
     string image_path = 5;
-
-    oneof likes_optional {
-        string likes = 6;
-    }
-
-    repeated CommentDto comments = 7;
+    string likes = 6;
+    string author_username = 7;
 }
 
 message ResponseDto {
@@ -34,10 +42,9 @@ message ResponseDto {
 }
 
 message CommentDto {
-     oneof id_optional {
-        string id = 1;
-        string author_id = 2;
-    }
+    string id = 1;
+    string author_id = 2;
     string post_id = 3;
     string message = 4;
+    string author_username = 5;
 }

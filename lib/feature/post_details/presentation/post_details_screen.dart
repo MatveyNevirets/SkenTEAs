@@ -18,19 +18,11 @@ class PostDetailsScreen extends StatelessWidget {
           ClosableScreenSliverAppBar(
             title: Text("Комментарии", style: TextStyle(color: mainTextColor)),
           ),
-          SliverToBoxAdapter(
-            child: PostItem(
-              authorUsername: post.authorUsername,
-              title: post.title,
-              description: post.description,
-            ),
-          ),
+          SliverToBoxAdapter(child: PostItem(post: post)),
           SliverList.builder(
             itemCount: post.comments.length,
-            itemBuilder: (context, index) => CommentaryItem(
-              userName: post.comments[index].authorUsername,
-              commentary: post.comments[index].message,
-            ),
+            itemBuilder: (context, index) =>
+                CommentaryItem(comment: post.comments[index]),
           ),
         ],
       ),

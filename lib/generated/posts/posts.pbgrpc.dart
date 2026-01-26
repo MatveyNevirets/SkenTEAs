@@ -67,6 +67,27 @@ class PostsRpcClient extends $grpc.Client {
     return $createUnaryCall(_$fetchPostDetails, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.ResponseDto> commentPost(
+    $0.CommentDto request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$commentPost, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ListCommentsDto> fetchPostComments(
+    $0.PostDto request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$fetchPostComments, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ResponseDto> likePost(
+    $0.PostDto request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$likePost, request, options: options);
+  }
+
   // method descriptors
 
   static final _$insertPost = $grpc.ClientMethod<$0.PostDto, $0.ResponseDto>(
@@ -91,6 +112,20 @@ class PostsRpcClient extends $grpc.Client {
       '/PostsRpc/FetchPostDetails',
       ($0.PostDto value) => value.writeToBuffer(),
       $0.PostDto.fromBuffer);
+  static final _$commentPost =
+      $grpc.ClientMethod<$0.CommentDto, $0.ResponseDto>(
+          '/PostsRpc/CommentPost',
+          ($0.CommentDto value) => value.writeToBuffer(),
+          $0.ResponseDto.fromBuffer);
+  static final _$fetchPostComments =
+      $grpc.ClientMethod<$0.PostDto, $0.ListCommentsDto>(
+          '/PostsRpc/FetchPostComments',
+          ($0.PostDto value) => value.writeToBuffer(),
+          $0.ListCommentsDto.fromBuffer);
+  static final _$likePost = $grpc.ClientMethod<$0.PostDto, $0.ResponseDto>(
+      '/PostsRpc/LikePost',
+      ($0.PostDto value) => value.writeToBuffer(),
+      $0.ResponseDto.fromBuffer);
 }
 
 @$pb.GrpcServiceName('PostsRpc')
@@ -133,6 +168,27 @@ abstract class PostsRpcServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.PostDto.fromBuffer(value),
         ($0.PostDto value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CommentDto, $0.ResponseDto>(
+        'CommentPost',
+        commentPost_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.CommentDto.fromBuffer(value),
+        ($0.ResponseDto value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.PostDto, $0.ListCommentsDto>(
+        'FetchPostComments',
+        fetchPostComments_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.PostDto.fromBuffer(value),
+        ($0.ListCommentsDto value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.PostDto, $0.ResponseDto>(
+        'LikePost',
+        likePost_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.PostDto.fromBuffer(value),
+        ($0.ResponseDto value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.ResponseDto> insertPost_Pre(
@@ -173,5 +229,29 @@ abstract class PostsRpcServiceBase extends $grpc.Service {
   }
 
   $async.Future<$0.PostDto> fetchPostDetails(
+      $grpc.ServiceCall call, $0.PostDto request);
+
+  $async.Future<$0.ResponseDto> commentPost_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.CommentDto> $request) async {
+    return commentPost($call, await $request);
+  }
+
+  $async.Future<$0.ResponseDto> commentPost(
+      $grpc.ServiceCall call, $0.CommentDto request);
+
+  $async.Future<$0.ListCommentsDto> fetchPostComments_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.PostDto> $request) async {
+    return fetchPostComments($call, await $request);
+  }
+
+  $async.Future<$0.ListCommentsDto> fetchPostComments(
+      $grpc.ServiceCall call, $0.PostDto request);
+
+  $async.Future<$0.ResponseDto> likePost_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.PostDto> $request) async {
+    return likePost($call, await $request);
+  }
+
+  $async.Future<$0.ResponseDto> likePost(
       $grpc.ServiceCall call, $0.PostDto request);
 }

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
+import 'package:skenteas/core/posts/data/models/post.dart';
+import 'package:skenteas/feature/home/presentation/bloc/posts_bloc.dart';
 
 class PostItem extends StatelessWidget {
-  const PostItem({
-    super.key,
-    required this.authorUsername,
-    required this.title,
-    required this.description,
-  });
+  const PostItem({super.key, required this.post, this.index = 0});
 
-  final String authorUsername;
-  final String title;
-  final String description;
+  final Post post;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +37,7 @@ class PostItem extends StatelessWidget {
                 ), // Используем person вместо man
                 const SizedBox(width: 8),
                 Text(
-                  authorUsername,
+                  post.authorUsername,
                   style: TextStyle(
                     color: colorScheme.onPrimaryContainer,
                     fontSize: 16,
@@ -59,10 +56,10 @@ class PostItem extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Icon(
-                  Icons.favorite_border,
-                  size: 30,
-                  color: colorScheme.onPrimaryContainer,
+                BlocBuilder<PostsBloc, PostsState>(
+                  builder: (context, state) {
+                    return LikeWidget(index: index, post: post);
+                  },
                 ),
                 const SizedBox(width: 10),
                 Icon(
@@ -88,7 +85,7 @@ class PostItem extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              title,
+              post.title,
               style: TextStyle(
                 color: colorScheme.onPrimaryContainer,
                 fontSize: 20,
@@ -97,7 +94,7 @@ class PostItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              description,
+              post.description,
               style: TextStyle(
                 color: colorScheme.onPrimaryContainer,
                 fontSize: 14,
@@ -106,6 +103,33 @@ class PostItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class LikeWidget extends StatelessWidget {
+  const LikeWidget({super.key, required this.index, required this.post});
+
+  final int index;
+  final Post post;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final likes = post.likes;
+
+    return Row(
+      children: [
+        IconButton(
+          icon: post.liked
+              ? Icon(Icons.favorite, size: 30)
+              : Icon(Icons.favorite_border, size: 30),
+          onPressed: () =>
+              context.read<PostsBloc>().add(ChangeLikePostEvent(index: index)),
+          color: colorScheme.onPrimaryContainer,
+        ),
+        Text(post.liked ? (likes + 1).toString() : likes.toString()),
+      ],
     );
   }
 }

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:skenteas/core/consts/color_consts.dart';
+import 'package:skenteas/core/posts/data/models/comment.dart';
 
 class CommentaryItem extends StatelessWidget {
-  const CommentaryItem({
-    super.key,
-    required this.userName,
-    required this.commentary,
-  });
+  const CommentaryItem({super.key, required this.comment});
 
-  final String userName;
-  final String commentary;
+  final Comment comment;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +23,14 @@ class CommentaryItem extends StatelessWidget {
               const Icon(Icons.person, size: 40),
               const SizedBox(width: 8),
               Text(
-                userName,
+                comment.authorUsername,
                 style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ],
           ),
           const SizedBox(height: 12),
           Text(
-            commentary,
+            comment.message,
             style: TextStyle(color: mainTextColor, fontSize: 14),
             maxLines: null,
             softWrap: true,

@@ -64,11 +64,7 @@ class HomeScreen extends StatelessWidget {
                       "/home/post_details",
                       extra: state.posts[index],
                     ),
-                    child: PostItem(
-                      authorUsername: state.posts[index].authorUsername,
-                      title: state.posts[index].title,
-                      description: state.posts[index].description,
-                    ),
+                    child: PostItem(post: state.posts[index], index: index),
                   ),
                 );
               } else if (state is PostsErrorState) {

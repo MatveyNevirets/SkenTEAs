@@ -9,3 +9,8 @@ class TryCreatePostEvent extends PostsEvent {
   TryCreatePostEvent({required this.post});
   final Post post;
 }
+
+class ChangeLikePostEvent extends PostsEvent {
+  ChangeLikePostEvent({required this.index});
+  int index;
+}

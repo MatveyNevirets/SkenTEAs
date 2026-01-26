@@ -20,45 +20,74 @@ const ListPostsDto$json = {
   '1': 'ListPostsDto',
   '2': [
     {'1': 'posts', '3': 1, '4': 3, '5': 11, '6': '.PostDto', '10': 'posts'},
+    {
+      '1': 'likedPosts',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.LikedPostsDto',
+      '10': 'likedPosts'
+    },
   ],
 };
 
 /// Descriptor for `ListPostsDto`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listPostsDtoDescriptor = $convert.base64Decode(
-    'CgxMaXN0UG9zdHNEdG8SHgoFcG9zdHMYASADKAsyCC5Qb3N0RHRvUgVwb3N0cw==');
+    'CgxMaXN0UG9zdHNEdG8SHgoFcG9zdHMYASADKAsyCC5Qb3N0RHRvUgVwb3N0cxIuCgpsaWtlZF'
+    'Bvc3RzGAIgAygLMg4uTGlrZWRQb3N0c0R0b1IKbGlrZWRQb3N0cw==');
 
-@$core.Deprecated('Use postDtoDescriptor instead')
-const PostDto$json = {
-  '1': 'PostDto',
+@$core.Deprecated('Use listCommentsDtoDescriptor instead')
+const ListCommentsDto$json = {
+  '1': 'ListCommentsDto',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'id'},
-    {'1': 'author_id', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'authorId'},
-    {'1': 'title', '3': 3, '4': 1, '5': 9, '10': 'title'},
-    {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
-    {'1': 'image_path', '3': 5, '4': 1, '5': 9, '10': 'imagePath'},
-    {'1': 'likes', '3': 6, '4': 1, '5': 9, '9': 1, '10': 'likes'},
     {
       '1': 'comments',
-      '3': 7,
+      '3': 1,
       '4': 3,
       '5': 11,
       '6': '.CommentDto',
       '10': 'comments'
     },
   ],
-  '8': [
-    {'1': 'id_optional'},
-    {'1': 'likes_optional'},
+};
+
+/// Descriptor for `ListCommentsDto`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listCommentsDtoDescriptor = $convert.base64Decode(
+    'Cg9MaXN0Q29tbWVudHNEdG8SJwoIY29tbWVudHMYASADKAsyCy5Db21tZW50RHRvUghjb21tZW'
+    '50cw==');
+
+@$core.Deprecated('Use likedPostsDtoDescriptor instead')
+const LikedPostsDto$json = {
+  '1': 'LikedPostsDto',
+  '2': [
+    {'1': 'post_id', '3': 1, '4': 1, '5': 9, '10': 'postId'},
+  ],
+};
+
+/// Descriptor for `LikedPostsDto`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List likedPostsDtoDescriptor = $convert
+    .base64Decode('Cg1MaWtlZFBvc3RzRHRvEhcKB3Bvc3RfaWQYASABKAlSBnBvc3RJZA==');
+
+@$core.Deprecated('Use postDtoDescriptor instead')
+const PostDto$json = {
+  '1': 'PostDto',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'author_id', '3': 2, '4': 1, '5': 9, '10': 'authorId'},
+    {'1': 'title', '3': 3, '4': 1, '5': 9, '10': 'title'},
+    {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
+    {'1': 'image_path', '3': 5, '4': 1, '5': 9, '10': 'imagePath'},
+    {'1': 'likes', '3': 6, '4': 1, '5': 9, '10': 'likes'},
+    {'1': 'author_username', '3': 7, '4': 1, '5': 9, '10': 'authorUsername'},
   ],
 };
 
 /// Descriptor for `PostDto`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List postDtoDescriptor = $convert.base64Decode(
-    'CgdQb3N0RHRvEhAKAmlkGAEgASgJSABSAmlkEh0KCWF1dGhvcl9pZBgCIAEoCUgAUghhdXRob3'
-    'JJZBIUCgV0aXRsZRgDIAEoCVIFdGl0bGUSIAoLZGVzY3JpcHRpb24YBCABKAlSC2Rlc2NyaXB0'
-    'aW9uEh0KCmltYWdlX3BhdGgYBSABKAlSCWltYWdlUGF0aBIWCgVsaWtlcxgGIAEoCUgBUgVsaW'
-    'tlcxInCghjb21tZW50cxgHIAMoCzILLkNvbW1lbnREdG9SCGNvbW1lbnRzQg0KC2lkX29wdGlv'
-    'bmFsQhAKDmxpa2VzX29wdGlvbmFs');
+    'CgdQb3N0RHRvEg4KAmlkGAEgASgJUgJpZBIbCglhdXRob3JfaWQYAiABKAlSCGF1dGhvcklkEh'
+    'QKBXRpdGxlGAMgASgJUgV0aXRsZRIgCgtkZXNjcmlwdGlvbhgEIAEoCVILZGVzY3JpcHRpb24S'
+    'HQoKaW1hZ2VfcGF0aBgFIAEoCVIJaW1hZ2VQYXRoEhQKBWxpa2VzGAYgASgJUgVsaWtlcxInCg'
+    '9hdXRob3JfdXNlcm5hbWUYByABKAlSDmF1dGhvclVzZXJuYW1l');
 
 @$core.Deprecated('Use responseDtoDescriptor instead')
 const ResponseDto$json = {
@@ -76,18 +105,16 @@ final $typed_data.Uint8List responseDtoDescriptor = $convert
 const CommentDto$json = {
   '1': 'CommentDto',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'id'},
-    {'1': 'author_id', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'authorId'},
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'author_id', '3': 2, '4': 1, '5': 9, '10': 'authorId'},
     {'1': 'post_id', '3': 3, '4': 1, '5': 9, '10': 'postId'},
     {'1': 'message', '3': 4, '4': 1, '5': 9, '10': 'message'},
-  ],
-  '8': [
-    {'1': 'id_optional'},
+    {'1': 'author_username', '3': 5, '4': 1, '5': 9, '10': 'authorUsername'},
   ],
 };
 
 /// Descriptor for `CommentDto`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List commentDtoDescriptor = $convert.base64Decode(
-    'CgpDb21tZW50RHRvEhAKAmlkGAEgASgJSABSAmlkEh0KCWF1dGhvcl9pZBgCIAEoCUgAUghhdX'
-    'Rob3JJZBIXCgdwb3N0X2lkGAMgASgJUgZwb3N0SWQSGAoHbWVzc2FnZRgEIAEoCVIHbWVzc2Fn'
-    'ZUINCgtpZF9vcHRpb25hbA==');
+    'CgpDb21tZW50RHRvEg4KAmlkGAEgASgJUgJpZBIbCglhdXRob3JfaWQYAiABKAlSCGF1dGhvck'
+    'lkEhcKB3Bvc3RfaWQYAyABKAlSBnBvc3RJZBIYCgdtZXNzYWdlGAQgASgJUgdtZXNzYWdlEicK'
+    'D2F1dGhvcl91c2VybmFtZRgFIAEoCVIOYXV0aG9yVXNlcm5hbWU=');
