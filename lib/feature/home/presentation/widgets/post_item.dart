@@ -128,6 +128,8 @@ class LikeWidget extends StatelessWidget {
               context.read<PostsBloc>().add(ChangeLikePostEvent(index: index)),
           color: colorScheme.onPrimaryContainer,
         ),
+        // TODO: Here spawns the bug
+        // Just fix it. I haven't any time
         Text(post.liked ? (likes + 1).toString() : likes.toString()),
       ],
     );
