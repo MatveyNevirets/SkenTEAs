@@ -1,5 +1,5 @@
 import 'package:logger/logger.dart';
-import 'package:skenteas/feature/auth/data/datasource/auth_datasource.dart';
+import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
 
 class MockAuthDatabase implements AuthDatasource {
   String? token;

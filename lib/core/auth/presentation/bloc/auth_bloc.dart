@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
-import 'package:skenteas/feature/auth/domain/repository/auth_repository.dart';
+import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

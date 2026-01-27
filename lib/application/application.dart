@@ -4,8 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:skenteas/application/routes.dart';
 import 'package:skenteas/core/consts/app_themes.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
-import 'package:skenteas/feature/auth/domain/repository/auth_repository.dart';
-import 'package:skenteas/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
+import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
 
 class Application extends StatelessWidget {
   const Application({super.key});

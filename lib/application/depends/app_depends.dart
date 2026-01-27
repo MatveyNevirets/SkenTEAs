@@ -11,11 +11,11 @@ import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
 import 'package:skenteas/core/posts/data/datasource/prod_posts_datasource.dart';
 import 'package:skenteas/core/posts/data/repository/post_repository_impl.dart';
 import 'package:skenteas/core/posts/domain/repository/post_repository.dart';
-import 'package:skenteas/feature/auth/data/datasource/auth_datasource.dart';
-import 'package:skenteas/feature/auth/data/datasource/mock_auth_database.dart';
-import 'package:skenteas/feature/auth/data/datasource/prod_auth_datasource.dart';
-import 'package:skenteas/feature/auth/data/repository/auth_repository_impl.dart';
-import 'package:skenteas/feature/auth/domain/repository/auth_repository.dart';
+import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
+import 'package:skenteas/core/auth/data/datasource/mock_auth_database.dart';
+import 'package:skenteas/core/auth/data/datasource/prod_auth_datasource.dart';
+import 'package:skenteas/core/auth/data/repository/auth_repository_impl.dart';
+import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
 import 'package:skenteas/generated/auth/auth.pbgrpc.dart';
 import 'package:skenteas/generated/posts/posts.pbgrpc.dart';
 

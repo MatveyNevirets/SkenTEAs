@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/widgets/snackbar.dart';
-import 'package:skenteas/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

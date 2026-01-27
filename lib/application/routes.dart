@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
 import 'package:skenteas/core/posts/domain/repository/post_repository.dart';
-import 'package:skenteas/feature/auth/presentation/login_screen.dart';
+import 'package:skenteas/core/auth/presentation/login_screen.dart';
 import 'package:skenteas/feature/create_post/presentation/create_post_page.dart';
 import 'package:skenteas/feature/home/presentation/bloc/posts_bloc.dart';
 import 'package:skenteas/feature/home/presentation/home_page.dart';

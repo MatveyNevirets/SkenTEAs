@@ -1,4 +1,4 @@
-import 'package:skenteas/feature/auth/data/datasource/auth_datasource.dart';
+import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
 import 'package:skenteas/generated/auth/auth.pbgrpc.dart';
 
 class ProdAuthDatasource implements AuthDatasource {
