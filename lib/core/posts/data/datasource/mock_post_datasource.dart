@@ -70,4 +70,10 @@ class MockPostsDatasource implements PostsDatasource {
     final index = int.parse(postId);
     mockPosts[index].likes = mockPosts[index].likes + 1;
   }
+  
+  @override
+  Future<void> commentPost(String postId, String message) {
+    // TODO: implement commentPost
+    throw UnimplementedError();
+  }
 }

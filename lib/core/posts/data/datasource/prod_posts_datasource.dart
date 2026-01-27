@@ -23,7 +23,6 @@ class ProdPostsDatasource implements PostsDatasource {
       final token = await keyValueStorageRepository.readString(
         dotenv.env['ACCESS_TOKEN_KEY']!,
       );
-      log("token: ${token.toString()}");
       final listPostsDto = await postsRpcClient.fetchPosts(
         ResponseDto(),
         options: token != null
@@ -34,7 +33,7 @@ class ProdPostsDatasource implements PostsDatasource {
       final posts = listPostsDto.posts.map((post) {
         return Post(
           id: post.id,
-          authorUsername: "Some name",
+          authorUsername: post.authorUsername,
           title: post.title,
           description: post.description,
           imagePath: post.imagePath,
@@ -77,7 +76,7 @@ class ProdPostsDatasource implements PostsDatasource {
         .map(
           (comment) => Comment(
             id: int.parse(comment.id),
-            authorUsername: "authorUsername",
+            authorUsername: comment.authorUsername,
             postId: int.parse(comment.postId),
             message: comment.message,
           ),
@@ -113,6 +112,18 @@ class ProdPostsDatasource implements PostsDatasource {
 
     await postsRpcClient.likePost(
       PostDto(id: postId),
+      options: CallOptions(metadata: {"accessToken": token!}),
+    );
+  }
+
+  @override
+  Future<void> commentPost(String postId, String message) async {
+    final token = await keyValueStorageRepository.readString(
+      dotenv.env['ACCESS_TOKEN_KEY']!,
+    );
+
+    await postsRpcClient.commentPost(
+      CommentDto(postId: postId, message: message),
       options: CallOptions(metadata: {"accessToken": token!}),
     );
   }

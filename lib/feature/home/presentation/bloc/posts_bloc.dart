@@ -18,6 +18,22 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     on<GetPostsEvent>(_onGetPosts);
     on<TryCreatePostEvent>(_onTryCreatePost);
     on<ChangeLikePostEvent>(_onChangeLikePost);
+    on<SendCommentEvent>(_onSendComment);
+  }
+
+  Future<void> _onSendComment(
+    SendCommentEvent event,
+    Emitter<PostsState> emit,
+  ) async {
+    emit(PostsLoadingState());
+
+    await postsRepository.commentPost(event.postId, event.message);
+    _cachedPosts = null;
+
+    final posts = await postsRepository.getPosts();
+    _cachedPosts = posts;
+
+    emit(HomePostsState(posts: _cachedPosts!));
   }
 
   Future<void> _onChangeLikePost(

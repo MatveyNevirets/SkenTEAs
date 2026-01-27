@@ -129,7 +129,7 @@ class LikeWidget extends StatelessWidget {
           color: colorScheme.onPrimaryContainer,
         ),
         // TODO: Here spawns the bug
-        // Just fix it. I haven't any time
+        // Just fix it. I haven't any timea
         Text(post.liked ? (likes + 1).toString() : likes.toString()),
       ],
     );

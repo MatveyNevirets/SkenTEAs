@@ -19,3 +19,5 @@ class PostsErrorState extends PostsState {
 class CreatePostSuccessState extends PostsState {
   CreatePostSuccessState({required String message});
 }
+
+class CommentSentState extends PostsState {}

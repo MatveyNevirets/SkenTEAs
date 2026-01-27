@@ -33,4 +33,13 @@ class PostsRepositoryImpl implements PostsRepository {
       throw Exception("$e StackTrace: $stack");
     }
   }
+
+  @override
+  Future<void> commentPost(String postId, String message) async {
+    try {
+      await postDatasource.commentPost(postId, message);
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
+  }
 }

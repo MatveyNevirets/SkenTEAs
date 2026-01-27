@@ -27,7 +27,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<(String, String)> signUp(String email, String password, String username) async {
+  Future<(String, String)> signUp(
+    String email,
+    String password,
+    String username,
+  ) async {
     try {
       final tokens = await _authDatasource.signUp(email, password, username);
       return (tokens.$1, tokens.$2);

@@ -14,3 +14,8 @@ class ChangeLikePostEvent extends PostsEvent {
   ChangeLikePostEvent({required this.index});
   int index;
 }
+
+class SendCommentEvent extends PostsEvent {
+  SendCommentEvent({required this.postId, required this.message});
+  String postId, message;
+}

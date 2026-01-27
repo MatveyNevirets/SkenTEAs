@@ -55,14 +55,14 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           BlocBuilder<PostsBloc, PostsState>(
-            builder: (context, state) {
+            builder: (builderContext, state) {
               if (state is HomePostsState) {
                 return SliverList.builder(
                   itemCount: state.posts.length,
-                  itemBuilder: (context, index) => GestureDetector(
+                  itemBuilder: (itemContext, index) => GestureDetector(
                     onTap: () => context.go(
                       "/home/post_details",
-                      extra: state.posts[index],
+                      extra: [state.posts[index], index],
                     ),
                     child: PostItem(post: state.posts[index], index: index),
                   ),
