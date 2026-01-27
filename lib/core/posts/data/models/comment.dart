@@ -1,12 +1,13 @@
-class Comment {
-  final int id;
-  final int postId;
-  final String authorUsername, message;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Comment({
-    required this.id,
-    required this.authorUsername,
-    required this.postId,
-    required this.message,
-  });
+part 'comment.freezed.dart';
+
+@freezed
+abstract class Comment with _$Comment {
+  const factory Comment({
+    required int id,
+    required int postId,
+    required String authorUsername,
+    required String message,
+  }) = _Comment;
 }

@@ -27,6 +27,7 @@ class MockPostsDatasource implements PostsDatasource {
           message: "Тема, истину глаголишь!",
         ),
       ],
+      liked: false,
     ),
     Post(
       id: "1",
@@ -50,6 +51,7 @@ class MockPostsDatasource implements PostsDatasource {
           message: "Да как же это отлично! Я с Темой в марте еду!",
         ),
       ],
+      liked: false,
     ),
   ];
 

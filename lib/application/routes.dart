@@ -13,6 +13,7 @@ import 'package:skenteas/feature/home/presentation/bloc/posts_bloc.dart';
 import 'package:skenteas/feature/home/presentation/home_page.dart';
 import 'package:skenteas/feature/post_details/presentation/post_details_page.dart';
 import 'package:skenteas/feature/post_details/presentation/post_details_screen.dart';
+import 'package:skenteas/feature/profile/presentation/profile_page.dart';
 
 FutureOr<String?> _redirect(BuildContext context, GoRouterState state) {
   final currentLocation = state.matchedLocation;
@@ -44,11 +45,10 @@ final routerConfig = GoRouter(
             final post = data[0] as Post;
             final index = data[1] as int;
 
-            
-
             return PostDetailsPage(post: post, index: index);
           },
         ),
+        GoRoute(path: "/profile", builder: (context, state) => ProfilePage()),
         GoRoute(
           path: "/create_post",
           builder: (context, state) => CreatePostPage(),

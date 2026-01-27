@@ -39,26 +39,27 @@ class ProdPostsDatasource implements PostsDatasource {
           imagePath: post.imagePath,
           likes: int.tryParse(post.likes) ?? 0,
           comments: [],
+          liked: false,
         );
       }).toList();
 
       List<Post> filledPosts = [];
 
       for (final post in posts) {
+        Post newPost = post;
         if (token != null) {
           final likedPosts = listPostsDto.likedPosts;
           log(likedPosts.toString());
           for (LikedPostsDto likedPost in likedPosts) {
             if (post.id == likedPost.postId) {
-              log("liked");
-              post.liked = true;
+              newPost = post.copyWith(liked: true);
               break;
             }
           }
         }
 
-        post.comments = await fetchComments(post.id);
-        filledPosts.add(post);
+        newPost = post.copyWith(comments: await fetchComments(post.id));
+        filledPosts.add(newPost);
       }
 
       return filledPosts;

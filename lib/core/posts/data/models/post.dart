@@ -1,19 +1,18 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:skenteas/core/posts/data/models/comment.dart';
 
-class Post {
-  int likes;
-  final String id, authorUsername, title, description, imagePath;
-  bool liked;
-  List<Comment> comments;
+part 'post.freezed.dart';
 
-  Post({
-    this.id = "",
-    required this.authorUsername,
-    required this.title,
-    required this.description,
-    required this.imagePath,
-    required this.likes,
-    required this.comments,
-    this.liked = false,
-  });
+@freezed
+abstract class Post with _$Post {
+  const factory Post({
+    required String id,
+    required int likes,
+    required bool liked,
+    required List<Comment> comments,
+    required String authorUsername,
+    required String title,
+    required String description,
+    required String imagePath,
+  }) = _Post;
 }

@@ -45,8 +45,8 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
         throw Exception("Posts haven't been recieved");
       }
 
-      final currentPost = _cachedPosts![event.index];
-      currentPost.liked = !currentPost.liked;
+      final cachedPost = _cachedPosts![event.index];
+      final currentPost = cachedPost.copyWith(liked: !cachedPost.liked);
 
       _cachedPosts![event.index] = currentPost;
 

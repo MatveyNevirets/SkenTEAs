@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               padding: Theme.of(context).screenPadding,
               child: Center(
                 child: ElevatedButton(
-                  onPressed: () => context.go("/home/create_post"),
+                  onPressed: () => context.go("/home/profile"),
                   child: Text("Профиль"),
                 ),
               ),

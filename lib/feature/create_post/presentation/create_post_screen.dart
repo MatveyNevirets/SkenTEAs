@@ -72,6 +72,8 @@ class CreatePostScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         final post = Post(
+                          id: "",
+                          liked: false,
                           authorUsername: "authorUsername",
                           title: titleController.text,
                           description: descriptionController.text,
