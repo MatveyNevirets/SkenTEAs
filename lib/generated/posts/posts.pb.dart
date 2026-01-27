@@ -296,6 +296,42 @@ class PostDto extends $pb.GeneratedMessage {
   void clearAuthorUsername() => $_clearField(7);
 }
 
+class RequestDto extends $pb.GeneratedMessage {
+  factory RequestDto() => create();
+
+  RequestDto._();
+
+  factory RequestDto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RequestDto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'RequestDto',
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RequestDto clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  RequestDto copyWith(void Function(RequestDto) updates) =>
+      super.copyWith((message) => updates(message as RequestDto)) as RequestDto;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RequestDto create() => RequestDto._();
+  @$core.override
+  RequestDto createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static RequestDto getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<RequestDto>(create);
+  static RequestDto? _defaultInstance;
+}
+
 class ResponseDto extends $pb.GeneratedMessage {
   factory ResponseDto({
     $core.String? message,

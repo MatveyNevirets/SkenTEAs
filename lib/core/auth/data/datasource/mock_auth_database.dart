@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
+import 'package:skenteas/core/auth/data/models/user.dart';
 
 class MockAuthDatabase implements AuthDatasource {
   String? token;
@@ -35,5 +36,10 @@ class MockAuthDatabase implements AuthDatasource {
       Logger().d("All fields must be filled");
       return ("", "");
     }
+  }
+
+  @override
+  Future<User> fetchUser() async {
+    return User(id: 0, username: "Misha");
   }
 }

@@ -4,9 +4,8 @@ service PostsRpc {
     rpc InsertPost(PostDto) returns (ResponseDto);
     rpc DeletePost(PostDto) returns (ResponseDto);
 
-    rpc FetchUserPosts (ResponseDto) returns (ListPostsDto);
-    rpc FetchPosts (ResponseDto) returns (ListPostsDto);
-    rpc FetchPostDetails (PostDto) returns (PostDto);
+    rpc FetchUserPosts (RequestDto) returns (ListPostsDto);
+    rpc FetchPosts (RequestDto) returns (ListPostsDto);
 
     rpc CommentPost(CommentDto) returns (ResponseDto);
     rpc FetchPostComments(PostDto) returns (ListCommentsDto);
@@ -35,6 +34,9 @@ message PostDto {
     string image_path = 5;
     string likes = 6;
     string author_username = 7;
+}
+
+message RequestDto {
 }
 
 message ResponseDto {

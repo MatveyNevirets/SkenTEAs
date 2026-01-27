@@ -24,7 +24,7 @@ class ProdPostsDatasource implements PostsDatasource {
         dotenv.env['ACCESS_TOKEN_KEY']!,
       );
       final listPostsDto = await postsRpcClient.fetchPosts(
-        ResponseDto(),
+        RequestDto(),
         options: token != null
             ? CallOptions(metadata: {"accessToken": token})
             : null,

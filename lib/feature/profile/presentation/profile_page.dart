@@ -14,7 +14,8 @@ class ProfilePage extends StatelessWidget {
     final authRepository = getIt<AuthRepository>();
 
     return BlocProvider(
-      create: (context) => ProfileBloc(authRepository: authRepository),
+      create: (context) =>
+          ProfileBloc(authRepository: authRepository)..add(FetchUserEvent()),
       child: ProfileScreen(),
     );
   }

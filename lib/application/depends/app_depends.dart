@@ -155,7 +155,10 @@ class AppDepends {
     try {
       switch (appEnv) {
         case AppEnv.prod:
-          authDatasource = ProdAuthDatasource(client: getIt<AuthRpcClient>());
+          authDatasource = ProdAuthDatasource(
+            client: getIt<AuthRpcClient>(),
+            keyValueStorageRepository: getIt<KeyValueStorageRepository>(),
+          );
         case AppEnv.test:
           authDatasource = MockAuthDatabase();
       }
