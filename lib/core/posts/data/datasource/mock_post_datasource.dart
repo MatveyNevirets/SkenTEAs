@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
 import 'package:skenteas/core/posts/data/models/comment.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
@@ -67,13 +68,18 @@ class MockPostsDatasource implements PostsDatasource {
 
   @override
   Future<void> changeLikesPost(String postId) async {
-    final index = int.parse(postId);
-    mockPosts[index].likes = mockPosts[index].likes + 1;
+    Logger().d("Simulates of like or unlike the post with id: $postId");
   }
-  
+
   @override
-  Future<void> commentPost(String postId, String message) {
-    // TODO: implement commentPost
-    throw UnimplementedError();
+  Future<void> commentPost(String postId, String message) async {
+    mockPosts[int.parse(postId)].comments.add(
+      Comment(
+        id: 0,
+        authorUsername: "Ты",
+        postId: int.parse(postId),
+        message: message,
+      ),
+    );
   }
 }
