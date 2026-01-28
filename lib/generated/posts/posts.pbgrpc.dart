@@ -47,17 +47,24 @@ class PostsRpcClient extends $grpc.Client {
   }
 
   $grpc.ResponseFuture<$0.ListPostsDto> fetchUserPosts(
-    $0.RequestDto request, {
+    $0.ResponseDto request, {
     $grpc.CallOptions? options,
   }) {
     return $createUnaryCall(_$fetchUserPosts, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListPostsDto> fetchPosts(
-    $0.RequestDto request, {
+    $0.ResponseDto request, {
     $grpc.CallOptions? options,
   }) {
     return $createUnaryCall(_$fetchPosts, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.PostDto> fetchPostDetails(
+    $0.PostDto request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$fetchPostDetails, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ResponseDto> commentPost(
@@ -92,15 +99,19 @@ class PostsRpcClient extends $grpc.Client {
       ($0.PostDto value) => value.writeToBuffer(),
       $0.ResponseDto.fromBuffer);
   static final _$fetchUserPosts =
-      $grpc.ClientMethod<$0.RequestDto, $0.ListPostsDto>(
+      $grpc.ClientMethod<$0.ResponseDto, $0.ListPostsDto>(
           '/PostsRpc/FetchUserPosts',
-          ($0.RequestDto value) => value.writeToBuffer(),
+          ($0.ResponseDto value) => value.writeToBuffer(),
           $0.ListPostsDto.fromBuffer);
   static final _$fetchPosts =
-      $grpc.ClientMethod<$0.RequestDto, $0.ListPostsDto>(
+      $grpc.ClientMethod<$0.ResponseDto, $0.ListPostsDto>(
           '/PostsRpc/FetchPosts',
-          ($0.RequestDto value) => value.writeToBuffer(),
+          ($0.ResponseDto value) => value.writeToBuffer(),
           $0.ListPostsDto.fromBuffer);
+  static final _$fetchPostDetails = $grpc.ClientMethod<$0.PostDto, $0.PostDto>(
+      '/PostsRpc/FetchPostDetails',
+      ($0.PostDto value) => value.writeToBuffer(),
+      $0.PostDto.fromBuffer);
   static final _$commentPost =
       $grpc.ClientMethod<$0.CommentDto, $0.ResponseDto>(
           '/PostsRpc/CommentPost',
@@ -136,20 +147,27 @@ abstract class PostsRpcServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.PostDto.fromBuffer(value),
         ($0.ResponseDto value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.RequestDto, $0.ListPostsDto>(
+    $addMethod($grpc.ServiceMethod<$0.ResponseDto, $0.ListPostsDto>(
         'FetchUserPosts',
         fetchUserPosts_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.RequestDto.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.ResponseDto.fromBuffer(value),
         ($0.ListPostsDto value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.RequestDto, $0.ListPostsDto>(
+    $addMethod($grpc.ServiceMethod<$0.ResponseDto, $0.ListPostsDto>(
         'FetchPosts',
         fetchPosts_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.RequestDto.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.ResponseDto.fromBuffer(value),
         ($0.ListPostsDto value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.PostDto, $0.PostDto>(
+        'FetchPostDetails',
+        fetchPostDetails_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.PostDto.fromBuffer(value),
+        ($0.PostDto value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.CommentDto, $0.ResponseDto>(
         'CommentPost',
         commentPost_Pre,
@@ -190,20 +208,28 @@ abstract class PostsRpcServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.PostDto request);
 
   $async.Future<$0.ListPostsDto> fetchUserPosts_Pre(
-      $grpc.ServiceCall $call, $async.Future<$0.RequestDto> $request) async {
+      $grpc.ServiceCall $call, $async.Future<$0.ResponseDto> $request) async {
     return fetchUserPosts($call, await $request);
   }
 
   $async.Future<$0.ListPostsDto> fetchUserPosts(
-      $grpc.ServiceCall call, $0.RequestDto request);
+      $grpc.ServiceCall call, $0.ResponseDto request);
 
   $async.Future<$0.ListPostsDto> fetchPosts_Pre(
-      $grpc.ServiceCall $call, $async.Future<$0.RequestDto> $request) async {
+      $grpc.ServiceCall $call, $async.Future<$0.ResponseDto> $request) async {
     return fetchPosts($call, await $request);
   }
 
   $async.Future<$0.ListPostsDto> fetchPosts(
-      $grpc.ServiceCall call, $0.RequestDto request);
+      $grpc.ServiceCall call, $0.ResponseDto request);
+
+  $async.Future<$0.PostDto> fetchPostDetails_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.PostDto> $request) async {
+    return fetchPostDetails($call, await $request);
+  }
+
+  $async.Future<$0.PostDto> fetchPostDetails(
+      $grpc.ServiceCall call, $0.PostDto request);
 
   $async.Future<$0.ResponseDto> commentPost_Pre(
       $grpc.ServiceCall $call, $async.Future<$0.CommentDto> $request) async {

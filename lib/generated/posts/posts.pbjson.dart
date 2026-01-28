@@ -89,15 +89,6 @@ final $typed_data.Uint8List postDtoDescriptor = $convert.base64Decode(
     'HQoKaW1hZ2VfcGF0aBgFIAEoCVIJaW1hZ2VQYXRoEhQKBWxpa2VzGAYgASgJUgVsaWtlcxInCg'
     '9hdXRob3JfdXNlcm5hbWUYByABKAlSDmF1dGhvclVzZXJuYW1l');
 
-@$core.Deprecated('Use requestDtoDescriptor instead')
-const RequestDto$json = {
-  '1': 'RequestDto',
-};
-
-/// Descriptor for `RequestDto`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List requestDtoDescriptor =
-    $convert.base64Decode('CgpSZXF1ZXN0RHRv');
-
 @$core.Deprecated('Use responseDtoDescriptor instead')
 const ResponseDto$json = {
   '1': 'ResponseDto',
