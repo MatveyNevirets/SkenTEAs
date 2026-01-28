@@ -243,5 +243,5 @@ class AppDepends {
 }
 
 int countProgress(int currentValue, int length) {
-  return (((currentValue + 1) * 100) / length).toInt();
+  return ((currentValue * 100) / length).toInt();
 }
