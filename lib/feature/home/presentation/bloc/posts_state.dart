@@ -11,6 +11,8 @@ class HomePostsState extends PostsState {
   List<Post> posts;
 }
 
+class SignInDialogState extends PostsState {}
+
 class PostsErrorState extends PostsState {
   String message;
   PostsErrorState({required this.message});

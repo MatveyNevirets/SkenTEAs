@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
+import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
+import 'package:skenteas/core/widgets/must_sign_in_dialog_widget.dart';
 import 'package:skenteas/feature/home/presentation/bloc/posts_bloc.dart';
 
 class PostItem extends StatelessWidget {

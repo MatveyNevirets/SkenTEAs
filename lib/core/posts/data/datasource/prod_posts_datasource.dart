@@ -106,15 +106,21 @@ class ProdPostsDatasource implements PostsDatasource {
   }
 
   @override
-  Future<void> changeLikesPost(String postId) async {
+  Future<bool> changeLikesPost(String postId) async {
     final token = await keyValueStorageRepository.readString(
       dotenv.env['ACCESS_TOKEN_KEY']!,
     );
 
+    if (token == null) {
+      return false;
+    }
+
     await postsRpcClient.likePost(
       PostDto(id: postId),
-      options: CallOptions(metadata: {"accessToken": token!}),
+      options: CallOptions(metadata: {"accessToken": token}),
     );
+
+    return true;
   }
 
   @override

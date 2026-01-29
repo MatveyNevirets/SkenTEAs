@@ -69,8 +69,9 @@ class MockPostsDatasource implements PostsDatasource {
   }
 
   @override
-  Future<void> changeLikesPost(String postId) async {
+  Future<bool> changeLikesPost(String postId) async {
     Logger().d("Simulates of like or unlike the post with id: $postId");
+    return true;
   }
 
   @override

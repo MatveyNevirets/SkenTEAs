@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/extensions/theme_extensions.dart';
 import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
+import 'package:skenteas/core/widgets/must_sign_in_dialog_widget.dart';
 import 'package:skenteas/feature/home/presentation/bloc/posts_bloc.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/home/presentation/widgets/tabs_panel.dart';
@@ -66,7 +67,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          BlocBuilder<PostsBloc, PostsState>(
+          BlocConsumer<PostsBloc, PostsState>(
             builder: (builderContext, state) {
               if (state is HomePostsState) {
                 return SliverList.builder(
@@ -88,6 +89,15 @@ class HomeScreen extends StatelessWidget {
               return SliverToBoxAdapter(
                 child: Center(child: CircularProgressIndicator()),
               );
+            },
+            listener: (BuildContext context, PostsState state) {
+              if (state is SignInDialogState) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext dialogContext) =>
+                      MustSignInDialogWidget(dialogContext: dialogContext),
+                );
+              }
             },
           ),
         ],

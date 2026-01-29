@@ -48,11 +48,15 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       final cachedPost = _cachedPosts![event.index];
       final currentPost = cachedPost.copyWith(liked: !cachedPost.liked);
 
-      _cachedPosts![event.index] = currentPost;
+      final result = await postsRepository.changeLikesPost(currentPost.id);
 
-      await postsRepository.changeLikesPost(currentPost.id);
-
-      emit(HomePostsState(posts: _cachedPosts!));
+      if (result) {
+        _cachedPosts![event.index] = currentPost;
+        emit(HomePostsState(posts: _cachedPosts!));
+      } else {
+        emit(SignInDialogState());
+        emit(HomePostsState(posts: _cachedPosts!));
+      }
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }
