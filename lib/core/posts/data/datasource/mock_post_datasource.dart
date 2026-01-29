@@ -75,7 +75,7 @@ class MockPostsDatasource implements PostsDatasource {
   }
 
   @override
-  Future<void> commentPost(String postId, String message) async {
+  Future<bool> commentPost(String postId, String message) async {
     mockPosts[int.parse(postId)].comments.add(
       Comment(
         id: 0,
@@ -84,5 +84,6 @@ class MockPostsDatasource implements PostsDatasource {
         message: message,
       ),
     );
+    return true;
   }
 }

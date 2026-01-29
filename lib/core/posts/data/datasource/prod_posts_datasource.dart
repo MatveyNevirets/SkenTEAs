@@ -124,14 +124,20 @@ class ProdPostsDatasource implements PostsDatasource {
   }
 
   @override
-  Future<void> commentPost(String postId, String message) async {
+  Future<bool> commentPost(String postId, String message) async {
     final token = await keyValueStorageRepository.readString(
       dotenv.env['ACCESS_TOKEN_KEY']!,
     );
 
+    if (token == null) {
+      return false;
+    }
+
     await postsRpcClient.commentPost(
       CommentDto(postId: postId, message: message),
-      options: CallOptions(metadata: {"accessToken": token!}),
+      options: CallOptions(metadata: {"accessToken": token}),
     );
+
+    return true;
   }
 }
