@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
@@ -13,9 +15,10 @@ import 'package:skenteas/core/posts/data/repository/post_repository_impl.dart';
 import 'package:skenteas/core/posts/domain/repository/post_repository.dart';
 import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
 import 'package:skenteas/core/auth/data/datasource/mock_auth_database.dart';
-import 'package:skenteas/core/auth/data/datasource/prod_auth_datasource.dart';
+import 'package:skenteas/core/auth/data/datasource/firebase_auth_datasource.dart';
 import 'package:skenteas/core/auth/data/repository/auth_repository_impl.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
+import 'package:skenteas/firebase_options.dart';
 import 'package:skenteas/generated/auth/auth.pbgrpc.dart';
 import 'package:skenteas/generated/posts/posts.pbgrpc.dart';
 
@@ -24,6 +27,7 @@ typedef OnError = void Function(Object? error, StackTrace stack);
 
 enum DependsEnum {
   envFile,
+  firebaseInit,
   keyValueDatasource,
   keyValueRepository,
   authRpcClient,
@@ -46,6 +50,9 @@ class AppDepends {
   late final PostsRepository postsRepository;
   final getIt = GetIt.I;
 
+  // Develop enviroment
+  bool useEmulator = false;
+
   AppDepends(this.appEnv);
 
   Future<void> initDepends({
@@ -63,6 +70,31 @@ class AppDepends {
       );
     } on Object catch (e, stack) {
       onError(e, stack);
+    }
+
+    /// ---
+    ///  Fireabase initializing
+    /// ---
+    if (appEnv == AppEnv.prod) {
+      try {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+
+        if (useEmulator) {
+          await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
+        }
+        onProgress(
+          DependsEnum.firebaseInit.toString(),
+          countProgress(
+            DependsEnum.firebaseInit.index,
+            DependsEnum.values.length,
+          ),
+        );
+      } on Object catch (e, stack) {
+        onError(e, stack);
+        throw Exception("$e StackTrace: $stack");
+      }
     }
 
     /// ---
@@ -155,7 +187,9 @@ class AppDepends {
     try {
       switch (appEnv) {
         case AppEnv.prod:
-          authDatasource = ProdAuthDatasource(client: getIt<AuthRpcClient>());
+          authDatasource = FirebaseAuthDatasource(
+            client: getIt<AuthRpcClient>(),
+          );
         case AppEnv.test:
           authDatasource = MockAuthDatabase();
       }

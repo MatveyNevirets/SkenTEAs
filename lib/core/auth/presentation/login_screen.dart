@@ -55,6 +55,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: Text("Зарегестрироваться"),
                 ),
+                Text("С помощью гугла"),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.accessibility_new),
+                ),
               ],
             );
           } else {

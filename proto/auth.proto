@@ -5,6 +5,7 @@ service AuthRpc {
     rpc SignUp(UserDto) returns (TokensDto);
     rpc RefreshTokens(TokensDto) returns (TokensDto);
     rpc FetchUser(RequestDto) returns (UserDto);
+    rpc UpdateUser(UserDto) returns (UserDto);
 }
 
 message UserDto{
