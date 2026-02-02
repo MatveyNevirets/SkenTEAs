@@ -42,7 +42,7 @@ class CreatePostScreen extends StatelessWidget {
                           width: 200,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            color: panelColor,
+                            color: obsoleteSecondaryColor,
                           ),
                           child: Center(
                             child: Text(
@@ -57,7 +57,7 @@ class CreatePostScreen extends StatelessWidget {
                     Container(
                       height: 250,
                       width: double.infinity,
-                      color: secondaryColor,
+                      color: obsoleteSecondaryColor,
                     ),
                     Text("Заголовок"),
                     SizedBox(

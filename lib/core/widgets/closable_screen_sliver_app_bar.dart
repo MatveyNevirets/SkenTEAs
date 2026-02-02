@@ -10,7 +10,7 @@ class ClosableScreenSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      backgroundColor: panelColor,
+      backgroundColor: obsoletePanelColor,
       title: title,
     );
   }
