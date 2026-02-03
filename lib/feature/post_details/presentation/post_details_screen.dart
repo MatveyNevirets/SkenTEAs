@@ -1,9 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skenteas/core/consts/color_consts.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
 import 'package:skenteas/core/widgets/closable_screen_sliver_app_bar.dart';
-import 'package:skenteas/core/widgets/must_sign_in_dialog_widget.dart';
 import 'package:skenteas/feature/home/presentation/bloc/posts_bloc.dart';
 import 'package:skenteas/feature/home/presentation/widgets/post_item.dart';
 import 'package:skenteas/feature/post_details/presentation/widgets/commentary_item.dart';
@@ -58,7 +58,7 @@ class PostDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          BlocConsumer<PostsBloc, PostsState>(
+          BlocBuilder<PostsBloc, PostsState>(
             builder: (context, state) {
               if (state is HomePostsState) {
                 return SliverList.builder(
@@ -70,15 +70,6 @@ class PostDetailsScreen extends StatelessWidget {
               }
               // TODO: Normal circular indicator
               return SliverToBoxAdapter(child: CircularProgressIndicator());
-            },
-            listener: (BuildContext context, PostsState state) {
-              if (state is SignInDialogState) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext dialogContext) =>
-                      MustSignInDialogWidget(dialogContext: dialogContext),
-                );
-              }
             },
           ),
         ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-// ignore: must_be_immutable
 class MustSignInDialogWidget extends StatelessWidget {
   MustSignInDialogWidget({required this.dialogContext, super.key});
 

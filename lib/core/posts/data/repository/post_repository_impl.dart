@@ -28,16 +28,17 @@ class PostsRepositoryImpl implements PostsRepository {
   @override
   Future<bool> changeLikesPost(String postId) async {
     try {
-      return await postDatasource.changeLikesPost(postId);
+    final result =  await postDatasource.changeLikesPost(postId);
+    return result;
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }
   }
 
   @override
-  Future<bool> commentPost(String postId, String message) async {
+  Future<void> commentPost(String postId, String message) async {
     try {
-      return await postDatasource.commentPost(postId, message);
+      await postDatasource.commentPost(postId, message);
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }

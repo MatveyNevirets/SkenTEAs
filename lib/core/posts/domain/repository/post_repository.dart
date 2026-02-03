@@ -4,5 +4,5 @@ abstract class PostsRepository {
   Future<List<Post>> getPosts();
   Future<void> insertPost(Post post);
   Future<bool> changeLikesPost(String postId);
-  Future<bool> commentPost(String postId, String message);
+  Future<void> commentPost(String postId, String message);
 }

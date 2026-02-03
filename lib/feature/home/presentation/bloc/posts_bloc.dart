@@ -27,22 +27,13 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   ) async {
     emit(PostsLoadingState());
 
-    final result = await postsRepository.commentPost(
-      event.postId,
-      event.message,
-    );
+    await postsRepository.commentPost(event.postId, event.message);
+    _cachedPosts = null;
 
-    if (result) {
-      _cachedPosts = null;
+    final posts = await postsRepository.getPosts();
+    _cachedPosts = posts;
 
-      final posts = await postsRepository.getPosts();
-      _cachedPosts = posts;
-
-      emit(HomePostsState(posts: _cachedPosts!));
-    } else {
-      emit(SignInDialogState());
-      emit(HomePostsState(posts: _cachedPosts!));
-    }
+    emit(HomePostsState(posts: _cachedPosts!));
   }
 
   Future<void> _onChangeLikePost(
