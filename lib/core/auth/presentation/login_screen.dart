@@ -106,16 +106,21 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        ElevatedButton(
-                          onPressed: () => context.read<AuthBloc>().add(
+                        SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () => context.read<AuthBloc>().add(
                             AuthSignUpEvent(
                               email: loginController.text,
                               password: passwordController.text,
                               username: usernameController.text,
                             ),
                           ),
-                          child: Text("Зарегестрироваться"),
+                          child: Text(
+                            "Зарегестрироваться (как кнопка)",
+                            style: TextStyle(color: Colors.green),
+                          ),
                         ),
+
                         Text("С помощью гугла"),
                         IconButton(
                           onPressed: () {},
