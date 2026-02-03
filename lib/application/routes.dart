@@ -25,7 +25,7 @@ FutureOr<String?> _redirect(BuildContext context, GoRouterState state) {
 
 final routerConfig = GoRouter(
   redirect: _redirect,
-  initialLocation: "/home",
+  initialLocation: "/auth",
   routes: [
     GoRoute(path: "/auth", builder: (context, state) => LoginScreen()),
     GoRoute(

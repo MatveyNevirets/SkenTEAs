@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skenteas/core/consts/color_consts.dart';
 import 'package:skenteas/core/widgets/snackbar.dart';
 import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
 
@@ -14,6 +15,33 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mainBgColor,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(150),
+        child: Container(
+          decoration: BoxDecoration(
+            color: secondaryHighlightedColor,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(26),
+              bottomRight: Radius.circular(26),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                "Регистрация",
+                style: TextStyle(
+                  fontSize: 32,
+                  color: mainTextColor,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthenticatedState) {
@@ -25,49 +53,114 @@ class LoginScreen extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is UnauthenticatedState) {
-            // TODO: Redesigned to the normal unauth screen
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Логин"),
-                TextField(controller: loginController),
-                Text("Пароль"),
-                TextField(controller: passwordController),
-                Text("Никнейм"),
-                TextField(controller: usernameController),
-                ElevatedButton(
-                  onPressed: () => context.read<AuthBloc>().add(
-                    AuthSignInEvent(
-                      email: loginController.text,
-                      password: passwordController.text,
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(left: 80, right: 80),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 700),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: 50),
+                        _buildInputField(
+                          context: context,
+                          controller: loginController,
+                          hintText: "Введите почту",
+                        ),
+                        SizedBox(height: 25),
+                        _buildInputField(
+                          context: context,
+                          controller: passwordController,
+                          hintText: "Введите пароль",
+                        ),
+                        SizedBox(height: 25),
+                        _buildInputField(
+                          context: context,
+                          controller: usernameController,
+                          hintText: "Введите никнейм",
+                        ),
+                        SizedBox(height: 50),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: secondaryHighlightedColor,
+                            foregroundColor: mainTextColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 18),
+                          ),
+                          onPressed: () => context.read<AuthBloc>().add(
+                            AuthSignInEvent(
+                              email: loginController.text,
+                              password: passwordController.text,
+                            ),
+                          ),
+                          child: Text(
+                            "Войти",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: mainTextColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => context.read<AuthBloc>().add(
+                            AuthSignUpEvent(
+                              email: loginController.text,
+                              password: passwordController.text,
+                              username: usernameController.text,
+                            ),
+                          ),
+                          child: Text("Зарегестрироваться"),
+                        ),
+                        Text("С помощью гугла"),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.accessibility_new),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Text("Войти"),
                 ),
-                ElevatedButton(
-                  onPressed: () => context.read<AuthBloc>().add(
-                    AuthSignUpEvent(
-                      email: loginController.text,
-                      password: passwordController.text,
-                      username: usernameController.text,
-                    ),
-                  ),
-                  child: Text("Зарегестрироваться"),
-                ),
-                Text("С помощью гугла"),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.accessibility_new),
-                ),
-              ],
+              ),
             );
           } else {
-            // TODO: Redesigned to the normal progress indicator
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: CircularProgressIndicator(color: mainHighlightedColor),
+            );
           }
         },
       ),
     );
   }
+}
+
+// TODO: Move this input field in /core
+Widget _buildInputField({
+  required BuildContext context,
+  required TextEditingController controller,
+  required String hintText,
+}) {
+  return Container(
+    height: 50,
+    decoration: BoxDecoration(
+      color: secondaryBgColor,
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(color: dividerColor, width: 2.5),
+    ),
+    child: TextField(
+      controller: controller,
+      style: TextStyle(color: mainTextColor, fontSize: 16),
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: TextStyle(color: mainTextColor, fontSize: 16),
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        isDense: true,
+      ),
+    ),
+  );
 }

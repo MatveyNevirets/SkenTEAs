@@ -1,0 +1,36 @@
+* [33mf97ef26[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m Test login screen visual
+[31m|[m * [33m00d58c2[m[33m ([m[1;32mmain[m[33m)[m Test login screen visual
+[31m|[m[31m/[m  
+* [33m3b4c846[m Created feature with showing the dialog widget which offers logging into the account and while try to publish comment too
+* [33ma6ec39f[m Created feature: when you're try to like post without logging into the account showing dialog widget which offers login
+* [33m0af0c76[m Without some changes
+* [33m6a472b3[m Some bugs
+* [33m1547e2e[m The user model has been created and added for the profile feature
+* [33mf3cce99[m Models have been recreated using freezed
+* [33m2fb5bdf[m The auth feature has been relocated to the core folder
+* [33m4fa5187[m The mock version of application has been fixed
+* [33m025a269[m The correct username showing done
+* [33m216709e[m Done the likes system feature. Bug: when we restart the application, likes count are +1 (see it into the home/presentation/widgets/post_item.dart file)
+* [33mfb0252c[m Done the likes system feature. Bug: when we restart the application, likes count are +1 (see it into the home/presentation/widgets/post_item.dart file)
+* [33mac4e5fe[m The feature of publishing posts well done; Added try-catch blocks inside some code's blocs
+* [33m99d44e4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m The auth feature with sign up, sign in, logout methods that connected with the grpc backend has been created successfully
+* [33mfa678a8[m The prod auth feature has been connected
+* [33mcc073e3[m The fetchPosts method from the server has been implemented successful
+* [33m712cb73[m PostsRpc has been added into dependencies
+* [33mf6d9f06[m The feature of create posts done, but have the bug: data shows uncorrect after publishing the post
+* [33mc454500[m Showing comments of the post well done
+* [33mf6759b6[m Showing of posts with the mock posts datasource well done
+* [33m19bf2f6[m The authentication foundament screen has been created; The auth feature connected with mock datasource; The getPost of the  mock posts feature has been created
+* [33md6cf687[m The auth foundament has been created; Auth BLoC has been connected between the auth screen and the MockAuthDatasource; The routing system has been recreated: added the redirect function for auth logic
+* [33mffd52f3[m MockAuthDatasource has been created successful; Inserted into dependencies
+* [33m9c316e7[m Home screen changed to the new theme logic done
+* [33meee4709[m Theme variations what uses colorScheme has been created
+* [33m2375951[m Auth database and repositories has been created and inserted inside the application dependencies using GetIt
+* [33m7478138[m The routing has been created successfully; Redesigned the back button into the post details appbar
+* [33m7c7f195[m Create post screen
+* [33mb1fdc58[m Commentary screen
+* [33mf5f730e[m Post details error fixed
+* [33me7aca12[m Home screen implementation
+* [33md603d9d[m Home screen concept
+* [33m1fc46f1[m Created: Folder structure; AppEnvs and Runner
+* [33m04c5af0[m Initial commit

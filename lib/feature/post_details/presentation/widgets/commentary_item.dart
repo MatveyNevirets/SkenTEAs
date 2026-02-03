@@ -11,7 +11,7 @@ class CommentaryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: secondaryPanelColor,
+      color: obsoleteSecondaryColor,
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -40,7 +40,7 @@ class CommentaryItem extends StatelessWidget {
               Spacer(),
               Text(
                 "1ч. назад",
-                style: TextStyle(fontSize: 16, color: secondaryColor),
+                style: TextStyle(fontSize: 16, color: obsoleteSecondaryColor),
               ),
             ],
           ),
