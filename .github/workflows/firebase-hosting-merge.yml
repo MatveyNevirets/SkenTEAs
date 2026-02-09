@@ -22,7 +22,7 @@ jobs:
 
      
       - name: Build Flutter for Web
-        run: flutter build web --release
+        run: flutter build web --release --target=lib/bin/prod_skenteas.dart
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
