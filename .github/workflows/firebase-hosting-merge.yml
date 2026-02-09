@@ -34,7 +34,8 @@ jobs:
             --dart-define=NGINX_PORT=${{ secrets.NGINX_PORT }} \
             --dart-define=ACCESS_TOKEN_KEY=$ACCESS_TOKEN_KEY \
             --dart-define=REFRESH_TOKEN_KEY=$REFRESH_TOKEN_KEY \
-            --dart-define=FIREBASE_CLIENT_ID=$FIREBASE_CLIENT_ID
+            --dart-define=FIREBASE_CLIENT_ID=$FIREBASE_CLIENT_ID \
+            --target=lib/bin/prod_skenteas.dart
             
       - name: Deploy to Firebase
         run: |
