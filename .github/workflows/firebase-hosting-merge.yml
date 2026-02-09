@@ -9,27 +9,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Загружаем код
+   
       - uses: actions/checkout@v4
 
-      # 2. Устанавливаем Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable' # Укажите нужную версию, например '3.22.2'
+          flutter-version: '3.38.5'
 
-      # 3. Устанавливаем зависимости Dart/Flutter
       - name: Install dependencies
         run: flutter pub get
 
-      # 4. Собираем проект для Web
+     
       - name: Build Flutter for Web
         run: flutter build web --release
 
-      # 5. Устанавливаем Firebase CLI
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      # 6. Деплой на Firebase Hosting
+
       - name: Deploy to Firebase
         run: firebase deploy --only hosting --project skenteas --token "${{ secrets.FIREBASE_DEPLOY_TOKEN }}"
