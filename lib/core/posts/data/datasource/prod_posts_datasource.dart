@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:grpc/service_api.dart';
+import 'package:skenteas/application/env.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
 import 'package:skenteas/core/posts/data/models/comment.dart';
@@ -21,7 +21,7 @@ class ProdPostsDatasource implements PostsDatasource {
   Future<List<Post>> getPosts() async {
     try {
       final token = await keyValueStorageRepository.readString(
-        dotenv.env['ACCESS_TOKEN_KEY']!,
+        Env.accessTokenKey,
       );
       final listPostsDto = await postsRpcClient.fetchPosts(
         ResponseDto(),
@@ -89,7 +89,7 @@ class ProdPostsDatasource implements PostsDatasource {
   Future<void> insertPost(Post post) async {
     try {
       final token = await keyValueStorageRepository.readString(
-        dotenv.env['ACCESS_TOKEN_KEY']!,
+        Env.accessTokenKey,
       );
 
       await postsRpcClient.insertPost(
@@ -108,7 +108,7 @@ class ProdPostsDatasource implements PostsDatasource {
   @override
   Future<bool> changeLikesPost(String postId) async {
     final token = await keyValueStorageRepository.readString(
-      dotenv.env['ACCESS_TOKEN_KEY']!,
+      Env.accessTokenKey,
     );
 
     if (token == null) {
@@ -126,7 +126,7 @@ class ProdPostsDatasource implements PostsDatasource {
   @override
   Future<void> commentPost(String postId, String message) async {
     final token = await keyValueStorageRepository.readString(
-      dotenv.env['ACCESS_TOKEN_KEY']!,
+      Env.accessTokenKey,
     );
 
     await postsRpcClient.commentPost(

@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
+import 'package:skenteas/application/env.dart';
 import 'package:skenteas/application/runner/app_env.dart';
 import 'package:skenteas/core/key_value_storage/data/datasource/key_value_datasource.dart';
 import 'package:skenteas/core/key_value_storage/data/datasource/shared_preferences_key_value_datasource.dart';
@@ -27,7 +27,6 @@ typedef OnProgress = void Function(String dependName, int progress);
 typedef OnError = void Function(Object? error, StackTrace stack);
 
 enum DependsEnum {
-  envFile,
   firebaseInit,
   keyValueDatasource,
   keyValueRepository,
@@ -62,20 +61,6 @@ class AppDepends {
     required OnProgress onProgress,
     required OnError onError,
   }) async {
-    /// ---
-    ///  Setups the .env depend
-    /// ---
-    try {
-      await dotenv.load(fileName: ".env");
-
-      onProgress(
-        DependsEnum.envFile.toString(),
-        countProgress(DependsEnum.envFile.index, DependsEnum.values.length),
-      );
-    } on Object catch (e, stack) {
-      onError(e, stack);
-    }
-
     /// ---
     ///  Fireabase initializing
     /// ---
@@ -143,7 +128,7 @@ class AppDepends {
 
     try {
       googleSignIn = GoogleSignIn.instance;
-      await googleSignIn.initialize(clientId: dotenv.env['CLIENT_ID']);
+      await googleSignIn.initialize(clientId: Env.firebaseClientId);
 
       getIt.registerSingleton<GoogleSignIn>(googleSignIn);
     } on Object catch (e, stack) {
@@ -155,8 +140,8 @@ class AppDepends {
     /// ---
     try {
       final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
-        host: dotenv.env['SERVICES_HOST']!,
-        port: int.parse(dotenv.env['NGINX_PORT']!),
+        host: Env.serverHost,
+        port: Env.nginxPort,
         transportSecure: false,
       );
 
@@ -178,8 +163,8 @@ class AppDepends {
     /// ---
     try {
       final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
-        host: dotenv.env['SERVICES_HOST']!,
-        port: int.parse(dotenv.env['NGINX_PORT']!),
+        host: Env.serverHost,
+        port: Env.nginxPort,
         transportSecure: false,
       );
 

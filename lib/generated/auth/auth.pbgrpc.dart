@@ -67,6 +67,13 @@ class AuthRpcClient extends $grpc.Client {
     return $createUnaryCall(_$updateUser, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.TokensDto> signInWithGoogle(
+    $0.UserDto request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createUnaryCall(_$signInWithGoogle, request, options: options);
+  }
+
   // method descriptors
 
   static final _$signIn = $grpc.ClientMethod<$0.UserDto, $0.TokensDto>(
@@ -89,6 +96,9 @@ class AuthRpcClient extends $grpc.Client {
       '/AuthRpc/UpdateUser',
       ($0.UserDto value) => value.writeToBuffer(),
       $0.UserDto.fromBuffer);
+  static final _$signInWithGoogle =
+      $grpc.ClientMethod<$0.UserDto, $0.TokensDto>('/AuthRpc/SignInWithGoogle',
+          ($0.UserDto value) => value.writeToBuffer(), $0.TokensDto.fromBuffer);
 }
 
 @$pb.GrpcServiceName('AuthRpc')
@@ -131,6 +141,13 @@ abstract class AuthRpcServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.UserDto.fromBuffer(value),
         ($0.UserDto value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.UserDto, $0.TokensDto>(
+        'SignInWithGoogle',
+        signInWithGoogle_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.UserDto.fromBuffer(value),
+        ($0.TokensDto value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.TokensDto> signIn_Pre(
@@ -171,5 +188,13 @@ abstract class AuthRpcServiceBase extends $grpc.Service {
   }
 
   $async.Future<$0.UserDto> updateUser(
+      $grpc.ServiceCall call, $0.UserDto request);
+
+  $async.Future<$0.TokensDto> signInWithGoogle_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.UserDto> $request) async {
+    return signInWithGoogle($call, await $request);
+  }
+
+  $async.Future<$0.TokensDto> signInWithGoogle(
       $grpc.ServiceCall call, $0.UserDto request);
 }

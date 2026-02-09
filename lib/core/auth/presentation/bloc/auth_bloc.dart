@@ -1,6 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:skenteas/application/env.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
@@ -33,11 +33,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final tokens = await authRepository.signInWithGoogle();
 
       await keyValueStorageRepository.write<String>(
-        dotenv.env['ACCESS_TOKEN_KEY']!,
+        Env.accessTokenKey,
         tokens.$1,
       );
       await keyValueStorageRepository.write<String>(
-        dotenv.env['REFRESH_TOKEN_KEY']!,
+        Env.refreshTokenKey,
         tokens.$2,
       );
 
@@ -54,7 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(AuthLoadingState());
     final token = await keyValueStorageRepository.readString(
-      dotenv.env['ACCESS_TOKEN_KEY']!,
+      Env.accessTokenKey,
     );
 
     if (token != null) {
@@ -68,8 +68,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoadingState());
       await authRepository.logout();
-      await keyValueStorageRepository.delete(dotenv.env['ACCESS_TOKEN_KEY']!);
-      await keyValueStorageRepository.delete(dotenv.env['REFRESH_TOKEN_KEY']!);
+      await keyValueStorageRepository.delete(Env.accessTokenKey);
+      await keyValueStorageRepository.delete(Env.refreshTokenKey);
       emit(UnauthenticatedState());
     } on Object catch (e, stack) {
       throw Exception("$e, StackTrace: $stack");
@@ -91,11 +91,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
 
         await keyValueStorageRepository.write<String>(
-          dotenv.env['ACCESS_TOKEN_KEY']!,
+          Env.accessTokenKey,
           tokens.$1,
         );
         await keyValueStorageRepository.write<String>(
-          dotenv.env['REFRESH_TOKEN_KEY']!,
+          Env.refreshTokenKey,
           tokens.$2,
         );
 
@@ -116,11 +116,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final tokens = await authRepository.signIn(event.email, event.password);
 
         await keyValueStorageRepository.write<String>(
-          dotenv.env['ACCESS_TOKEN_KEY']!,
+          Env.accessTokenKey,
           tokens.$1,
         );
         await keyValueStorageRepository.write<String>(
-          dotenv.env['REFRESH_TOKEN_KEY']!,
+          Env.refreshTokenKey,
           tokens.$2,
         );
 
