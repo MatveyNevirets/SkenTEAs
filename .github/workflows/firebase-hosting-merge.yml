@@ -35,7 +35,8 @@ jobs:
             --dart-define=ACCESS_TOKEN_KEY=$ACCESS_TOKEN_KEY \
             --dart-define=REFRESH_TOKEN_KEY=$REFRESH_TOKEN_KEY \
             --dart-define=FIREBASE_CLIENT_ID=$FIREBASE_CLIENT_ID \
-            --target=lib/bin/prod_skenteas.dart
+            --target=lib/bin/prod_skenteas.dart \
+            --no-wasm-dry-run
             
       - name: Deploy to Firebase
         run: |
