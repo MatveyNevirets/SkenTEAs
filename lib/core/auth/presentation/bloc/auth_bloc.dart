@@ -20,6 +20,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignInEvent>(_onSignIn);
     on<AuthLogoutEvent>(_onLogout);
     on<AuthCheckTokenEvent>(_onCheckToken);
+    on<AuthGoogleSignInEvent>(_onGoogleSignIn);
+  }
+
+  Future<void> _onGoogleSignIn(
+    AuthGoogleSignInEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      emit(AuthLoadingState());
+
+      final tokens = await authRepository.signInWithGoogle();
+
+      await keyValueStorageRepository.write<String>(
+        dotenv.env['ACCESS_TOKEN_KEY']!,
+        tokens.$1,
+      );
+      await keyValueStorageRepository.write<String>(
+        dotenv.env['REFRESH_TOKEN_KEY']!,
+        tokens.$2,
+      );
+
+      emit(AuthenticatedState());
+    } on Object catch (e, stack) {
+      emit(UnauthenticatedState(message: AppMessages.somethingWrong));
+      throw Exception("$e StackTrace: $stack");
+    }
   }
 
   Future<void> _onCheckToken(

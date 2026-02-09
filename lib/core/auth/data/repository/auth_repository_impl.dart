@@ -39,4 +39,14 @@ class AuthRepositoryImpl implements AuthRepository {
       throw Exception("$e StackTrace: $stack");
     }
   }
+
+  @override
+  Future<(String, String)> signInWithGoogle() async {
+    try {
+      final tokens = await _authDatasource.signInWithGoogle();
+      return (tokens.$1, tokens.$2);
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
+  }
 }

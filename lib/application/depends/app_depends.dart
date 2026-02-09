@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
 import 'package:skenteas/application/runner/app_env.dart';
 import 'package:skenteas/core/key_value_storage/data/datasource/key_value_datasource.dart';
@@ -30,6 +31,7 @@ enum DependsEnum {
   firebaseInit,
   keyValueDatasource,
   keyValueRepository,
+  googleSignIn,
   authRpcClient,
   postsRpcClient,
   authDatasource,
@@ -42,6 +44,7 @@ class AppDepends {
   final AppEnv appEnv;
   late final KeyValueDatasource keyValueDatasource;
   late final KeyValueStorageRepository keyValueStorageRepository;
+  late final GoogleSignIn googleSignIn;
   late final AuthRpcClient authRpcClient;
   late final PostsRpcClient postsRpcClient;
   late final AuthDatasource authDatasource;
@@ -64,6 +67,7 @@ class AppDepends {
     /// ---
     try {
       await dotenv.load(fileName: ".env");
+
       onProgress(
         DependsEnum.envFile.toString(),
         countProgress(DependsEnum.envFile.index, DependsEnum.values.length),
@@ -75,26 +79,24 @@ class AppDepends {
     /// ---
     ///  Fireabase initializing
     /// ---
-    if (appEnv == AppEnv.prod) {
-      try {
-        await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        );
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 
-        if (useEmulator) {
-          await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
-        }
-        onProgress(
-          DependsEnum.firebaseInit.toString(),
-          countProgress(
-            DependsEnum.firebaseInit.index,
-            DependsEnum.values.length,
-          ),
-        );
-      } on Object catch (e, stack) {
-        onError(e, stack);
-        throw Exception("$e StackTrace: $stack");
+      if (useEmulator) {
+        await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
       }
+      onProgress(
+        DependsEnum.firebaseInit.toString(),
+        countProgress(
+          DependsEnum.firebaseInit.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+      throw Exception("$e StackTrace: $stack");
     }
 
     /// ---
@@ -133,6 +135,19 @@ class AppDepends {
       );
     } on Object catch (e, stack) {
       onError(e, stack);
+    }
+
+    /// ---
+    ///   Setups the GoogleSignIn depend
+    /// ---
+
+    try {
+      googleSignIn = GoogleSignIn.instance;
+      await googleSignIn.initialize(clientId: dotenv.env['CLIENT_ID']);
+
+      getIt.registerSingleton<GoogleSignIn>(googleSignIn);
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
     }
 
     /// ---

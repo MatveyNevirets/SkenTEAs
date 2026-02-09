@@ -120,10 +120,16 @@ class LoginScreen extends StatelessWidget {
                             style: TextStyle(color: Colors.green),
                           ),
                         ),
+                        SizedBox(height: 20),
 
-                        Text("С помощью гугла"),
+                        Text(
+                          "Или с помощью гугла",
+                          style: TextStyle(color: Colors.lightGreen),
+                        ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => context.read<AuthBloc>().add(
+                            AuthGoogleSignInEvent(),
+                          ),
                           icon: Icon(Icons.accessibility_new),
                         ),
                       ],

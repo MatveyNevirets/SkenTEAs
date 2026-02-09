@@ -73,4 +73,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'skenteas.firebasestorage.app',
     measurementId: 'G-P5MRB8C59J',
   );
+
 }

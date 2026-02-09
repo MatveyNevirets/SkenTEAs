@@ -12,7 +12,20 @@
           "package_name": "com.example.skenteas"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "241361616971-qgci929068r3p7d08b59j1gif3q25tv8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.skenteas",
+            "certificate_hash": "d868b1517f742334c4df7bba1a8fe32d8d7138fe"
+          }
+        },
+        {
+          "client_id": "241361616971-2o5uhraqqs3gkbr9abj3lmdg18n380ci.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCRbgdEGn5Ghh61yDrjYlq9gxs4mIFoxcg"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241361616971-2o5uhraqqs3gkbr9abj3lmdg18n380ci.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

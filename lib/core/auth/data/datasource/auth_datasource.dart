@@ -5,5 +5,6 @@ abstract interface class AuthDatasource {
     String password,
     String username,
   );
+  Future<(String, String)> signInWithGoogle();
   Future<void> logout();
 }

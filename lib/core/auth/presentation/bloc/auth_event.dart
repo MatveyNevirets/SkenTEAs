@@ -12,6 +12,8 @@ class AuthSignUpEvent extends AuthEvent {
   });
 }
 
+class AuthGoogleSignInEvent extends AuthEvent {}
+
 class AuthSignInEvent extends AuthEvent {
   String email, password;
 

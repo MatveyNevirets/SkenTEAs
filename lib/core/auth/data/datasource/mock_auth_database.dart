@@ -36,4 +36,10 @@ class MockAuthDatabase implements AuthDatasource {
       return ("", "");
     }
   }
+
+  @override
+  Future<(String, String)> signInWithGoogle() async {
+    await Future.delayed(Duration(seconds: 2));
+    return ("", "");
+  }
 }
