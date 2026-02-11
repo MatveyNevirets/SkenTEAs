@@ -22,12 +22,14 @@ class UserDto extends $pb.GeneratedMessage {
     $core.String? username,
     $core.String? email,
     $core.String? password,
+    $core.bool? isAdmin,
   }) {
     final result = create();
     if (id != null) result.id = id;
     if (username != null) result.username = username;
     if (email != null) result.email = email;
     if (password != null) result.password = password;
+    if (isAdmin != null) result.isAdmin = isAdmin;
     return result;
   }
 
@@ -47,6 +49,7 @@ class UserDto extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'username')
     ..aOS(3, _omitFieldNames ? '' : 'email')
     ..aOS(4, _omitFieldNames ? '' : 'password')
+    ..aOB(5, _omitFieldNames ? '' : 'isAdmin')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -102,6 +105,15 @@ class UserDto extends $pb.GeneratedMessage {
   $core.bool hasPassword() => $_has(3);
   @$pb.TagNumber(4)
   void clearPassword() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.bool get isAdmin => $_getBF(4);
+  @$pb.TagNumber(5)
+  set isAdmin($core.bool value) => $_setBool(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasIsAdmin() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearIsAdmin() => $_clearField(5);
 }
 
 class TokensDto extends $pb.GeneratedMessage {

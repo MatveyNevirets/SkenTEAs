@@ -23,8 +23,8 @@ class ProdPostsDatasource implements PostsDatasource {
       final token = await keyValueStorageRepository.readString(
         Env.accessTokenKey,
       );
-      final listPostsDto = await postsRpcClient.fetchPosts(
-        ResponseDto(),
+      final listPostsDto = await postsRpcClient.fetchConfirmedPosts(
+        RequestDto(),
         options: token != null
             ? CallOptions(metadata: {"accessToken": token})
             : null,
@@ -97,6 +97,7 @@ class ProdPostsDatasource implements PostsDatasource {
           title: post.title,
           description: post.description,
           imagePath: post.imagePath,
+          isConfirmed: false,
         ),
         options: CallOptions(metadata: {'accessToken': token!}),
       );

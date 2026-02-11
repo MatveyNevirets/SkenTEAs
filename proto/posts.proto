@@ -4,13 +4,14 @@ service PostsRpc {
     rpc InsertPost(PostDto) returns (ResponseDto);
     rpc DeletePost(PostDto) returns (ResponseDto);
 
-    rpc FetchUserPosts (ResponseDto) returns (ListPostsDto);
-    rpc FetchPosts (ResponseDto) returns (ListPostsDto);
-    rpc FetchPostDetails (PostDto) returns (PostDto);
+    rpc FetchUserPosts (RequestDto) returns (ListPostsDto);
+    rpc FetchConfirmedPosts (RequestDto) returns (ListPostsDto);
+    rpc FetchUnconfirmedPosts (RequestDto) returns (ListPostsDto);
 
     rpc CommentPost(CommentDto) returns (ResponseDto);
     rpc FetchPostComments(PostDto) returns (ListCommentsDto);
     
+    rpc ChangePostConfirmed (PostDto) returns (ResponseDto);
     rpc LikePost(PostDto) returns (ResponseDto);
 }
 
@@ -35,6 +36,10 @@ message PostDto {
     string image_path = 5;
     string likes = 6;
     string author_username = 7;
+    bool is_confirmed=8;
+}
+
+message RequestDto {
 }
 
 message ResponseDto {
