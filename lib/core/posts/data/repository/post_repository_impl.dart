@@ -8,9 +8,9 @@ class PostsRepositoryImpl implements PostsRepository {
   PostsRepositoryImpl({required this.postDatasource});
 
   @override
-  Future<List<Post>> getPosts() async {
+  Future<List<Post>> getPosts({bool isConfirmed = true}) async {
     try {
-      return await postDatasource.getPosts();
+      return await postDatasource.getPosts(isConfirmed: isConfirmed);
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }
@@ -28,8 +28,8 @@ class PostsRepositoryImpl implements PostsRepository {
   @override
   Future<bool> changeLikesPost(String postId) async {
     try {
-    final result =  await postDatasource.changeLikesPost(postId);
-    return result;
+      final result = await postDatasource.changeLikesPost(postId);
+      return result;
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }
@@ -41,6 +41,15 @@ class PostsRepositoryImpl implements PostsRepository {
       await postDatasource.commentPost(postId, message);
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
+    }
+  }
+
+  @override
+  Future<void> publishPost(Post post) async {
+    try {
+      await postDatasource.publishPost(post);
+    } catch (e) {
+      rethrow;
     }
   }
 }

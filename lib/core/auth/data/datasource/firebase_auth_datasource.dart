@@ -1,14 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:grpc/service_api.dart';
+import 'package:skenteas/application/env.dart';
 import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
+import 'package:skenteas/core/auth/data/models/user.dart';
+import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/generated/auth/auth.pbgrpc.dart';
 
 class FirebaseAuthDatasource implements AuthDatasource {
   final AuthRpcClient client;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final KeyValueStorageRepository keyValueStorageRepository;
 
-  FirebaseAuthDatasource({required this.client});
+  FirebaseAuthDatasource({
+    required this.client,
+    required this.keyValueStorageRepository,
+  });
 
   @override
   Future<void> logout() async {}
@@ -93,6 +101,28 @@ class FirebaseAuthDatasource implements AuthDatasource {
     } on Object catch (e, stack) {
       await _firebaseAuth.currentUser?.delete();
       throw Exception("$e StackTrace: $stack");
+    }
+  }
+
+  @override
+  Future<UserModel> fetchUser() async {
+    try {
+      final token = await keyValueStorageRepository.readString(
+        Env.accessTokenKey,
+      );
+
+      final user = await client.fetchUser(
+        RequestDto(),
+        options: CallOptions(metadata: {'accessToken': token!}),
+      );
+
+      return UserModel(
+        id: int.parse(user.id),
+        username: user.username,
+        isAdmin: user.isAdmin,
+      );
+    } on Object catch (_) {
+      rethrow;
     }
   }
 }

@@ -189,6 +189,7 @@ class AppDepends {
         case AppEnv.prod:
           authDatasource = FirebaseAuthDatasource(
             client: getIt<AuthRpcClient>(),
+            keyValueStorageRepository: getIt<KeyValueStorageRepository>(),
           );
         case AppEnv.test:
           authDatasource = MockAuthDatabase();

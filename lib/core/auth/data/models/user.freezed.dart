@@ -12,40 +12,40 @@ part of 'user.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$User {
+mixin _$UserModel {
 
- int get id; String get username;
-/// Create a copy of User
+ int get id; String get username; bool get isAdmin;
+/// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$UserCopyWith<User> get copyWith => _$UserCopyWithImpl<User>(this as User, _$identity);
+$UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>(this as UserModel, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,username);
+int get hashCode => Object.hash(runtimeType,id,username,isAdmin);
 
 @override
 String toString() {
-  return 'User(id: $id, username: $username)';
+  return 'UserModel(id: $id, username: $username, isAdmin: $isAdmin)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $UserCopyWith<$Res>  {
-  factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
+abstract mixin class $UserModelCopyWith<$Res>  {
+  factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String username
+ int id, String username, bool isAdmin
 });
 
 
@@ -53,28 +53,29 @@ $Res call({
 
 }
 /// @nodoc
-class _$UserCopyWithImpl<$Res>
-    implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._self, this._then);
+class _$UserModelCopyWithImpl<$Res>
+    implements $UserModelCopyWith<$Res> {
+  _$UserModelCopyWithImpl(this._self, this._then);
 
-  final User _self;
-  final $Res Function(User) _then;
+  final UserModel _self;
+  final $Res Function(UserModel) _then;
 
-/// Create a copy of User
+/// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? isAdmin = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isAdmin: null == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [User].
-extension UserPatterns on User {
+/// Adds pattern-matching-related methods to [UserModel].
+extension UserModelPatterns on UserModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -87,10 +88,10 @@ extension UserPatterns on User {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _User value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _UserModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _User() when $default != null:
+case _UserModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -109,10 +110,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _User value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _UserModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _User():
+case _UserModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -130,10 +131,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _User value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _UserModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _User() when $default != null:
+case _UserModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String username)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String username,  bool isAdmin)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _User() when $default != null:
-return $default(_that.id,_that.username);case _:
+case _UserModel() when $default != null:
+return $default(_that.id,_that.username,_that.isAdmin);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.id,_that.username);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String username)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String username,  bool isAdmin)  $default,) {final _that = this;
 switch (_that) {
-case _User():
-return $default(_that.id,_that.username);case _:
+case _UserModel():
+return $default(_that.id,_that.username,_that.isAdmin);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.id,_that.username);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String username)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String username,  bool isAdmin)?  $default,) {final _that = this;
 switch (_that) {
-case _User() when $default != null:
-return $default(_that.id,_that.username);case _:
+case _UserModel() when $default != null:
+return $default(_that.id,_that.username,_that.isAdmin);case _:
   return null;
 
 }
@@ -206,44 +207,45 @@ return $default(_that.id,_that.username);case _:
 /// @nodoc
 
 
-class _User implements User {
-  const _User({required this.id, required this.username});
+class _UserModel implements UserModel {
+  const _UserModel({required this.id, required this.username, required this.isAdmin});
   
 
 @override final  int id;
 @override final  String username;
+@override final  bool isAdmin;
 
-/// Create a copy of User
+/// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$UserCopyWith<_User> get copyWith => __$UserCopyWithImpl<_User>(this, _$identity);
+_$UserModelCopyWith<_UserModel> get copyWith => __$UserModelCopyWithImpl<_UserModel>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,username);
+int get hashCode => Object.hash(runtimeType,id,username,isAdmin);
 
 @override
 String toString() {
-  return 'User(id: $id, username: $username)';
+  return 'UserModel(id: $id, username: $username, isAdmin: $isAdmin)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
+abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
+  factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String username
+ int id, String username, bool isAdmin
 });
 
 
@@ -251,20 +253,21 @@ $Res call({
 
 }
 /// @nodoc
-class __$UserCopyWithImpl<$Res>
-    implements _$UserCopyWith<$Res> {
-  __$UserCopyWithImpl(this._self, this._then);
+class __$UserModelCopyWithImpl<$Res>
+    implements _$UserModelCopyWith<$Res> {
+  __$UserModelCopyWithImpl(this._self, this._then);
 
-  final _User _self;
-  final $Res Function(_User) _then;
+  final _UserModel _self;
+  final $Res Function(_UserModel) _then;
 
-/// Create a copy of User
+/// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,}) {
-  return _then(_User(
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? isAdmin = null,}) {
+  return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isAdmin: null == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

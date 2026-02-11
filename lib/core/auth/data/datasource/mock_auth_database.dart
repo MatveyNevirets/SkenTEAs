@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
+import 'package:skenteas/core/auth/data/models/user.dart';
 
 class MockAuthDatabase implements AuthDatasource {
   String? token;
@@ -41,5 +42,11 @@ class MockAuthDatabase implements AuthDatasource {
   Future<(String, String)> signInWithGoogle() async {
     await Future.delayed(Duration(seconds: 2));
     return ("", "");
+  }
+
+  @override
+  Future<UserModel> fetchUser() async {
+    await Future.delayed(Duration(seconds: 2));
+    return UserModel(id: 1, username: "Yellow", isAdmin: true);
   }
 }

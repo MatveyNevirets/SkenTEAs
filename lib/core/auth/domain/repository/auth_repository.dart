@@ -1,3 +1,5 @@
+import '../../data/models/user.dart';
+
 abstract interface class AuthRepository {
   Future<(String, String)> signIn(String email, String password);
   Future<(String, String)> signUp(
@@ -7,5 +9,6 @@ abstract interface class AuthRepository {
   );
 
   Future<(String, String)> signInWithGoogle();
+  Future<UserModel> fetchUser();
   Future<void> logout();
 }

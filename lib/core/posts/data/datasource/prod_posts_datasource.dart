@@ -18,17 +18,24 @@ class ProdPostsDatasource implements PostsDatasource {
   });
 
   @override
-  Future<List<Post>> getPosts() async {
+  Future<List<Post>> getPosts({bool isConfirmed = true}) async {
     try {
       final token = await keyValueStorageRepository.readString(
         Env.accessTokenKey,
       );
-      final listPostsDto = await postsRpcClient.fetchConfirmedPosts(
-        RequestDto(),
-        options: token != null
-            ? CallOptions(metadata: {"accessToken": token})
-            : null,
-      );
+      final listPostsDto = isConfirmed
+          ? await postsRpcClient.fetchConfirmedPosts(
+              RequestDto(),
+              options: token != null
+                  ? CallOptions(metadata: {"accessToken": token})
+                  : null,
+            )
+          : await postsRpcClient.fetchUnconfirmedPosts(
+              RequestDto(),
+              options: token != null
+                  ? CallOptions(metadata: {"accessToken": token})
+                  : null,
+            );
 
       final posts = listPostsDto.posts.map((post) {
         return Post(
@@ -126,13 +133,32 @@ class ProdPostsDatasource implements PostsDatasource {
 
   @override
   Future<void> commentPost(String postId, String message) async {
-    final token = await keyValueStorageRepository.readString(
-      Env.accessTokenKey,
-    );
+    try {
+      final token = await keyValueStorageRepository.readString(
+        Env.accessTokenKey,
+      );
 
-    await postsRpcClient.commentPost(
-      CommentDto(postId: postId, message: message),
-      options: CallOptions(metadata: {"accessToken": token!}),
-    );
+      await postsRpcClient.commentPost(
+        CommentDto(postId: postId, message: message),
+        options: CallOptions(metadata: {"accessToken": token!}),
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> publishPost(Post post) async {
+    try {
+      final token = await keyValueStorageRepository.readString(
+        Env.accessTokenKey,
+      );
+      await postsRpcClient.changePostConfirmed(
+        PostDto(id: post.id, isConfirmed: true),
+        options: CallOptions(metadata: {"accessToken": token!}),
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 }

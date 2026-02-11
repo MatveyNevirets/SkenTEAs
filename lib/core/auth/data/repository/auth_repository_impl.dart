@@ -1,6 +1,8 @@
 import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
 
+import '../models/user.dart';
+
 class AuthRepositoryImpl implements AuthRepository {
   final AuthDatasource _authDatasource;
 
@@ -48,5 +50,10 @@ class AuthRepositoryImpl implements AuthRepository {
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
     }
+  }
+
+  @override
+  Future<UserModel> fetchUser() async {
+    return await _authDatasource.fetchUser();
   }
 }

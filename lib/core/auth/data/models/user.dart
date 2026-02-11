@@ -3,6 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user.freezed.dart';
 
 @freezed
-abstract class User with _$User {
-  const factory User({required int id, required String username}) = _User;
+abstract class UserModel with _$UserModel {
+  const factory UserModel({
+    required int id,
+    required String username,
+    required bool isAdmin,
+  }) = _UserModel;
 }

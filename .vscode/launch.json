@@ -8,7 +8,7 @@
             "program": "lib/bin/prod_skenteas.dart",
             "args": [
                 "--dart-define=SERVER_HOST=155.212.175.24",
-                "--dart-define=NGINX_PORT=9866",
+                "--dart-define=NGINX_PORT=9688",
                 "--dart-define=ACCESS_TOKEN_KEY=j4cKNWL2YJHD45ndIBEs2qon8k9QSx4dGewWJ9GlHWd",
                 "--dart-define=REFRESH_TOKEN_KEY=lDxWwvj8oZoEaAzaouIgh59vWijEA15eKnjFrtKuB1B",
                 "--dart-define=241361616971-2o5uhraqqs3gkbr9abj3lmdg18n380ci.apps.googleusercontent.com",

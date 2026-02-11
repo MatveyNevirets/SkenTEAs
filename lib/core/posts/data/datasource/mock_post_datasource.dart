@@ -4,7 +4,7 @@ import 'package:skenteas/core/posts/data/models/comment.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
 
 class MockPostsDatasource implements PostsDatasource {
-  List<Post> mockPosts = [
+  List<Post> mockConfirmedPosts = [
     Post(
       id: "0",
       authorUsername: "Тема Карпов",
@@ -55,17 +55,31 @@ class MockPostsDatasource implements PostsDatasource {
     ),
   ];
 
+  final List<Post> mockUnconfirmedPosts = [
+    Post(
+      id: "1",
+      authorUsername: "Мишаня",
+      title: "Где выпить чая на Тайбей?",
+      description:
+          "Я на знаю. За то я знаю, что у меня есть ТГК, где есть ответ на другие интересные вопросы: (telegram link)",
+      imagePath: "assets/images/mock_image_1.png",
+      likes: 0,
+      comments: [],
+      liked: false,
+    ),
+  ];
+
   @override
-  Future<List<Post>> getPosts() async {
+  Future<List<Post>> getPosts({bool isConfirmed = true}) async {
     await Future.delayed(Duration(seconds: 2));
 
-    return mockPosts;
+    return isConfirmed ? mockConfirmedPosts : mockUnconfirmedPosts;
   }
 
   @override
   Future<void> insertPost(Post post) async {
     await Future.delayed(Duration(seconds: 2));
-    mockPosts.add(post);
+    mockConfirmedPosts.add(post);
   }
 
   @override
@@ -76,7 +90,7 @@ class MockPostsDatasource implements PostsDatasource {
 
   @override
   Future<void> commentPost(String postId, String message) async {
-    mockPosts[int.parse(postId)].comments.add(
+    mockConfirmedPosts[int.parse(postId)].comments.add(
       Comment(
         id: 0,
         authorUsername: "Ты",
@@ -84,5 +98,12 @@ class MockPostsDatasource implements PostsDatasource {
         message: message,
       ),
     );
+  }
+
+  @override
+  Future<void> publishPost(Post post) async {
+    await Future.delayed(Duration(seconds: 2));
+    mockUnconfirmedPosts.remove(post);
+    mockConfirmedPosts.add(post);
   }
 }
