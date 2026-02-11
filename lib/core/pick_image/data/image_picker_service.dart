@@ -8,6 +8,11 @@ final class ImagePickerService implements IPickImageService {
 
   @override
   Future<XFile?> pickImageFromGallery() async {
-    return await imagePicker.pickImage(source: ImageSource.gallery);
+    return await imagePicker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 800,
+      maxHeight: 600,
+      imageQuality: 85,
+    );
   }
 }

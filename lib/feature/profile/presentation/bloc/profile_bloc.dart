@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:skenteas/core/auth/data/models/user.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
+import 'package:skenteas/core/files/domain/repository/i_files_repository.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
 import 'package:skenteas/core/posts/domain/repository/post_repository.dart';
 
@@ -11,9 +12,13 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthRepository authRepository;
   final PostsRepository postsRepository;
+  final IFilesRepository filesRepository;
 
-  ProfileBloc({required this.authRepository, required this.postsRepository})
-    : super(ProfileInitial()) {
+  ProfileBloc({
+    required this.authRepository,
+    required this.postsRepository,
+    required this.filesRepository,
+  }) : super(ProfileInitial()) {
     on<FetchUserEvent>(_onFetchUser);
     on<PublishPostEvent>(_onPublishPost);
   }
@@ -26,14 +31,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) async {
     try {
       emit(ProfileLoadingState());
-      final user = await authRepository.fetchUser();
-      final posts = user.isAdmin
+      UserModel? newUser;
+      newUser = await authRepository.fetchUser();
+      final posts = newUser.isAdmin
           ? await postsRepository.getPosts(isConfirmed: false)
           : null;
 
+      final avatarBytes = await filesRepository.fetchAvatar();
+      newUser = newUser.copyWith(imageBytes: avatarBytes);
+
       _cachedPosts = posts;
 
-      emit(UserFetchedState(userModel: user, posts: posts));
+      emit(UserFetchedState(userModel: newUser, posts: posts));
     } on Exception catch (e, stack) {
       emit(ProfileErrorState(error: e, stack: stack));
       rethrow;

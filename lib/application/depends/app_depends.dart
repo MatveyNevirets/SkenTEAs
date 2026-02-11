@@ -327,6 +327,7 @@ class AppDepends {
       final filesDatasource = switch (appEnv) {
         AppEnv.test => MockFilesDatasource(),
         AppEnv.prod => GrpcFilesDatasource(
+          keyValueStorageRepository: getIt<KeyValueStorageRepository>(),
           filesRpcClient: getIt<FilesRpcClient>(),
         ),
       };

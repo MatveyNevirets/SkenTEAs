@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +13,8 @@ class LoginScreen extends StatelessWidget {
   final loginController = TextEditingController(),
       passwordController = TextEditingController(),
       usernameController = TextEditingController();
+
+  String? avatarImagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +48,10 @@ class LoginScreen extends StatelessWidget {
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
+          if (state is SuccessImageInstalledState) {
+            avatarImagePath = state.imagePath;
+            // context.read<AuthBloc>().add(aUT)
+          }
           if (state is AuthenticatedState) {
             context.go("/home");
           }
@@ -52,7 +60,8 @@ class LoginScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is UnauthenticatedState) {
+          if (state is UnauthenticatedState ||
+              state is SuccessImageInstalledState) {
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.only(left: 80, right: 80),
@@ -83,16 +92,22 @@ class LoginScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 25),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () => context.read<AuthBloc>().add(
+                            AuthPickImageEvent(),
+                          ),
                           child: CircleAvatar(
-                            minRadius: 50,
+                            radius: avatarImagePath != null ? 100 : 50,
                             backgroundColor: obsoleteSecondaryColor,
-
-                            child: Icon(
-                              Icons.photo_camera_outlined,
-                              size: 64,
-                              color: headerTextColor,
-                            ),
+                            foregroundImage: avatarImagePath != null
+                                ? FileImage(File(avatarImagePath!), scale: 200)
+                                : null,
+                            child: avatarImagePath == null
+                                ? Icon(
+                                    Icons.photo_camera_outlined,
+                                    size: 64,
+                                    color: headerTextColor,
+                                  )
+                                : null,
                           ),
                         ),
                         SizedBox(height: 25),

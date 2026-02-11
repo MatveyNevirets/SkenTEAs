@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skenteas/core/consts/color_consts.dart';
 import 'package:skenteas/feature/profile/presentation/bloc/profile_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -11,6 +14,7 @@ class ProfileScreen extends StatelessWidget {
       body: BlocConsumer<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state is UserFetchedState) {
+            Uint8List? imageBytes = state.userModel.imageBytes;
             return SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -20,6 +24,20 @@ class ProfileScreen extends StatelessWidget {
                   Text("Profile"),
                   Text("Is admin? ${state.userModel.isAdmin}"),
                   Text("Username: ${state.userModel.username}"),
+                  CircleAvatar(
+                    radius: imageBytes != null ? 100 : 50,
+                    backgroundColor: obsoleteSecondaryColor,
+                    foregroundImage: imageBytes != null
+                        ? MemoryImage(imageBytes)
+                        : null,
+                    child: imageBytes == null
+                        ? Icon(
+                            Icons.photo_camera_outlined,
+                            size: 64,
+                            color: headerTextColor,
+                          )
+                        : null,
+                  ),
                   state.userModel.isAdmin
                       ? Text("Все посты в очереди на подтверждение:")
                       : SizedBox(),

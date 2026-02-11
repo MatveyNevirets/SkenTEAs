@@ -1,7 +1,9 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:skenteas/application/env.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
+import 'package:skenteas/core/files/domain/repository/i_files_repository.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
 import 'package:skenteas/core/pick_image/domain/i_pick_image_service.dart';
@@ -11,11 +13,15 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
+  final IFilesRepository filesRepository;
   final IPickImageService iPickImageService;
   final KeyValueStorageRepository keyValueStorageRepository;
 
+  XFile? _cachedAvatarImage;
+
   AuthBloc({
     required this.authRepository,
+    required this.filesRepository,
     required this.keyValueStorageRepository,
     required this.iPickImageService,
   }) : super(UnauthenticatedState()) {
@@ -24,12 +30,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLogoutEvent>(_onLogout);
     on<AuthCheckTokenEvent>(_onCheckToken);
     on<AuthGoogleSignInEvent>(_onGoogleSignIn);
+    on<AuthPickImageEvent>(_onPickImage);
   }
 
-  Future<void> _onPickImage(AuthPickImageEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onPickImage(
+    AuthPickImageEvent event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(AuthLoadingState());
-    final xFile = iPickImageService.pickImageFromGallery();
-    
+    try {
+      final xFile = await iPickImageService.pickImageFromGallery();
+      _cachedAvatarImage = xFile;
+      emit(SuccessImageInstalledState(imagePath: xFile!.path));
+    } on Object catch (e, stack) {
+      emit(UnauthenticatedState(message: AppMessages.somethingWrong));
+      throw Exception("$e StackTrace: $stack");
+    }
   }
 
   Future<void> _onGoogleSignIn(
@@ -107,6 +123,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           Env.refreshTokenKey,
           tokens.$2,
         );
+
+        final avatarBytes = await _cachedAvatarImage!.readAsBytes();
+
+        await filesRepository.putAvatar(avatarBytes.buffer.asUint8List());
 
         emit(AuthenticatedState());
       }

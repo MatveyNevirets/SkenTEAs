@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:skenteas/application/routes.dart';
 import 'package:skenteas/core/consts/app_themes.dart';
+import 'package:skenteas/core/files/domain/repository/i_files_repository.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
 import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
@@ -17,8 +18,10 @@ class Application extends StatelessWidget {
     final authRepository = getIt<AuthRepository>();
     final keyValueStorageRepository = getIt<KeyValueStorageRepository>();
     final iPickImageService = getIt<IPickImageService>();
+    final filesRepository = getIt<IFilesRepository>();
     return BlocProvider(
       create: (context) => AuthBloc(
+        filesRepository: filesRepository,
         iPickImageService: iPickImageService,
         authRepository: authRepository,
         keyValueStorageRepository: keyValueStorageRepository,
