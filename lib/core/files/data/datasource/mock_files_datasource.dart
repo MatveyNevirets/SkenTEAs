@@ -12,7 +12,7 @@ final class MockFilesDatasource implements IFilesDatasource {
   }
 
   @override
-  Future<Uint8List?> fetchAvatar() async {
+  Future<Uint8List?> fetchAvatar({int? userId}) async {
     await Future.delayed(Duration(seconds: 2));
     return _image;
   }

@@ -33,14 +33,14 @@ final class GrpcFilesDatasource implements IFilesDatasource {
   }
 
   @override
-  Future<Uint8List?> fetchAvatar() async {
+  Future<Uint8List?> fetchAvatar({int? userId}) async {
     try {
       final token = await keyValueStorageRepository.readString(
         Env.accessTokenKey,
       );
 
       final stream = filesRpcClient.fetchAvatar(
-        FileDto(),
+        userId != null ? FileDto(name: userId.toString()) : FileDto(),
         options: CallOptions(metadata: {'accessToken': token!}),
       );
 

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Comment {
 
- int get id; int get postId; String get authorUsername; String get message;
+ int get id; int get postId; int? get authorId; Uint8List? get avatarBytes; String get authorUsername; String get message;
 /// Create a copy of Comment
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $CommentCopyWith<Comment> get copyWith => _$CommentCopyWithImpl<Comment>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Comment&&(identical(other.id, id) || other.id == id)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Comment&&(identical(other.id, id) || other.id == id)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&const DeepCollectionEquality().equals(other.avatarBytes, avatarBytes)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,postId,authorUsername,message);
+int get hashCode => Object.hash(runtimeType,id,postId,authorId,const DeepCollectionEquality().hash(avatarBytes),authorUsername,message);
 
 @override
 String toString() {
-  return 'Comment(id: $id, postId: $postId, authorUsername: $authorUsername, message: $message)';
+  return 'Comment(id: $id, postId: $postId, authorId: $authorId, avatarBytes: $avatarBytes, authorUsername: $authorUsername, message: $message)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $CommentCopyWith<$Res>  {
   factory $CommentCopyWith(Comment value, $Res Function(Comment) _then) = _$CommentCopyWithImpl;
 @useResult
 $Res call({
- int id, int postId, String authorUsername, String message
+ int id, int postId, int? authorId, Uint8List? avatarBytes, String authorUsername, String message
 });
 
 
@@ -62,11 +62,13 @@ class _$CommentCopyWithImpl<$Res>
 
 /// Create a copy of Comment
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? postId = null,Object? authorUsername = null,Object? message = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? postId = null,Object? authorId = freezed,Object? avatarBytes = freezed,Object? authorUsername = null,Object? message = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as int,authorUsername: null == authorUsername ? _self.authorUsername : authorUsername // ignore: cast_nullable_to_non_nullable
+as int,authorId: freezed == authorId ? _self.authorId : authorId // ignore: cast_nullable_to_non_nullable
+as int?,avatarBytes: freezed == avatarBytes ? _self.avatarBytes : avatarBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,authorUsername: null == authorUsername ? _self.authorUsername : authorUsername // ignore: cast_nullable_to_non_nullable
 as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -153,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int postId,  String authorUsername,  String message)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int postId,  int? authorId,  Uint8List? avatarBytes,  String authorUsername,  String message)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Comment() when $default != null:
-return $default(_that.id,_that.postId,_that.authorUsername,_that.message);case _:
+return $default(_that.id,_that.postId,_that.authorId,_that.avatarBytes,_that.authorUsername,_that.message);case _:
   return orElse();
 
 }
@@ -174,10 +176,10 @@ return $default(_that.id,_that.postId,_that.authorUsername,_that.message);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int postId,  String authorUsername,  String message)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int postId,  int? authorId,  Uint8List? avatarBytes,  String authorUsername,  String message)  $default,) {final _that = this;
 switch (_that) {
 case _Comment():
-return $default(_that.id,_that.postId,_that.authorUsername,_that.message);case _:
+return $default(_that.id,_that.postId,_that.authorId,_that.avatarBytes,_that.authorUsername,_that.message);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +196,10 @@ return $default(_that.id,_that.postId,_that.authorUsername,_that.message);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int postId,  String authorUsername,  String message)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int postId,  int? authorId,  Uint8List? avatarBytes,  String authorUsername,  String message)?  $default,) {final _that = this;
 switch (_that) {
 case _Comment() when $default != null:
-return $default(_that.id,_that.postId,_that.authorUsername,_that.message);case _:
+return $default(_that.id,_that.postId,_that.authorId,_that.avatarBytes,_that.authorUsername,_that.message);case _:
   return null;
 
 }
@@ -209,11 +211,13 @@ return $default(_that.id,_that.postId,_that.authorUsername,_that.message);case _
 
 
 class _Comment implements Comment {
-  const _Comment({required this.id, required this.postId, required this.authorUsername, required this.message});
+  const _Comment({required this.id, required this.postId, this.authorId, this.avatarBytes, required this.authorUsername, required this.message});
   
 
 @override final  int id;
 @override final  int postId;
+@override final  int? authorId;
+@override final  Uint8List? avatarBytes;
 @override final  String authorUsername;
 @override final  String message;
 
@@ -227,16 +231,16 @@ _$CommentCopyWith<_Comment> get copyWith => __$CommentCopyWithImpl<_Comment>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Comment&&(identical(other.id, id) || other.id == id)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Comment&&(identical(other.id, id) || other.id == id)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&const DeepCollectionEquality().equals(other.avatarBytes, avatarBytes)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,postId,authorUsername,message);
+int get hashCode => Object.hash(runtimeType,id,postId,authorId,const DeepCollectionEquality().hash(avatarBytes),authorUsername,message);
 
 @override
 String toString() {
-  return 'Comment(id: $id, postId: $postId, authorUsername: $authorUsername, message: $message)';
+  return 'Comment(id: $id, postId: $postId, authorId: $authorId, avatarBytes: $avatarBytes, authorUsername: $authorUsername, message: $message)';
 }
 
 
@@ -247,7 +251,7 @@ abstract mixin class _$CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
   factory _$CommentCopyWith(_Comment value, $Res Function(_Comment) _then) = __$CommentCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int postId, String authorUsername, String message
+ int id, int postId, int? authorId, Uint8List? avatarBytes, String authorUsername, String message
 });
 
 
@@ -264,11 +268,13 @@ class __$CommentCopyWithImpl<$Res>
 
 /// Create a copy of Comment
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? postId = null,Object? authorUsername = null,Object? message = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? postId = null,Object? authorId = freezed,Object? avatarBytes = freezed,Object? authorUsername = null,Object? message = null,}) {
   return _then(_Comment(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as int,authorUsername: null == authorUsername ? _self.authorUsername : authorUsername // ignore: cast_nullable_to_non_nullable
+as int,authorId: freezed == authorId ? _self.authorId : authorId // ignore: cast_nullable_to_non_nullable
+as int?,avatarBytes: freezed == avatarBytes ? _self.avatarBytes : avatarBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,authorUsername: null == authorUsername ? _self.authorUsername : authorUsername // ignore: cast_nullable_to_non_nullable
 as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));

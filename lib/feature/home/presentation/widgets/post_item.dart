@@ -31,10 +31,14 @@ class PostItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
-                  Icons.person,
-                  size: 40,
-                ), // Используем person вместо man
+                post.authorAvatar != null
+                    ? CircleAvatar(
+                        radius: 20,
+                        backgroundImage: MemoryImage(
+                          post.authorAvatar!,
+                        ), // ← ImageProvider
+                      )
+                    : const Icon(Icons.person, size: 40),
                 const SizedBox(width: 8),
                 Text(
                   post.authorUsername,
@@ -47,7 +51,7 @@ class PostItem extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Container(
-              height: 250,
+              height: 100,
               decoration: BoxDecoration(
                 borderRadius: theme.containerRadius / 1.5,
                 color: colorScheme.onPrimaryContainer,

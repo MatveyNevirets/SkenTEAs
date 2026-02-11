@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:grpc/service_api.dart';
 import 'package:skenteas/application/env.dart';
+import 'package:skenteas/core/files/domain/repository/i_files_repository.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
 import 'package:skenteas/core/posts/data/models/comment.dart';
@@ -10,10 +11,12 @@ import 'package:skenteas/generated/posts/posts.pbgrpc.dart';
 
 class ProdPostsDatasource implements PostsDatasource {
   final PostsRpcClient postsRpcClient;
+  final IFilesRepository filesRepository;
   final KeyValueStorageRepository keyValueStorageRepository;
 
   ProdPostsDatasource({
     required this.postsRpcClient,
+    required this.filesRepository,
     required this.keyValueStorageRepository,
   });
 
@@ -40,6 +43,7 @@ class ProdPostsDatasource implements PostsDatasource {
       final posts = listPostsDto.posts.map((post) {
         return Post(
           id: post.id,
+          authorId: post.authorId,
           authorUsername: post.authorUsername,
           title: post.title,
           description: post.description,
@@ -54,6 +58,7 @@ class ProdPostsDatasource implements PostsDatasource {
 
       for (final post in posts) {
         Post newPost = post;
+
         if (token != null) {
           final likedPosts = listPostsDto.likedPosts;
           log(likedPosts.toString());
@@ -65,7 +70,13 @@ class ProdPostsDatasource implements PostsDatasource {
           }
         }
 
-        newPost = post.copyWith(comments: await fetchComments(post.id));
+        newPost = post.copyWith(
+          comments: await fetchComments(post.id),
+          authorAvatar: await filesRepository.fetchAvatar(
+            userId: int.parse(newPost.authorId!),
+          ),
+        );
+
         filledPosts.add(newPost);
       }
 
@@ -80,16 +91,28 @@ class ProdPostsDatasource implements PostsDatasource {
       PostDto(id: postId),
     );
 
-    return listCommentsDto.comments
+    final comments = listCommentsDto.comments
         .map(
           (comment) => Comment(
             id: int.parse(comment.id),
             authorUsername: comment.authorUsername,
             postId: int.parse(comment.postId),
             message: comment.message,
+            authorId: int.parse(comment.authorId),
           ),
         )
         .toList();
+
+    List<Comment> newComments = [];
+
+    for (final comment in comments) {
+      final avatarBytes = await filesRepository.fetchAvatar(
+        userId: comment.authorId,
+      );
+      newComments.add(comment.copyWith(avatarBytes: avatarBytes));
+    }
+
+    return newComments;
   }
 
   @override

@@ -20,7 +20,14 @@ class CommentaryItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.person, size: 40),
+              comment.avatarBytes != null
+                  ? CircleAvatar(
+                      radius: 20,
+                      backgroundImage: MemoryImage(
+                        comment.avatarBytes!,
+                      ), // ← ImageProvider
+                    )
+                  : const Icon(Icons.person, size: 40),
               const SizedBox(width: 8),
               Text(
                 comment.authorUsername,

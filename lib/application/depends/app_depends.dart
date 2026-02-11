@@ -275,51 +275,6 @@ class AppDepends {
     }
 
     /// ---
-    ///  Setups the PostsDatasource depend
-    /// ---
-
-    try {
-      final postsDatasource = switch (appEnv) {
-        AppEnv.test => MockPostsDatasource(),
-        AppEnv.prod => ProdPostsDatasource(
-          postsRpcClient: getIt<PostsRpcClient>(),
-          keyValueStorageRepository: getIt<KeyValueStorageRepository>(),
-        ),
-      };
-      getIt.registerSingleton<PostsDatasource>(postsDatasource);
-      onProgress(
-        DependsEnum.postsDatasource.toString(),
-        countProgress(
-          DependsEnum.postsDatasource.index,
-          DependsEnum.values.length,
-        ),
-      );
-    } on Object catch (e, stack) {
-      onError(e, stack);
-    }
-
-    /// ---
-    ///  Setups the PostsDatasource depend
-    /// ---
-
-    try {
-      getIt.registerSingleton<PostsRepository>(
-        PostsRepositoryImpl(postDatasource: getIt<PostsDatasource>()),
-      );
-      onProgress(
-        DependsEnum.postsRepository.toString(),
-        countProgress(
-          DependsEnum.postsRepository.index,
-          DependsEnum.values.length,
-        ),
-      );
-    } on Object catch (e, stack) {
-      onError(e, stack);
-    }
-
-    //
-
-    /// ---
     ///  Setups the FilesDatasource depend
     /// ---
 
@@ -361,6 +316,52 @@ class AppDepends {
     } on Object catch (e, stack) {
       onError(e, stack);
     }
+
+    /// ---
+    ///  Setups the PostsDatasource depend
+    /// ---
+
+    try {
+      final postsDatasource = switch (appEnv) {
+        AppEnv.test => MockPostsDatasource(),
+        AppEnv.prod => ProdPostsDatasource(
+          postsRpcClient: getIt<PostsRpcClient>(),
+          filesRepository: getIt<IFilesRepository>(),
+          keyValueStorageRepository: getIt<KeyValueStorageRepository>(),
+        ),
+      };
+      getIt.registerSingleton<PostsDatasource>(postsDatasource);
+      onProgress(
+        DependsEnum.postsDatasource.toString(),
+        countProgress(
+          DependsEnum.postsDatasource.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
+    ///  Setups the PostsDatasource depend
+    /// ---
+
+    try {
+      getIt.registerSingleton<PostsRepository>(
+        PostsRepositoryImpl(postDatasource: getIt<PostsDatasource>()),
+      );
+      onProgress(
+        DependsEnum.postsRepository.toString(),
+        countProgress(
+          DependsEnum.postsRepository.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    //
   }
 }
 

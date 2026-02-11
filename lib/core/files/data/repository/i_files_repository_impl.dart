@@ -18,9 +18,9 @@ final class IFilesRepositoryImpl implements IFilesRepository {
   }
 
   @override
-  Future<Uint8List?> fetchAvatar() async {
+  Future<Uint8List?> fetchAvatar({int? userId}) async {
     try {
-      return await filesDatasource.fetchAvatar();
+      return await filesDatasource.fetchAvatar(userId: userId);
     } catch (e) {
       rethrow;
     }
