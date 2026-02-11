@@ -6,16 +6,19 @@ import 'package:skenteas/application/env.dart';
 import 'package:skenteas/core/auth/data/datasource/auth_datasource.dart';
 import 'package:skenteas/core/auth/data/models/user.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
+import 'package:skenteas/core/pick_image/domain/i_pick_image_service.dart';
 import 'package:skenteas/generated/auth/auth.pbgrpc.dart';
 
 class FirebaseAuthDatasource implements AuthDatasource {
   final AuthRpcClient client;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final IPickImageService iPickImageService;
   final KeyValueStorageRepository keyValueStorageRepository;
 
   FirebaseAuthDatasource({
     required this.client,
     required this.keyValueStorageRepository,
+    required this.iPickImageService
   });
 
   @override

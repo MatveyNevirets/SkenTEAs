@@ -81,7 +81,22 @@ class LoginScreen extends StatelessWidget {
                           controller: usernameController,
                           hintText: "Введите никнейм",
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: 25),
+                        GestureDetector(
+                          onTap: () {},
+                          child: CircleAvatar(
+                            minRadius: 50,
+                            backgroundColor: obsoleteSecondaryColor,
+
+                            child: Icon(
+                              Icons.photo_camera_outlined,
+                              size: 64,
+                              color: headerTextColor,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 25),
+
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: secondaryHighlightedColor,

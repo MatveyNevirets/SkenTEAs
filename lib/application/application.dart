@@ -6,6 +6,7 @@ import 'package:skenteas/core/consts/app_themes.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
 import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
+import 'package:skenteas/core/pick_image/domain/i_pick_image_service.dart';
 
 class Application extends StatelessWidget {
   const Application({super.key});
@@ -15,8 +16,10 @@ class Application extends StatelessWidget {
     final getIt = GetIt.I;
     final authRepository = getIt<AuthRepository>();
     final keyValueStorageRepository = getIt<KeyValueStorageRepository>();
+    final iPickImageService = getIt<IPickImageService>();
     return BlocProvider(
       create: (context) => AuthBloc(
+        iPickImageService: iPickImageService,
         authRepository: authRepository,
         keyValueStorageRepository: keyValueStorageRepository,
       )..add(AuthCheckTokenEvent()),

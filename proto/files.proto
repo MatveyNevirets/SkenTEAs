@@ -1,0 +1,20 @@
+syntax="proto3";
+
+service FilesRpc {
+   rpc PutAvatar(FileDto) returns (ResponseDto);
+   rpc DeleteAvatar(FileDto) returns (ResponseDto);
+   rpc FetchAvatar(FileDto) returns (stream FileDto);
+}
+
+message FileDto {
+    string bucket = 1;
+    string name = 2;
+    bytes data = 3;
+    string tag = 4;
+}
+
+message RequestDto {}
+
+message ResponseDto {
+    string message = 1;
+}

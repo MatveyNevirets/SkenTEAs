@@ -3,12 +3,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:skenteas/application/env.dart';
 import 'package:skenteas/application/runner/app_env.dart';
+import 'package:skenteas/core/files/data/datasource/grpc_files_datasource.dart';
+import 'package:skenteas/core/files/data/datasource/i_files_datasource.dart';
+import 'package:skenteas/core/files/data/datasource/mock_files_datasource.dart';
+import 'package:skenteas/core/files/data/repository/i_files_repository_impl.dart';
+import 'package:skenteas/core/files/domain/repository/i_files_repository.dart';
 import 'package:skenteas/core/key_value_storage/data/datasource/key_value_datasource.dart';
 import 'package:skenteas/core/key_value_storage/data/datasource/shared_preferences_key_value_datasource.dart';
 import 'package:skenteas/core/key_value_storage/data/repository/key_value_storage_repository_impl.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
+import 'package:skenteas/core/pick_image/data/image_picker_service.dart';
+import 'package:skenteas/core/pick_image/domain/i_pick_image_service.dart';
 import 'package:skenteas/core/posts/data/datasource/mock_post_datasource.dart';
 import 'package:skenteas/core/posts/data/datasource/post_datasource.dart';
 import 'package:skenteas/core/posts/data/datasource/prod_posts_datasource.dart';
@@ -21,6 +29,7 @@ import 'package:skenteas/core/auth/data/repository/auth_repository_impl.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
 import 'package:skenteas/firebase_options.dart';
 import 'package:skenteas/generated/auth/auth.pbgrpc.dart';
+import 'package:skenteas/generated/files/files.pbgrpc.dart';
 import 'package:skenteas/generated/posts/posts.pbgrpc.dart';
 
 typedef OnProgress = void Function(String dependName, int progress);
@@ -33,24 +42,26 @@ enum DependsEnum {
   googleSignIn,
   authRpcClient,
   postsRpcClient,
+  filesRpcClient,
   authDatasource,
   authRepository,
   postsDatasource,
   postsRepository,
+  filesDatasource,
+  filesReposirory,
+  imagePicker,
+  pickImageService,
 }
 
 class AppDepends {
   final AppEnv appEnv;
-  late final KeyValueDatasource keyValueDatasource;
-  late final KeyValueStorageRepository keyValueStorageRepository;
-  late final GoogleSignIn googleSignIn;
-  late final AuthRpcClient authRpcClient;
-  late final PostsRpcClient postsRpcClient;
-  late final AuthDatasource authDatasource;
-  late final AuthRepository authRepository;
-  late final PostsDatasource postsDatasource;
-  late final PostsRepository postsRepository;
   final getIt = GetIt.I;
+
+  final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
+    host: Env.serverHost,
+    port: Env.nginxPort,
+    transportSecure: false,
+  );
 
   // Develop enviroment
   bool useEmulator = false;
@@ -88,8 +99,9 @@ class AppDepends {
     ///  Setups the KeyValueDatasource depend
     /// ---
     try {
-      keyValueDatasource = SharedPreferencesKeyValueDatasource();
-      getIt.registerSingleton<KeyValueDatasource>(keyValueDatasource);
+      getIt.registerSingleton<KeyValueDatasource>(
+        SharedPreferencesKeyValueDatasource(),
+      );
       onProgress(
         DependsEnum.keyValueDatasource.toString(),
         countProgress(
@@ -105,11 +117,10 @@ class AppDepends {
     ///  Setups the KeyValueRepository depend
     /// ---
     try {
-      keyValueStorageRepository = KeyValueStorageRepositoryImpl(
-        keyValueDatasource: getIt<KeyValueDatasource>(),
-      );
       getIt.registerSingleton<KeyValueStorageRepository>(
-        keyValueStorageRepository,
+        KeyValueStorageRepositoryImpl(
+          keyValueDatasource: getIt<KeyValueDatasource>(),
+        ),
       );
       onProgress(
         DependsEnum.keyValueRepository.toString(),
@@ -123,11 +134,44 @@ class AppDepends {
     }
 
     /// ---
+    /// ImagePicker
+    /// ---
+
+    try {
+      getIt.registerSingleton<ImagePicker>(ImagePicker());
+      onProgress(
+        DependsEnum.imagePicker.name,
+        countProgress(DependsEnum.imagePicker.index, DependsEnum.values.length),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
+    /// PickImage service
+    /// ---
+
+    try {
+      getIt.registerSingleton<IPickImageService>(
+        ImagePickerService(imagePicker: getIt<ImagePicker>()),
+      );
+      onProgress(
+        DependsEnum.pickImageService.name,
+        countProgress(
+          DependsEnum.pickImageService.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
     ///   Setups the GoogleSignIn depend
     /// ---
 
     try {
-      googleSignIn = GoogleSignIn.instance;
+      GoogleSignIn googleSignIn = GoogleSignIn.instance;
       await googleSignIn.initialize(clientId: Env.firebaseClientId);
 
       getIt.registerSingleton<GoogleSignIn>(googleSignIn);
@@ -139,14 +183,7 @@ class AppDepends {
     ///  Setups the AuthRpcClient depend
     /// ---
     try {
-      final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
-        host: Env.serverHost,
-        port: Env.nginxPort,
-        transportSecure: false,
-      );
-
-      authRpcClient = AuthRpcClient(channel);
-      getIt.registerSingleton<AuthRpcClient>(authRpcClient);
+      getIt.registerSingleton<AuthRpcClient>(AuthRpcClient(channel));
       onProgress(
         DependsEnum.authRpcClient.name,
         countProgress(
@@ -162,14 +199,7 @@ class AppDepends {
     ///  Setups the PostsRpcClient depend
     /// ---
     try {
-      final channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
-        host: Env.serverHost,
-        port: Env.nginxPort,
-        transportSecure: false,
-      );
-
-      postsRpcClient = PostsRpcClient(channel);
-      getIt.registerSingleton<PostsRpcClient>(postsRpcClient);
+      getIt.registerSingleton<PostsRpcClient>(PostsRpcClient(channel));
       onProgress(
         DependsEnum.postsRpcClient.name,
         countProgress(
@@ -182,12 +212,30 @@ class AppDepends {
     }
 
     /// ---
+    ///  Setups the FilesRpcClient depend
+    /// ---
+    try {
+      getIt.registerSingleton<FilesRpcClient>(FilesRpcClient(channel));
+      onProgress(
+        DependsEnum.filesRpcClient.name,
+        countProgress(
+          DependsEnum.filesRpcClient.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
     ///  Setups the AuthDatasource depend
     /// ---
     try {
+      late final AuthDatasource authDatasource;
       switch (appEnv) {
         case AppEnv.prod:
           authDatasource = FirebaseAuthDatasource(
+            iPickImageService: getIt<IPickImageService>(),
             client: getIt<AuthRpcClient>(),
             keyValueStorageRepository: getIt<KeyValueStorageRepository>(),
           );
@@ -211,10 +259,9 @@ class AppDepends {
     /// ---
 
     try {
-      authRepository = AuthRepositoryImpl(
-        authDatasource: getIt<AuthDatasource>(),
+      getIt.registerSingleton<AuthRepository>(
+        AuthRepositoryImpl(authDatasource: getIt<AuthDatasource>()),
       );
-      getIt.registerSingleton<AuthRepository>(authRepository);
 
       onProgress(
         DependsEnum.authDatasource.toString(),
@@ -232,7 +279,7 @@ class AppDepends {
     /// ---
 
     try {
-      postsDatasource = switch (appEnv) {
+      final postsDatasource = switch (appEnv) {
         AppEnv.test => MockPostsDatasource(),
         AppEnv.prod => ProdPostsDatasource(
           postsRpcClient: getIt<PostsRpcClient>(),
@@ -256,15 +303,57 @@ class AppDepends {
     /// ---
 
     try {
-      postsRepository = PostsRepositoryImpl(
-        postDatasource: getIt<PostsDatasource>(),
+      getIt.registerSingleton<PostsRepository>(
+        PostsRepositoryImpl(postDatasource: getIt<PostsDatasource>()),
       );
-
-      getIt.registerSingleton<PostsRepository>(postsRepository);
       onProgress(
         DependsEnum.postsRepository.toString(),
         countProgress(
           DependsEnum.postsRepository.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    //
+
+    /// ---
+    ///  Setups the FilesDatasource depend
+    /// ---
+
+    try {
+      final filesDatasource = switch (appEnv) {
+        AppEnv.test => MockFilesDatasource(),
+        AppEnv.prod => GrpcFilesDatasource(
+          filesRpcClient: getIt<FilesRpcClient>(),
+        ),
+      };
+      getIt.registerSingleton<IFilesDatasource>(filesDatasource);
+      onProgress(
+        DependsEnum.filesDatasource.toString(),
+        countProgress(
+          DependsEnum.filesDatasource.index,
+          DependsEnum.values.length,
+        ),
+      );
+    } on Object catch (e, stack) {
+      onError(e, stack);
+    }
+
+    /// ---
+    ///  Setups the FilesRepository depend
+    /// ---
+
+    try {
+      getIt.registerSingleton<IFilesRepository>(
+        IFilesRepositoryImpl(filesDatasource: getIt<IFilesDatasource>()),
+      );
+      onProgress(
+        DependsEnum.filesReposirory.toString(),
+        countProgress(
+          DependsEnum.filesReposirory.index,
           DependsEnum.values.length,
         ),
       );

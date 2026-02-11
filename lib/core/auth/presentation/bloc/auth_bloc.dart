@@ -4,23 +4,32 @@ import 'package:skenteas/application/env.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
 import 'package:skenteas/core/key_value_storage/domain/repository/key_value_storage_repository.dart';
 import 'package:skenteas/core/auth/domain/repository/auth_repository.dart';
+import 'package:skenteas/core/pick_image/domain/i_pick_image_service.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
+  final IPickImageService iPickImageService;
   final KeyValueStorageRepository keyValueStorageRepository;
 
   AuthBloc({
     required this.authRepository,
     required this.keyValueStorageRepository,
+    required this.iPickImageService,
   }) : super(UnauthenticatedState()) {
     on<AuthSignUpEvent>(_onSignUp);
     on<AuthSignInEvent>(_onSignIn);
     on<AuthLogoutEvent>(_onLogout);
     on<AuthCheckTokenEvent>(_onCheckToken);
     on<AuthGoogleSignInEvent>(_onGoogleSignIn);
+  }
+
+  Future<void> _onPickImage(AuthPickImageEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoadingState());
+    final xFile = iPickImageService.pickImageFromGallery();
+    
   }
 
   Future<void> _onGoogleSignIn(
