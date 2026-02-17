@@ -3,6 +3,8 @@ import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
+import 'package:skenteas/core/pick_image/data/image_picker_service.dart';
+import 'package:skenteas/core/pick_image/domain/i_pick_image_service.dart';
 import 'package:skenteas/core/posts/data/models/post.dart';
 import 'package:skenteas/core/posts/domain/repository/post_repository.dart';
 
@@ -11,14 +13,26 @@ part 'posts_state.dart';
 
 class PostsBloc extends Bloc<PostsEvent, PostsState> {
   final PostsRepository postsRepository;
+  final IPickImageService imagePickerService;
 
   List<Post>? _cachedPosts;
 
-  PostsBloc({required this.postsRepository}) : super(HomeInitial()) {
+  PostsBloc({required this.postsRepository, required this.imagePickerService})
+    : super(HomeInitial()) {
     on<GetPostsEvent>(_onGetPosts);
     on<TryCreatePostEvent>(_onTryCreatePost);
     on<ChangeLikePostEvent>(_onChangeLikePost);
     on<SendCommentEvent>(_onSendComment);
+    on<PickImageEvent>(_onPickImage);
+  }
+
+  Future<void> _onPickImage(
+    PickImageEvent event,
+    Emitter<PostsState> emit,
+  ) async {
+    emit(PostsLoadingState());
+    final image = await imagePickerService.pickImageFromGallery();
+    
   }
 
   Future<void> _onSendComment(

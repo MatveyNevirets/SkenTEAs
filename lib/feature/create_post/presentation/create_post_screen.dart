@@ -58,6 +58,12 @@ class CreatePostScreen extends StatelessWidget {
                       height: 250,
                       width: double.infinity,
                       color: obsoleteSecondaryColor,
+                      child: Center(
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          child: Text("Добавить изображение"),
+                        ),
+                      ),
                     ),
                     Text("Заголовок"),
                     SizedBox(

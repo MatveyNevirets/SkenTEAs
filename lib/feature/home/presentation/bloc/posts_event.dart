@@ -19,3 +19,5 @@ class SendCommentEvent extends PostsEvent {
   SendCommentEvent({required this.postId, required this.message});
   String postId, message;
 }
+
+class PickImageEvent extends PostsEvent {}
