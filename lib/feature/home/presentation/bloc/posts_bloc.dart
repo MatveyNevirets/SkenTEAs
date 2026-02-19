@@ -1,5 +1,8 @@
 // ignore: depend_on_referenced_packages
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
+import 'package:image_picker/image_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:skenteas/core/consts/error_messages.dart';
@@ -16,6 +19,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   final IPickImageService imagePickerService;
 
   List<Post>? _cachedPosts;
+  XFile? _cachedFileImage;
 
   PostsBloc({required this.postsRepository, required this.imagePickerService})
     : super(HomeInitial()) {
@@ -31,8 +35,15 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     Emitter<PostsState> emit,
   ) async {
     emit(PostsLoadingState());
-    final image = await imagePickerService.pickImageFromGallery();
-    
+    _cachedFileImage = null;
+    final file = await imagePickerService.pickImageFromGallery();
+
+    if (file == null) {
+      emit(HomePostsState(posts: _cachedPosts!));
+    } else {
+      _cachedFileImage = file;
+      emit(SuccessFilePickedState(imagePath: file.path));
+    }
   }
 
   Future<void> _onSendComment(
@@ -99,7 +110,9 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   ) async {
     try {
       emit(PostsLoadingState());
-      await postsRepository.insertPost(event.post);
+      final imageAsBytes = await _cachedFileImage?.readAsBytes();
+      final newPost = event.post.copyWith(imageBytes: imageAsBytes);
+      await postsRepository.insertPost(newPost);
       _cachedPosts = null;
       emit(CreatePostSuccessState(message: AppMessages.publishedSuccessful));
     } on Object catch (e, stack) {

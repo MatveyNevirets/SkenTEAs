@@ -11,7 +11,6 @@ class MockPostsDatasource implements PostsDatasource {
       title: "Почему ЧКП - best чайная Волгограда?",
       description:
           "Это очень простой вопрос. Все потому, что Матвей начал свой путь именно в этой чайной. Идите в лофт и вспоминаейте его легенадрную фразу: 'Пейте чай, друзья!'",
-      imagePath: "assets/images/mock_image_0.png",
       likes: 124,
       comments: [
         Comment(
@@ -35,7 +34,6 @@ class MockPostsDatasource implements PostsDatasource {
       title: "Как я в чайную попал",
       description:
           "Дело началось в Волгограде, когда мы в очередной раз приехали туда. Мне было нечего делать, я открыл гугл карты и начал искать самые разные места. Так я и наткнулся на чайную.",
-      imagePath: "assets/images/mock_image_1.png",
       likes: 231,
       comments: [
         Comment(
@@ -62,7 +60,6 @@ class MockPostsDatasource implements PostsDatasource {
       title: "Где выпить чая на Тайбей?",
       description:
           "Я на знаю. За то я знаю, что у меня есть ТГК, где есть ответ на другие интересные вопросы: (telegram link)",
-      imagePath: "assets/images/mock_image_1.png",
       likes: 0,
       comments: [],
       liked: false,

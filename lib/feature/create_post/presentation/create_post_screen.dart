@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:go_router/go_router.dart";
@@ -11,6 +13,8 @@ class CreatePostScreen extends StatelessWidget {
 
   final titleController = TextEditingController(),
       descriptionController = TextEditingController();
+
+  String? postImagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +58,34 @@ class CreatePostScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Container(
-                      height: 250,
-                      width: double.infinity,
-                      color: obsoleteSecondaryColor,
-                      child: Center(
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          child: Text("Добавить изображение"),
-                        ),
-                      ),
+
+                    BlocConsumer<PostsBloc, PostsState>(
+                      listener: (context, state) {
+                        if (state is SuccessFilePickedState) {
+                          postImagePath = state.imagePath;
+                        }
+                      },
+                      builder: (context, state) {
+                        return postImagePath != null
+                            ? Card(
+                                child: Image(
+                                  image: FileImage(File(postImagePath!)),
+                                ),
+                              )
+                            : Container(
+                                height: 250,
+                                width: double.infinity,
+                                color: obsoleteSecondaryColor,
+                                child: Center(
+                                  child: OutlinedButton(
+                                    onPressed: () => context
+                                        .read<PostsBloc>()
+                                        .add(PickImageEvent()),
+                                    child: Text("Добавить изображение"),
+                                  ),
+                                ),
+                              );
+                      },
                     ),
                     Text("Заголовок"),
                     SizedBox(
@@ -83,7 +105,6 @@ class CreatePostScreen extends StatelessWidget {
                           authorUsername: "authorUsername",
                           title: titleController.text,
                           description: descriptionController.text,
-                          imagePath: "imagePath",
                           likes: 0,
                           comments: [],
                         );

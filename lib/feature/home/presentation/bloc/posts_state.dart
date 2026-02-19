@@ -11,6 +11,11 @@ class HomePostsState extends PostsState {
   List<Post> posts;
 }
 
+class SuccessFilePickedState extends PostsState {
+  String imagePath;
+  SuccessFilePickedState({required this.imagePath});
+}
+
 class SignInDialogState extends PostsState {}
 
 class PostsErrorState extends PostsState {

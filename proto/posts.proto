@@ -33,7 +33,7 @@ message PostDto {
     string author_id = 2;
     string title = 3;
     string description = 4;
-    string image_path = 5;
+    bytes image_bytes = 5;
     string likes = 6;
     string author_username = 7;
     bool is_confirmed=8;

@@ -178,7 +178,7 @@ class PostDto extends $pb.GeneratedMessage {
     $core.String? authorId,
     $core.String? title,
     $core.String? description,
-    $core.String? imagePath,
+    $core.List<$core.int>? imageBytes,
     $core.String? likes,
     $core.String? authorUsername,
     $core.bool? isConfirmed,
@@ -188,7 +188,7 @@ class PostDto extends $pb.GeneratedMessage {
     if (authorId != null) result.authorId = authorId;
     if (title != null) result.title = title;
     if (description != null) result.description = description;
-    if (imagePath != null) result.imagePath = imagePath;
+    if (imageBytes != null) result.imageBytes = imageBytes;
     if (likes != null) result.likes = likes;
     if (authorUsername != null) result.authorUsername = authorUsername;
     if (isConfirmed != null) result.isConfirmed = isConfirmed;
@@ -211,7 +211,8 @@ class PostDto extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'authorId')
     ..aOS(3, _omitFieldNames ? '' : 'title')
     ..aOS(4, _omitFieldNames ? '' : 'description')
-    ..aOS(5, _omitFieldNames ? '' : 'imagePath')
+    ..a<$core.List<$core.int>>(
+        5, _omitFieldNames ? '' : 'imageBytes', $pb.PbFieldType.OY)
     ..aOS(6, _omitFieldNames ? '' : 'likes')
     ..aOS(7, _omitFieldNames ? '' : 'authorUsername')
     ..aOB(8, _omitFieldNames ? '' : 'isConfirmed')
@@ -272,13 +273,13 @@ class PostDto extends $pb.GeneratedMessage {
   void clearDescription() => $_clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get imagePath => $_getSZ(4);
+  $core.List<$core.int> get imageBytes => $_getN(4);
   @$pb.TagNumber(5)
-  set imagePath($core.String value) => $_setString(4, value);
+  set imageBytes($core.List<$core.int> value) => $_setBytes(4, value);
   @$pb.TagNumber(5)
-  $core.bool hasImagePath() => $_has(4);
+  $core.bool hasImageBytes() => $_has(4);
   @$pb.TagNumber(5)
-  void clearImagePath() => $_clearField(5);
+  void clearImageBytes() => $_clearField(5);
 
   @$pb.TagNumber(6)
   $core.String get likes => $_getSZ(5);

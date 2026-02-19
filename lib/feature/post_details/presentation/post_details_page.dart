@@ -17,7 +17,7 @@ class PostDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final getIt = GetIt.I;
 
-    final iPickService = getIt<IPickImageService>();
+ final iPickService = getIt<IPickImageService>();
     return BlocProvider(
       create: (context) => PostsBloc(
         postsRepository: getIt<PostsRepository>(),

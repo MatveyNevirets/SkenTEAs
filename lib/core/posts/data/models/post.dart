@@ -15,8 +15,8 @@ abstract class Post with _$Post {
     required List<Comment> comments,
     required String authorUsername,
     Uint8List? authorAvatar,
+    Uint8List? imageBytes,
     required String title,
     required String description,
-    required String imagePath,
   }) = _Post;
 }

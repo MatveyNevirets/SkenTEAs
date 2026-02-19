@@ -9,18 +9,18 @@ final class IFilesRepositoryImpl implements IFilesRepository {
   IFilesRepositoryImpl({required this.filesDatasource});
 
   @override
-  Future<void> putAvatar(Uint8List imageBytes) async {
+  Future<void> putFile(Uint8List imageBytes, String? bucket) async {
     try {
-      await filesDatasource.putAvatar(imageBytes);
+      await filesDatasource.putAvatar(imageBytes, bucket);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<Uint8List?> fetchAvatar({int? userId}) async {
+  Future<Uint8List?> fetchFile({int? userId, String? bucket}) async {
     try {
-      return await filesDatasource.fetchAvatar(userId: userId);
+      return await filesDatasource.fetchAvatar(userId: userId, bucket: bucket);
     } catch (e) {
       rethrow;
     }

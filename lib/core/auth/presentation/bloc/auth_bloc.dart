@@ -17,6 +17,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IPickImageService iPickImageService;
   final KeyValueStorageRepository keyValueStorageRepository;
 
+  // From backend
+  static const String _avatarBuckets = "avatars";
+
   XFile? _cachedAvatarImage;
 
   AuthBloc({
@@ -126,7 +129,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         final avatarBytes = await _cachedAvatarImage!.readAsBytes();
 
-        await filesRepository.putAvatar(avatarBytes.buffer.asUint8List());
+        await filesRepository.putFile(
+          avatarBytes.buffer.asUint8List(),
+          _avatarBuckets,
+        );
 
         emit(AuthenticatedState());
       }

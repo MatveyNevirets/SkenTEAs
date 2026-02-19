@@ -17,7 +17,7 @@ final class GrpcFilesDatasource implements IFilesDatasource {
   });
 
   @override
-  Future<void> deleteAvatar() async {
+  Future<void> deleteAvatar( String? bucket) async {
     try {
       final token = await keyValueStorageRepository.readString(
         Env.accessTokenKey,
@@ -33,7 +33,7 @@ final class GrpcFilesDatasource implements IFilesDatasource {
   }
 
   @override
-  Future<Uint8List?> fetchAvatar({int? userId}) async {
+  Future<Uint8List?> fetchAvatar({int? userId, String? bucket}) async {
     try {
       final token = await keyValueStorageRepository.readString(
         Env.accessTokenKey,
@@ -57,7 +57,7 @@ final class GrpcFilesDatasource implements IFilesDatasource {
   }
 
   @override
-  Future<void> putAvatar(Uint8List imageBytes) async {
+  Future<void> putAvatar(Uint8List imageBytes, String? bucket) async {
     try {
       final token = await keyValueStorageRepository.readString(
         Env.accessTokenKey,

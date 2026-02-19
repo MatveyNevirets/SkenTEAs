@@ -37,7 +37,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ? await postsRepository.getPosts(isConfirmed: false)
           : null;
 
-      final avatarBytes = await filesRepository.fetchAvatar();
+      final avatarBytes = await filesRepository.fetchFile();
       newUser = newUser.copyWith(imageBytes: avatarBytes);
 
       _cachedPosts = posts;
