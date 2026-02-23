@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:skenteas/core/auth/data/models/user.dart';
@@ -21,9 +23,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }) : super(ProfileInitial()) {
     on<FetchUserEvent>(_onFetchUser);
     on<PublishPostEvent>(_onPublishPost);
+    on<UserUpdateEvent>(_onUserUpdate);
   }
 
   List<Post>? _cachedPosts;
+
+  Future<void> _onUserUpdate(
+    UserUpdateEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    emit(ProfileLoadingState());
+    final newUserModel = UserModel(
+      id: event.userModel.id,
+      username: event.userModel.username,
+      password: event.userModel.password,
+      email: event.userModel.email,
+    );
+    await authRepository.updateUser(newUserModel);
+    emit(RebuildProfileState());
+  }
 
   Future<void> _onFetchUser(
     FetchUserEvent event,
@@ -33,11 +51,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileLoadingState());
       UserModel? newUser;
       newUser = await authRepository.fetchUser();
-      final posts = newUser.isAdmin
+      final posts = newUser.isAdmin!
           ? await postsRepository.getPosts(isConfirmed: false)
           : null;
 
-      final avatarBytes = await filesRepository.fetchFile();
+      final avatarBytes = await filesRepository.fetchFile(bucket: "avatars");
       newUser = newUser.copyWith(imageBytes: avatarBytes);
 
       _cachedPosts = posts;
@@ -56,6 +74,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(ProfileLoadingState());
     await postsRepository.publishPost(event.post);
     _cachedPosts!.remove(event.post);
-    emit(SuccessPublishedProfileState());
+    emit(RebuildProfileState());
   }
 }

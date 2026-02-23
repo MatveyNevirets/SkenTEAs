@@ -37,9 +37,16 @@ message PostDto {
     string likes = 6;
     string author_username = 7;
     bool is_confirmed=8;
+
+    // Post types
+    // 0: post
+    // 1: question
+    // 2: tutorial
+    string post_type=9;
 }
 
 message RequestDto {
+    string post_type=1;
 }
 
 message ResponseDto {

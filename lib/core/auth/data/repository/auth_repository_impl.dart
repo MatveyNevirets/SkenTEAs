@@ -56,4 +56,13 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<UserModel> fetchUser() async {
     return await _authDatasource.fetchUser();
   }
+
+  @override
+  Future<void> updateUser(UserModel userModel) async {
+    try {
+      await _authDatasource.updateUser(userModel);
+    } on Object catch (e, stack) {
+      throw Exception("$e StackTrace: $stack");
+    }
+  }
 }

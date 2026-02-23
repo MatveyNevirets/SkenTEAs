@@ -17,14 +17,14 @@ final class GrpcFilesDatasource implements IFilesDatasource {
   });
 
   @override
-  Future<void> deleteAvatar( String? bucket) async {
+  Future<void> deleteAvatar(String? bucket) async {
     try {
       final token = await keyValueStorageRepository.readString(
         Env.accessTokenKey,
       );
 
-      await filesRpcClient.deleteAvatar(
-        FileDto(),
+      await filesRpcClient.deleteFile(
+        FileDto(bucket: bucket),
         options: CallOptions(metadata: {'accessToken': token!}),
       );
     } catch (e) {
@@ -39,8 +39,10 @@ final class GrpcFilesDatasource implements IFilesDatasource {
         Env.accessTokenKey,
       );
 
-      final stream = filesRpcClient.fetchAvatar(
-        userId != null ? FileDto(name: userId.toString()) : FileDto(),
+      final stream = filesRpcClient.fetchFile(
+        userId != null
+            ? FileDto(name: userId.toString(), bucket: bucket)
+            : FileDto(bucket: bucket),
         options: CallOptions(metadata: {'accessToken': token!}),
       );
 
@@ -63,8 +65,8 @@ final class GrpcFilesDatasource implements IFilesDatasource {
         Env.accessTokenKey,
       );
 
-      await filesRpcClient.putAvatar(
-        FileDto(data: imageBytes),
+      await filesRpcClient.putFile(
+        FileDto(data: imageBytes, bucket: bucket),
         options: CallOptions(metadata: {'accessToken': token!}),
       );
     } catch (e) {

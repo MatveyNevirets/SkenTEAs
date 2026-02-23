@@ -11,6 +11,11 @@ abstract class Post with _$Post {
     required String id,
     String? authorId,
     required int likes,
+    // Post types
+    // 0: post
+    // 1: question
+    // 2: tutorial
+    int? postType,
     required bool liked,
     required List<Comment> comments,
     required String authorUsername,

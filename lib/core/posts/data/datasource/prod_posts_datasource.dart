@@ -71,6 +71,12 @@ class ProdPostsDatasource implements PostsDatasource {
 
         newPost = post.copyWith(
           comments: await fetchComments(post.id),
+          imageBytes: post.postType != 1
+              ? await filesRepository.fetchFile(
+                  bucket: "images",
+                  userId: int.parse(post.id),
+                )
+              : null,
           authorAvatar: await filesRepository.fetchFile(
             bucket: "avatars",
             userId: int.parse(newPost.authorId!),
@@ -108,6 +114,7 @@ class ProdPostsDatasource implements PostsDatasource {
     for (final comment in comments) {
       final avatarBytes = await filesRepository.fetchFile(
         userId: comment.authorId,
+        bucket: "avatars",
       );
       newComments.add(comment.copyWith(avatarBytes: avatarBytes));
     }
@@ -127,6 +134,7 @@ class ProdPostsDatasource implements PostsDatasource {
           title: post.title,
           description: post.description,
           imageBytes: post.imageBytes,
+          postType: post.postType.toString(),
           isConfirmed: false,
         ),
         options: CallOptions(metadata: {'accessToken': token!}),

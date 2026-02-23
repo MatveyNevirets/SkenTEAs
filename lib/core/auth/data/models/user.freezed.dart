@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- int get id; String get username; Uint8List? get imageBytes; bool get isAdmin;
+ int? get id; String? get username; dynamic get email; dynamic get password; Uint8List? get imageBytes; bool? get isAdmin;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&const DeepCollectionEquality().equals(other.email, email)&&const DeepCollectionEquality().equals(other.password, password)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,username,const DeepCollectionEquality().hash(imageBytes),isAdmin);
+int get hashCode => Object.hash(runtimeType,id,username,const DeepCollectionEquality().hash(email),const DeepCollectionEquality().hash(password),const DeepCollectionEquality().hash(imageBytes),isAdmin);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, username: $username, imageBytes: $imageBytes, isAdmin: $isAdmin)';
+  return 'UserModel(id: $id, username: $username, email: $email, password: $password, imageBytes: $imageBytes, isAdmin: $isAdmin)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String username, Uint8List? imageBytes, bool isAdmin
+ int? id, String? username, dynamic email, dynamic password, Uint8List? imageBytes, bool? isAdmin
 });
 
 
@@ -62,13 +62,15 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? imageBytes = freezed,Object? isAdmin = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? username = freezed,Object? email = freezed,Object? password = freezed,Object? imageBytes = freezed,Object? isAdmin = freezed,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,imageBytes: freezed == imageBytes ? _self.imageBytes : imageBytes // ignore: cast_nullable_to_non_nullable
-as Uint8List?,isAdmin: null == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
-as bool,
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as dynamic,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as dynamic,imageBytes: freezed == imageBytes ? _self.imageBytes : imageBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,isAdmin: freezed == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 
@@ -153,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String username,  Uint8List? imageBytes,  bool isAdmin)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String? username,  dynamic email,  dynamic password,  Uint8List? imageBytes,  bool? isAdmin)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.username,_that.imageBytes,_that.isAdmin);case _:
+return $default(_that.id,_that.username,_that.email,_that.password,_that.imageBytes,_that.isAdmin);case _:
   return orElse();
 
 }
@@ -174,10 +176,10 @@ return $default(_that.id,_that.username,_that.imageBytes,_that.isAdmin);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String username,  Uint8List? imageBytes,  bool isAdmin)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String? username,  dynamic email,  dynamic password,  Uint8List? imageBytes,  bool? isAdmin)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.username,_that.imageBytes,_that.isAdmin);case _:
+return $default(_that.id,_that.username,_that.email,_that.password,_that.imageBytes,_that.isAdmin);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +196,10 @@ return $default(_that.id,_that.username,_that.imageBytes,_that.isAdmin);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String username,  Uint8List? imageBytes,  bool isAdmin)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String? username,  dynamic email,  dynamic password,  Uint8List? imageBytes,  bool? isAdmin)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.username,_that.imageBytes,_that.isAdmin);case _:
+return $default(_that.id,_that.username,_that.email,_that.password,_that.imageBytes,_that.isAdmin);case _:
   return null;
 
 }
@@ -209,13 +211,15 @@ return $default(_that.id,_that.username,_that.imageBytes,_that.isAdmin);case _:
 
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.username, this.imageBytes, required this.isAdmin});
+  const _UserModel({this.id, this.username, this.email, this.password, this.imageBytes, this.isAdmin});
   
 
-@override final  int id;
-@override final  String username;
+@override final  int? id;
+@override final  String? username;
+@override final  dynamic email;
+@override final  dynamic password;
 @override final  Uint8List? imageBytes;
-@override final  bool isAdmin;
+@override final  bool? isAdmin;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +231,16 @@ _$UserModelCopyWith<_UserModel> get copyWith => __$UserModelCopyWithImpl<_UserMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&const DeepCollectionEquality().equals(other.email, email)&&const DeepCollectionEquality().equals(other.password, password)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,username,const DeepCollectionEquality().hash(imageBytes),isAdmin);
+int get hashCode => Object.hash(runtimeType,id,username,const DeepCollectionEquality().hash(email),const DeepCollectionEquality().hash(password),const DeepCollectionEquality().hash(imageBytes),isAdmin);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, username: $username, imageBytes: $imageBytes, isAdmin: $isAdmin)';
+  return 'UserModel(id: $id, username: $username, email: $email, password: $password, imageBytes: $imageBytes, isAdmin: $isAdmin)';
 }
 
 
@@ -247,7 +251,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String username, Uint8List? imageBytes, bool isAdmin
+ int? id, String? username, dynamic email, dynamic password, Uint8List? imageBytes, bool? isAdmin
 });
 
 
@@ -264,13 +268,15 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? imageBytes = freezed,Object? isAdmin = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? username = freezed,Object? email = freezed,Object? password = freezed,Object? imageBytes = freezed,Object? isAdmin = freezed,}) {
   return _then(_UserModel(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,imageBytes: freezed == imageBytes ? _self.imageBytes : imageBytes // ignore: cast_nullable_to_non_nullable
-as Uint8List?,isAdmin: null == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
-as bool,
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as dynamic,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as dynamic,imageBytes: freezed == imageBytes ? _self.imageBytes : imageBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,isAdmin: freezed == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 

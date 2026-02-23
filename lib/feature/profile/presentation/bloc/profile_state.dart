@@ -19,4 +19,4 @@ class ProfileErrorState extends ProfileState {
   ProfileErrorState({required this.error, required this.stack});
 }
 
-class SuccessPublishedProfileState extends ProfileState {}
+class RebuildProfileState extends ProfileState {}

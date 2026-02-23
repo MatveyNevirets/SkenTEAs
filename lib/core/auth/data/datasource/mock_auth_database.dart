@@ -49,4 +49,9 @@ class MockAuthDatabase implements AuthDatasource {
     await Future.delayed(Duration(seconds: 2));
     return UserModel(id: 1, username: "Yellow", isAdmin: true);
   }
+
+  @override
+  Future<void> updateUser(UserModel userModel) async {
+    await Future.delayed(Duration(seconds: 2));
+  }
 }

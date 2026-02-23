@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Post {
 
- String get id; String? get authorId; int get likes; bool get liked; List<Comment> get comments; String get authorUsername; Uint8List? get authorAvatar; Uint8List? get imageBytes; String get title; String get description;
+ String get id; String? get authorId; int get likes; int? get postType; bool get liked; List<Comment> get comments; String get authorUsername; Uint8List? get authorAvatar; Uint8List? get imageBytes; String get title; String get description;
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostCopyWith<Post> get copyWith => _$PostCopyWithImpl<Post>(this as Post, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Post&&(identical(other.id, id) || other.id == id)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.likes, likes) || other.likes == likes)&&(identical(other.liked, liked) || other.liked == liked)&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&const DeepCollectionEquality().equals(other.authorAvatar, authorAvatar)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Post&&(identical(other.id, id) || other.id == id)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.likes, likes) || other.likes == likes)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.liked, liked) || other.liked == liked)&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&const DeepCollectionEquality().equals(other.authorAvatar, authorAvatar)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,authorId,likes,liked,const DeepCollectionEquality().hash(comments),authorUsername,const DeepCollectionEquality().hash(authorAvatar),const DeepCollectionEquality().hash(imageBytes),title,description);
+int get hashCode => Object.hash(runtimeType,id,authorId,likes,postType,liked,const DeepCollectionEquality().hash(comments),authorUsername,const DeepCollectionEquality().hash(authorAvatar),const DeepCollectionEquality().hash(imageBytes),title,description);
 
 @override
 String toString() {
-  return 'Post(id: $id, authorId: $authorId, likes: $likes, liked: $liked, comments: $comments, authorUsername: $authorUsername, authorAvatar: $authorAvatar, imageBytes: $imageBytes, title: $title, description: $description)';
+  return 'Post(id: $id, authorId: $authorId, likes: $likes, postType: $postType, liked: $liked, comments: $comments, authorUsername: $authorUsername, authorAvatar: $authorAvatar, imageBytes: $imageBytes, title: $title, description: $description)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PostCopyWith<$Res>  {
   factory $PostCopyWith(Post value, $Res Function(Post) _then) = _$PostCopyWithImpl;
 @useResult
 $Res call({
- String id, String? authorId, int likes, bool liked, List<Comment> comments, String authorUsername, Uint8List? authorAvatar, Uint8List? imageBytes, String title, String description
+ String id, String? authorId, int likes, int? postType, bool liked, List<Comment> comments, String authorUsername, Uint8List? authorAvatar, Uint8List? imageBytes, String title, String description
 });
 
 
@@ -62,12 +62,13 @@ class _$PostCopyWithImpl<$Res>
 
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? authorId = freezed,Object? likes = null,Object? liked = null,Object? comments = null,Object? authorUsername = null,Object? authorAvatar = freezed,Object? imageBytes = freezed,Object? title = null,Object? description = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? authorId = freezed,Object? likes = null,Object? postType = freezed,Object? liked = null,Object? comments = null,Object? authorUsername = null,Object? authorAvatar = freezed,Object? imageBytes = freezed,Object? title = null,Object? description = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,authorId: freezed == authorId ? _self.authorId : authorId // ignore: cast_nullable_to_non_nullable
 as String?,likes: null == likes ? _self.likes : likes // ignore: cast_nullable_to_non_nullable
-as int,liked: null == liked ? _self.liked : liked // ignore: cast_nullable_to_non_nullable
+as int,postType: freezed == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
+as int?,liked: null == liked ? _self.liked : liked // ignore: cast_nullable_to_non_nullable
 as bool,comments: null == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
 as List<Comment>,authorUsername: null == authorUsername ? _self.authorUsername : authorUsername // ignore: cast_nullable_to_non_nullable
 as String,authorAvatar: freezed == authorAvatar ? _self.authorAvatar : authorAvatar // ignore: cast_nullable_to_non_nullable
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? authorId,  int likes,  bool liked,  List<Comment> comments,  String authorUsername,  Uint8List? authorAvatar,  Uint8List? imageBytes,  String title,  String description)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? authorId,  int likes,  int? postType,  bool liked,  List<Comment> comments,  String authorUsername,  Uint8List? authorAvatar,  Uint8List? imageBytes,  String title,  String description)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Post() when $default != null:
-return $default(_that.id,_that.authorId,_that.likes,_that.liked,_that.comments,_that.authorUsername,_that.authorAvatar,_that.imageBytes,_that.title,_that.description);case _:
+return $default(_that.id,_that.authorId,_that.likes,_that.postType,_that.liked,_that.comments,_that.authorUsername,_that.authorAvatar,_that.imageBytes,_that.title,_that.description);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.id,_that.authorId,_that.likes,_that.liked,_that.comments,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? authorId,  int likes,  bool liked,  List<Comment> comments,  String authorUsername,  Uint8List? authorAvatar,  Uint8List? imageBytes,  String title,  String description)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? authorId,  int likes,  int? postType,  bool liked,  List<Comment> comments,  String authorUsername,  Uint8List? authorAvatar,  Uint8List? imageBytes,  String title,  String description)  $default,) {final _that = this;
 switch (_that) {
 case _Post():
-return $default(_that.id,_that.authorId,_that.likes,_that.liked,_that.comments,_that.authorUsername,_that.authorAvatar,_that.imageBytes,_that.title,_that.description);case _:
+return $default(_that.id,_that.authorId,_that.likes,_that.postType,_that.liked,_that.comments,_that.authorUsername,_that.authorAvatar,_that.imageBytes,_that.title,_that.description);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.id,_that.authorId,_that.likes,_that.liked,_that.comments,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? authorId,  int likes,  bool liked,  List<Comment> comments,  String authorUsername,  Uint8List? authorAvatar,  Uint8List? imageBytes,  String title,  String description)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? authorId,  int likes,  int? postType,  bool liked,  List<Comment> comments,  String authorUsername,  Uint8List? authorAvatar,  Uint8List? imageBytes,  String title,  String description)?  $default,) {final _that = this;
 switch (_that) {
 case _Post() when $default != null:
-return $default(_that.id,_that.authorId,_that.likes,_that.liked,_that.comments,_that.authorUsername,_that.authorAvatar,_that.imageBytes,_that.title,_that.description);case _:
+return $default(_that.id,_that.authorId,_that.likes,_that.postType,_that.liked,_that.comments,_that.authorUsername,_that.authorAvatar,_that.imageBytes,_that.title,_that.description);case _:
   return null;
 
 }
@@ -215,12 +216,13 @@ return $default(_that.id,_that.authorId,_that.likes,_that.liked,_that.comments,_
 
 
 class _Post implements Post {
-  const _Post({required this.id, this.authorId, required this.likes, required this.liked, required final  List<Comment> comments, required this.authorUsername, this.authorAvatar, this.imageBytes, required this.title, required this.description}): _comments = comments;
+  const _Post({required this.id, this.authorId, required this.likes, this.postType, required this.liked, required final  List<Comment> comments, required this.authorUsername, this.authorAvatar, this.imageBytes, required this.title, required this.description}): _comments = comments;
   
 
 @override final  String id;
 @override final  String? authorId;
 @override final  int likes;
+@override final  int? postType;
 @override final  bool liked;
  final  List<Comment> _comments;
 @override List<Comment> get comments {
@@ -245,16 +247,16 @@ _$PostCopyWith<_Post> get copyWith => __$PostCopyWithImpl<_Post>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Post&&(identical(other.id, id) || other.id == id)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.likes, likes) || other.likes == likes)&&(identical(other.liked, liked) || other.liked == liked)&&const DeepCollectionEquality().equals(other._comments, _comments)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&const DeepCollectionEquality().equals(other.authorAvatar, authorAvatar)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Post&&(identical(other.id, id) || other.id == id)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.likes, likes) || other.likes == likes)&&(identical(other.postType, postType) || other.postType == postType)&&(identical(other.liked, liked) || other.liked == liked)&&const DeepCollectionEquality().equals(other._comments, _comments)&&(identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername)&&const DeepCollectionEquality().equals(other.authorAvatar, authorAvatar)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,authorId,likes,liked,const DeepCollectionEquality().hash(_comments),authorUsername,const DeepCollectionEquality().hash(authorAvatar),const DeepCollectionEquality().hash(imageBytes),title,description);
+int get hashCode => Object.hash(runtimeType,id,authorId,likes,postType,liked,const DeepCollectionEquality().hash(_comments),authorUsername,const DeepCollectionEquality().hash(authorAvatar),const DeepCollectionEquality().hash(imageBytes),title,description);
 
 @override
 String toString() {
-  return 'Post(id: $id, authorId: $authorId, likes: $likes, liked: $liked, comments: $comments, authorUsername: $authorUsername, authorAvatar: $authorAvatar, imageBytes: $imageBytes, title: $title, description: $description)';
+  return 'Post(id: $id, authorId: $authorId, likes: $likes, postType: $postType, liked: $liked, comments: $comments, authorUsername: $authorUsername, authorAvatar: $authorAvatar, imageBytes: $imageBytes, title: $title, description: $description)';
 }
 
 
@@ -265,7 +267,7 @@ abstract mixin class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   factory _$PostCopyWith(_Post value, $Res Function(_Post) _then) = __$PostCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? authorId, int likes, bool liked, List<Comment> comments, String authorUsername, Uint8List? authorAvatar, Uint8List? imageBytes, String title, String description
+ String id, String? authorId, int likes, int? postType, bool liked, List<Comment> comments, String authorUsername, Uint8List? authorAvatar, Uint8List? imageBytes, String title, String description
 });
 
 
@@ -282,12 +284,13 @@ class __$PostCopyWithImpl<$Res>
 
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? authorId = freezed,Object? likes = null,Object? liked = null,Object? comments = null,Object? authorUsername = null,Object? authorAvatar = freezed,Object? imageBytes = freezed,Object? title = null,Object? description = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? authorId = freezed,Object? likes = null,Object? postType = freezed,Object? liked = null,Object? comments = null,Object? authorUsername = null,Object? authorAvatar = freezed,Object? imageBytes = freezed,Object? title = null,Object? description = null,}) {
   return _then(_Post(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,authorId: freezed == authorId ? _self.authorId : authorId // ignore: cast_nullable_to_non_nullable
 as String?,likes: null == likes ? _self.likes : likes // ignore: cast_nullable_to_non_nullable
-as int,liked: null == liked ? _self.liked : liked // ignore: cast_nullable_to_non_nullable
+as int,postType: freezed == postType ? _self.postType : postType // ignore: cast_nullable_to_non_nullable
+as int?,liked: null == liked ? _self.liked : liked // ignore: cast_nullable_to_non_nullable
 as bool,comments: null == comments ? _self._comments : comments // ignore: cast_nullable_to_non_nullable
 as List<Comment>,authorUsername: null == authorUsername ? _self.authorUsername : authorUsername // ignore: cast_nullable_to_non_nullable
 as String,authorAvatar: freezed == authorAvatar ? _self.authorAvatar : authorAvatar // ignore: cast_nullable_to_non_nullable

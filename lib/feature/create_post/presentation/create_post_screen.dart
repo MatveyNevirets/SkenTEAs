@@ -1,4 +1,5 @@
 import "dart:io";
+import "dart:typed_data";
 
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
@@ -12,7 +13,8 @@ class CreatePostScreen extends StatelessWidget {
   CreatePostScreen({super.key});
 
   final titleController = TextEditingController(),
-      descriptionController = TextEditingController();
+      descriptionController = TextEditingController(),
+      publishTypeController = TextEditingController();
 
   String? postImagePath;
 
@@ -48,9 +50,13 @@ class CreatePostScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                             color: obsoleteSecondaryColor,
                           ),
-                          child: Center(
-                            child: Text(
-                              "Тип публикации",
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: publishTypeController,
+                              decoration: InputDecoration(
+                                hint: Text("Тип публикации"),
+                              ),
                               style: TextStyle(color: mainTextColor),
                             ),
                           ),
@@ -106,6 +112,10 @@ class CreatePostScreen extends StatelessWidget {
                           title: titleController.text,
                           description: descriptionController.text,
                           likes: 0,
+                          postType: int.tryParse(publishTypeController.text),
+                          imageBytes: postImagePath != null
+                              ? Uint8List.fromList(postImagePath!.codeUnits)
+                              : null,
                           comments: [],
                         );
                         context.read<PostsBloc>().add(

@@ -182,6 +182,7 @@ class PostDto extends $pb.GeneratedMessage {
     $core.String? likes,
     $core.String? authorUsername,
     $core.bool? isConfirmed,
+    $core.String? postType,
   }) {
     final result = create();
     if (id != null) result.id = id;
@@ -192,6 +193,7 @@ class PostDto extends $pb.GeneratedMessage {
     if (likes != null) result.likes = likes;
     if (authorUsername != null) result.authorUsername = authorUsername;
     if (isConfirmed != null) result.isConfirmed = isConfirmed;
+    if (postType != null) result.postType = postType;
     return result;
   }
 
@@ -216,6 +218,7 @@ class PostDto extends $pb.GeneratedMessage {
     ..aOS(6, _omitFieldNames ? '' : 'likes')
     ..aOS(7, _omitFieldNames ? '' : 'authorUsername')
     ..aOB(8, _omitFieldNames ? '' : 'isConfirmed')
+    ..aOS(9, _omitFieldNames ? '' : 'postType')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -307,10 +310,29 @@ class PostDto extends $pb.GeneratedMessage {
   $core.bool hasIsConfirmed() => $_has(7);
   @$pb.TagNumber(8)
   void clearIsConfirmed() => $_clearField(8);
+
+  /// Post types
+  /// 0: post
+  /// 1: question
+  /// 2: tutorial
+  @$pb.TagNumber(9)
+  $core.String get postType => $_getSZ(8);
+  @$pb.TagNumber(9)
+  set postType($core.String value) => $_setString(8, value);
+  @$pb.TagNumber(9)
+  $core.bool hasPostType() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearPostType() => $_clearField(9);
 }
 
 class RequestDto extends $pb.GeneratedMessage {
-  factory RequestDto() => create();
+  factory RequestDto({
+    $core.String? postType,
+  }) {
+    final result = create();
+    if (postType != null) result.postType = postType;
+    return result;
+  }
 
   RequestDto._();
 
@@ -324,6 +346,7 @@ class RequestDto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'RequestDto',
       createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'postType')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -343,6 +366,15 @@ class RequestDto extends $pb.GeneratedMessage {
   static RequestDto getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<RequestDto>(create);
   static RequestDto? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get postType => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set postType($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasPostType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPostType() => $_clearField(1);
 }
 
 class ResponseDto extends $pb.GeneratedMessage {

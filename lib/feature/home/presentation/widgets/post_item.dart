@@ -50,13 +50,15 @@ class PostItem extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Container(
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: theme.containerRadius / 1.5,
-                color: colorScheme.onPrimaryContainer,
-              ),
-            ),
+            post.imageBytes != null
+                ? Center(child: Image.memory(post.imageBytes!))
+                : Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: theme.containerRadius / 1.5,
+                      color: colorScheme.onPrimaryContainer,
+                    ),
+                  ),
             const SizedBox(height: 12),
             Row(
               children: [

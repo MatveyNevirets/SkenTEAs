@@ -10,5 +10,6 @@ abstract interface class AuthRepository {
 
   Future<(String, String)> signInWithGoogle();
   Future<UserModel> fetchUser();
+  Future<void> updateUser(UserModel userModel);
   Future<void> logout();
 }

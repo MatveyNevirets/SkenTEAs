@@ -9,3 +9,8 @@ class PublishPostEvent extends ProfileEvent {
   Post post;
   PublishPostEvent({required this.post});
 }
+
+class UserUpdateEvent extends ProfileEvent {
+  UserModel userModel;
+  UserUpdateEvent({required this.userModel});
+}

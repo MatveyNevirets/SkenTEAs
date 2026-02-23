@@ -1,9 +1,9 @@
 syntax="proto3";
 
 service FilesRpc {
-   rpc PutAvatar(FileDto) returns (ResponseDto);
-   rpc DeleteAvatar(FileDto) returns (ResponseDto);
-   rpc FetchAvatar(FileDto) returns (stream FileDto);
+   rpc PutFile(FileDto) returns (ResponseDto);
+   rpc DeleteFile(FileDto) returns (ResponseDto);
+   rpc FetchFile(FileDto) returns (stream FileDto);
 }
 
 message FileDto {

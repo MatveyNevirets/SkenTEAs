@@ -9,5 +9,6 @@ abstract interface class AuthDatasource {
   );
   Future<(String, String)> signInWithGoogle();
   Future<UserModel> fetchUser();
+  Future<void> updateUser(UserModel userModel);
   Future<void> logout();
 }

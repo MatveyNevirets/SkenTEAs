@@ -80,6 +80,7 @@ const PostDto$json = {
     {'1': 'likes', '3': 6, '4': 1, '5': 9, '10': 'likes'},
     {'1': 'author_username', '3': 7, '4': 1, '5': 9, '10': 'authorUsername'},
     {'1': 'is_confirmed', '3': 8, '4': 1, '5': 8, '10': 'isConfirmed'},
+    {'1': 'post_type', '3': 9, '4': 1, '5': 9, '10': 'postType'},
   ],
 };
 
@@ -89,16 +90,19 @@ final $typed_data.Uint8List postDtoDescriptor = $convert.base64Decode(
     'QKBXRpdGxlGAMgASgJUgV0aXRsZRIgCgtkZXNjcmlwdGlvbhgEIAEoCVILZGVzY3JpcHRpb24S'
     'HwoLaW1hZ2VfYnl0ZXMYBSABKAxSCmltYWdlQnl0ZXMSFAoFbGlrZXMYBiABKAlSBWxpa2VzEi'
     'cKD2F1dGhvcl91c2VybmFtZRgHIAEoCVIOYXV0aG9yVXNlcm5hbWUSIQoMaXNfY29uZmlybWVk'
-    'GAggASgIUgtpc0NvbmZpcm1lZA==');
+    'GAggASgIUgtpc0NvbmZpcm1lZBIbCglwb3N0X3R5cGUYCSABKAlSCHBvc3RUeXBl');
 
 @$core.Deprecated('Use requestDtoDescriptor instead')
 const RequestDto$json = {
   '1': 'RequestDto',
+  '2': [
+    {'1': 'post_type', '3': 1, '4': 1, '5': 9, '10': 'postType'},
+  ],
 };
 
 /// Descriptor for `RequestDto`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List requestDtoDescriptor =
-    $convert.base64Decode('CgpSZXF1ZXN0RHRv');
+final $typed_data.Uint8List requestDtoDescriptor = $convert
+    .base64Decode('CgpSZXF1ZXN0RHRvEhsKCXBvc3RfdHlwZRgBIAEoCVIIcG9zdFR5cGU=');
 
 @$core.Deprecated('Use responseDtoDescriptor instead')
 const ResponseDto$json = {

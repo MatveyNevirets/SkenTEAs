@@ -2,11 +2,19 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:skenteas/core/auth/data/models/user.dart';
 import 'package:skenteas/core/consts/color_consts.dart';
+import 'package:skenteas/core/widgets/app_dialog.dart';
 import 'package:skenteas/feature/profile/presentation/bloc/profile_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+
+  final emailController = TextEditingController(),
+      passwordController = TextEditingController(),
+      verifyPasswordController = TextEditingController(),
+      usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +46,80 @@ class ProfileScreen extends StatelessWidget {
                           )
                         : null,
                   ),
-                  state.userModel.isAdmin
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: emailController,
+                              decoration: InputDecoration(
+                                hint: Text("Изменить email"),
+                              ),
+                            ),
+                            TextField(
+                              controller: passwordController,
+                              decoration: InputDecoration(
+                                hint: Text("Изменить password"),
+                              ),
+                            ),
+                            TextField(
+                              controller: verifyPasswordController,
+                              decoration: InputDecoration(
+                                hint: Text("Повторить password"),
+                              ),
+                            ),
+                            TextField(
+                              controller: usernameController,
+                              decoration: InputDecoration(
+                                hint: Text("Изменить username"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  OutlinedButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (dialogContext) => ApplicationDialog(
+                        onLeft: () {
+                          final userModel = UserModel(
+                            id: state.userModel.id,
+                            email: emailController.text.isEmpty
+                                ? null
+                                : emailController.text,
+                            password: passwordController.text.isEmpty
+                                ? null
+                                : passwordController.text,
+                            username: usernameController.text.isEmpty
+                                ? null
+                                : usernameController.text,
+                          );
+
+                          context.read<ProfileBloc>().add(
+                            UserUpdateEvent(userModel: userModel),
+                          );
+                          dialogContext.pop();
+                        },
+                        onRight: () {
+                          dialogContext.pop();
+                        },
+                        dialogTitle: 'Точно хочешь изменить?',
+                        leftTextButton: 'Дэ',
+                        rightTextButton: 'Неа',
+                      ),
+                    ),
+                    child: Text("Изменить"),
+                  ),
+                  state.userModel.isAdmin!
                       ? Text("Все посты в очереди на подтверждение:")
                       : SizedBox(),
-                  state.userModel.isAdmin
+                  state.userModel.isAdmin!
                       ? SizedBox(
                           height: 1000,
                           child: ListView.builder(
@@ -107,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         },
         listener: (BuildContext context, ProfileState state) {
-          if (state is SuccessPublishedProfileState) {
+          if (state is RebuildProfileState) {
             context.read<ProfileBloc>().add(FetchUserEvent());
           }
         },

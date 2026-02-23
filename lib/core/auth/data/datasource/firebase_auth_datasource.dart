@@ -18,7 +18,7 @@ class FirebaseAuthDatasource implements AuthDatasource {
   FirebaseAuthDatasource({
     required this.client,
     required this.keyValueStorageRepository,
-    required this.iPickImageService
+    required this.iPickImageService,
   });
 
   @override
@@ -27,13 +27,6 @@ class FirebaseAuthDatasource implements AuthDatasource {
   @override
   Future<(String, String)> signIn(String email, String password) async {
     try {
-      final credentials = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      await isEmailVerified(credentials.user);
-
       final token = await client.signIn(
         UserDto(email: email, password: password),
       );
@@ -123,6 +116,26 @@ class FirebaseAuthDatasource implements AuthDatasource {
         id: int.parse(user.id),
         username: user.username,
         isAdmin: user.isAdmin,
+      );
+    } on Object catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateUser(UserModel userModel) async {
+    try {
+      final token = await keyValueStorageRepository.readString(
+        Env.accessTokenKey,
+      );
+      await client.updateUser(
+        UserDto(
+          id: userModel.id.toString(),
+          username: userModel.username,
+          email: userModel.email,
+          password: userModel.password,
+        ),
+        options: CallOptions(metadata: {'accessToken': token!}),
       );
     } on Object catch (_) {
       rethrow;
