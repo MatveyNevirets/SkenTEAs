@@ -46,6 +46,24 @@ class ProfileScreen extends StatelessWidget {
                           )
                         : null,
                   ),
+                  OutlinedButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (dialogContext) => ApplicationDialog(
+                        onLeft: () {
+                          context.read<ProfileBloc>().add(ChangeAvatarEvent());
+                          dialogContext.pop();
+                        },
+                        onRight: () {
+                          dialogContext.pop();
+                        },
+                        dialogTitle: 'Точно хочешь изменить?',
+                        leftTextButton: 'Дэ',
+                        rightTextButton: 'Неа',
+                      ),
+                    ),
+                    child: Text("Изменить аватар"),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
@@ -185,7 +203,7 @@ class ProfileScreen extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         },
         listener: (BuildContext context, ProfileState state) {
-          if (state is RebuildProfileState) {
+          if (state is RebuildProfileState || state is AvatarChangedState) {
             context.read<ProfileBloc>().add(FetchUserEvent());
           }
         },

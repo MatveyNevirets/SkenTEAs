@@ -54,9 +54,21 @@ class PostItem extends StatelessWidget {
                 ? Center(child: Image.memory(post.imageBytes!))
                 : Container(
                     height: 100,
+                    width: double.maxFinite,
                     decoration: BoxDecoration(
-                      borderRadius: theme.containerRadius / 1.5,
+                      borderRadius: theme.containerRadius * 2,
                       color: colorScheme.onPrimaryContainer,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "ВОПРОС",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
             const SizedBox(height: 12),

@@ -14,3 +14,5 @@ class UserUpdateEvent extends ProfileEvent {
   UserModel userModel;
   UserUpdateEvent({required this.userModel});
 }
+
+class ChangeAvatarEvent extends ProfileEvent {}

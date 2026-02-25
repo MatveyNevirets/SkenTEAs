@@ -11,6 +11,11 @@ class UserFetchedState extends ProfileState {
   UserFetchedState({required this.userModel, this.posts});
 }
 
+class AvatarChangedState extends ProfileState {
+  String imagePath;
+  AvatarChangedState({required this.imagePath});
+}
+
 class ProfileLoadingState extends ProfileState {}
 
 class ProfileErrorState extends ProfileState {
