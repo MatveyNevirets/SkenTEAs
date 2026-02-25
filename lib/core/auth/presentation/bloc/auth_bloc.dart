@@ -36,6 +36,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthPickImageEvent>(_onPickImage);
   }
 
+  Future<void> _onChangeEmail(AuthChangeEmailEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoadingState());
+    
+  }
+
   Future<void> _onPickImage(
     AuthPickImageEvent event,
     Emitter<AuthState> emit,

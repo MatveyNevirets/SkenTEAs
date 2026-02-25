@@ -27,9 +27,14 @@ class FirebaseAuthDatasource implements AuthDatasource {
   @override
   Future<(String, String)> signIn(String email, String password) async {
     try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       final token = await client.signIn(
         UserDto(email: email, password: password),
       );
+
       return (token.accessToken, token.refreshToken);
     } on Object catch (e, stack) {
       throw Exception("$e StackTrace: $stack");
@@ -128,6 +133,16 @@ class FirebaseAuthDatasource implements AuthDatasource {
       final token = await keyValueStorageRepository.readString(
         Env.accessTokenKey,
       );
+
+      final user = _firebaseAuth.currentUser;
+
+      if (userModel.password != null) {
+        await _firebaseAuth.currentUser!.updatePassword(userModel.password);
+      }
+      if (userModel.email.toString() != "") {
+        await user!.verifyBeforeUpdateEmail(userModel.email);
+      }
+
       await client.updateUser(
         UserDto(
           id: userModel.id.toString(),

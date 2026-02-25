@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/auth/data/models/user.dart';
+import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
 import 'package:skenteas/core/consts/color_consts.dart';
 import 'package:skenteas/core/widgets/app_dialog.dart';
 import 'package:skenteas/feature/profile/presentation/bloc/profile_bloc.dart';
