@@ -44,7 +44,7 @@ class ProdPostsDatasource implements PostsDatasource {
         return Post(
           id: post.id,
           authorId: post.authorId,
-          postType: int.tryParse(post.postType) ?? 0,
+          postType: int.tryParse(post.postType),
           authorUsername: post.authorUsername,
           title: post.title,
           description: post.description,
@@ -69,10 +69,10 @@ class ProdPostsDatasource implements PostsDatasource {
             }
           }
         }
-
+    
         newPost = post.copyWith(
           comments: await fetchComments(post.id),
-          imageBytes: post.postType != 1 && post.postType != null
+          imageBytes: post.postType != 1
               ? await filesRepository.fetchFile(
                   bucket: "images",
                   userId: int.parse(post.id),
