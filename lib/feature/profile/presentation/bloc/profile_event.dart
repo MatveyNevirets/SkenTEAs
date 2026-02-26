@@ -15,4 +15,9 @@ class UserUpdateEvent extends ProfileEvent {
   UserUpdateEvent({required this.userModel});
 }
 
+class UsersPostStatusEvent extends ProfileEvent {
+  UserModel userModel;
+  UsersPostStatusEvent({required this.userModel});
+}
+
 class ChangeAvatarEvent extends ProfileEvent {}

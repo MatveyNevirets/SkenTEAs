@@ -7,8 +7,12 @@ final class ProfileInitial extends ProfileState {}
 
 class UserFetchedState extends ProfileState {
   UserModel userModel;
-  List<Post>? posts;
-  UserFetchedState({required this.userModel, this.posts});
+  List<Post>? posts, usersPosts;
+  UserFetchedState({
+    required this.userModel,
+    this.posts,
+    required this.usersPosts,
+  });
 }
 
 class AvatarChangedState extends ProfileState {
