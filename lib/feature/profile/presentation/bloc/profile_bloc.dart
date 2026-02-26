@@ -60,7 +60,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       id: event.userModel.id,
       username: event.userModel.username,
       password: event.userModel.password,
-      email: event.userModel.email,
     );
     await authRepository.updateUser(newUserModel);
     emit(RebuildProfileState());

@@ -134,20 +134,14 @@ class FirebaseAuthDatasource implements AuthDatasource {
         Env.accessTokenKey,
       );
 
-      final user = _firebaseAuth.currentUser;
-
       if (userModel.password != null) {
         await _firebaseAuth.currentUser!.updatePassword(userModel.password);
-      }
-      if (userModel.email.toString() != "") {
-        await user!.verifyBeforeUpdateEmail(userModel.email);
       }
 
       await client.updateUser(
         UserDto(
           id: userModel.id.toString(),
           username: userModel.username,
-          email: userModel.email,
           password: userModel.password,
         ),
         options: CallOptions(metadata: {'accessToken': token!}),

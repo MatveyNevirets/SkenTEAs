@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/auth/data/models/user.dart';
-import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
 import 'package:skenteas/core/consts/color_consts.dart';
 import 'package:skenteas/core/widgets/app_dialog.dart';
 import 'package:skenteas/feature/profile/presentation/bloc/profile_bloc.dart';
@@ -12,8 +11,7 @@ import 'package:skenteas/feature/profile/presentation/bloc/profile_bloc.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
-  final emailController = TextEditingController(),
-      passwordController = TextEditingController(),
+  final passwordController = TextEditingController(),
       verifyPasswordController = TextEditingController(),
       usernameController = TextEditingController();
 
@@ -73,12 +71,6 @@ class ProfileScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             TextField(
-                              controller: emailController,
-                              decoration: InputDecoration(
-                                hint: Text("Изменить email"),
-                              ),
-                            ),
-                            TextField(
                               controller: passwordController,
                               decoration: InputDecoration(
                                 hint: Text("Изменить password"),
@@ -109,9 +101,7 @@ class ProfileScreen extends StatelessWidget {
                         onLeft: () {
                           final userModel = UserModel(
                             id: state.userModel.id,
-                            email: emailController.text.isEmpty
-                                ? null
-                                : emailController.text,
+
                             password: passwordController.text.isEmpty
                                 ? null
                                 : passwordController.text,
