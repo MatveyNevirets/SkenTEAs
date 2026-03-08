@@ -22,6 +22,7 @@ dependencies:
   logger: ^2.6.2
   protobuf: ^6.0.0
   shared_preferences: ^2.5.4
+  flutter_svg: ^2.0.10
 
 dev_dependencies:
   flutter_test:
@@ -31,3 +32,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+  - family: MisterBrush
+    fonts:
+    - asset: assets/fonts/MisterBrush.otf
+  assets:
+    - assets/images/
