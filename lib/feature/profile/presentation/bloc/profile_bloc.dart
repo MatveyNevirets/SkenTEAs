@@ -73,16 +73,32 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileLoadingState());
       UserModel? newUser;
       newUser = await authRepository.fetchUser();
-      final posts = newUser.isAdmin!
-          ? await postsRepository.getPosts(isConfirmed: false)
-          : null;
+      final unconfirmedPosts = await postsRepository.getPosts(
+        isConfirmed: false,
+      );
+      final adminPosts = newUser.isAdmin! ? unconfirmedPosts : null;
 
       final avatarBytes = await filesRepository.fetchFile(bucket: "avatars");
       newUser = newUser.copyWith(imageBytes: avatarBytes);
 
-      _cachedPosts = posts;
+      _cachedPosts = adminPosts;
 
-      emit(UserFetchedState(userModel: newUser, posts: posts));
+      final allPosts = [
+        ...await postsRepository.getPosts(),
+        ...unconfirmedPosts,
+      ];
+
+      final usersPosts = allPosts
+          .where((post) => post.authorId == newUser!.id.toString())
+          .toList();
+
+      emit(
+        UserFetchedState(
+          userModel: newUser,
+          posts: adminPosts,
+          usersPosts: usersPosts,
+        ),
+      );
     } on Exception catch (e, stack) {
       emit(ProfileErrorState(error: e, stack: stack));
       rethrow;

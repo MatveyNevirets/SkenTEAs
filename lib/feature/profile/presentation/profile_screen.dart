@@ -185,6 +185,53 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         )
                       : SizedBox(),
+                  Text("Все твои посты:"),
+                  SizedBox(
+                    height: 500,
+                    child: ListView.builder(
+                      itemCount: state.usersPosts?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Card(
+                            color: Colors.green,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Text(state.usersPosts![index].title),
+                                    subtitle: Text(
+                                      state.usersPosts![index].description,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: ElevatedButton(
+                                          onPressed: () {},
+                                          child: Text("Опубликовать"),
+                                        ),
+                                      ),
+                                      Expanded(child: SizedBox()),
+                                      Expanded(
+                                        flex: 4,
+                                        child: ElevatedButton(
+                                          onPressed: () {},
+                                          child: Text("Отклонить"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             );
