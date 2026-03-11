@@ -17,6 +17,7 @@ abstract class AppThemes {
     hintColor: Color.fromRGBO(195, 186, 171, 255),
     hoverColor: Color.fromRGBO(183, 174, 157, 255),
     splashColor: Color.fromRGBO(26, 54, 29, 255),
+    highlightColor: Color.fromRGBO(165, 158, 145, 255),
   );
   static final ThemeData darkTheme = ThemeData(
     colorScheme: ColorScheme.fromSeed(seedColor: _darkThemeColor),

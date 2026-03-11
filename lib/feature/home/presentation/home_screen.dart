@@ -15,15 +15,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final colorTheme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: colorTheme.scaffoldBackgroundColor,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             pinned: true,
-            backgroundColor: colorScheme.primary,
+            backgroundColor: colorTheme.hoverColor,
             title: UpPanel(),
           ),
           SliverToBoxAdapter(child: TabsPanel()),

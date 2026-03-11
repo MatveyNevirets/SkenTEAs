@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skenteas/core/consts/color_consts.dart';
+import 'package:skenteas/core/widgets/input_field.dart';
 import 'package:skenteas/core/widgets/snackbar.dart';
 import 'package:skenteas/core/auth/presentation/bloc/auth_bloc.dart';
 
@@ -54,20 +55,17 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 45),
-                  _buildInputField(
-                    context: context,
+                  InputField(
                     controller: TextEditingController(),
                     hintText: 'Введите почту',
                   ),
                   SizedBox(height: 20),
-                  _buildInputField(
-                    context: context,
+                  InputField(
                     controller: TextEditingController(),
                     hintText: 'Введите пароль',
                   ),
                   SizedBox(height: 20),
-                  _buildInputField(
-                    context: context,
+                  InputField(
                     controller: TextEditingController(),
                     hintText: 'Повторите пароль',
                   ),
@@ -141,39 +139,6 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _buildInputField({
-  required BuildContext context,
-  required TextEditingController controller,
-  required String hintText,
-}) {
-  final colorTheme = Theme.of(context);
-  return Padding(
-    padding: const EdgeInsets.only(left: 40, right: 40),
-    child: SizedBox(
-      height: 60,
-      child: Container(
-        height: 50,
-        decoration: BoxDecoration(
-          color: colorTheme.scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: colorTheme.hoverColor, width: 2.5),
-        ),
-        child: TextField(
-          controller: controller,
-          style: TextStyle(color: colorTheme.primaryColorDark, fontSize: 16),
-          decoration: InputDecoration(
-            hintText: hintText,
-            hintStyle: TextStyle(color: colorTheme.hintColor, fontSize: 16),
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            isDense: true,
-          ),
-        ),
-      ),
-    ),
-  );
 }
 
 

@@ -21,7 +21,7 @@ class PostItem extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: theme.containerRadius,
-          color: colorScheme.primaryContainer,
+          color: theme.hintColor,
         ),
 
         padding: theme.screenPadding,
